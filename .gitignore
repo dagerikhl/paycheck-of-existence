@@ -4,6 +4,9 @@
 # Production
 /build
 
+# SASS
+src/**/*.css
+
 # Miscellaneous
 ## MAC
 .DS_Store
