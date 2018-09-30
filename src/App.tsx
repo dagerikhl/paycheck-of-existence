@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import './App.scss';
 
@@ -24,9 +24,9 @@ interface DispatchProps {
     simpleAction: (payload: string) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => ({
-    simpleAction: (payload: string) => dispatch(simpleAction(payload))
-});
+const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => bindActionCreators({
+    simpleAction
+}, dispatch);
 
 type AppProps = StateProps & DispatchProps;
 
