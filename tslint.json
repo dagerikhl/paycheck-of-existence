@@ -14,8 +14,14 @@
             "spaces",
             4
         ],
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
         "jsx-boolean-value": false,
+        "no-small-switch": false,
         "no-unnecessary-callback-wrapper": true,
+        "object-literal-sort-keys": false,
         "only-arrow-functions": true,
         "prefer-optional": true,
         "quotemark": [
@@ -25,7 +31,8 @@
         ],
         "semicolon": [
             true,
-            "always"
+            "always",
+            "ignore-bound-class-methods"
         ],
         "trailing-comma": [
             true,

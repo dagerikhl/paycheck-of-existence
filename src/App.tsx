@@ -1,14 +1,36 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
 import './App.scss';
 
+import { DummyAction, simpleAction } from './actions/action.dummy';
 import logo from './logo.svg';
+import { State } from './states/state.root';
 
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;
 
-class App extends React.Component {
+interface StateProps {
+    dummyMember: string;
+}
+
+const mapStateToProps = (state: State): StateProps => ({
+    dummyMember: state.dummy.dummyMember
+});
+
+interface DispatchProps {
+    simpleAction: (payload: string) => void;
+}
+
+const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => ({
+    simpleAction: (payload: string) => dispatch(simpleAction(payload))
+});
+
+type AppProps = StateProps & DispatchProps;
+
+class App extends React.Component<AppProps> {
     public render() {
         return (
             <div className="app">
@@ -25,9 +47,21 @@ class App extends React.Component {
                     <Route exact path="/hours" render={dummyComponent('Hours')}/>
                     <Route exact path="/summary" render={dummyComponent('Summary')}/>
                 </Switch>
+
+                {/* Redux dummy */}
+                <button
+                    onClick={this.handleOnClick}
+                >
+                    Press to test
+                </button>
             </div>
         );
     }
+
+    // Redux dummy function
+    private handleOnClick = () => {
+        this.props.simpleAction('a new dummy value');
+    };
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
