@@ -41,6 +41,9 @@ class App extends React.Component<AppProps> {
                 <p className="a">
                     To get started, edit <code>src/App.tsx</code> and save to reload.
                 </p>
+                <p>
+                    Test text to see that Travis has deployed.
+                </p>
 
                 {/* Router dummy */}
                 <Switch>
