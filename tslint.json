@@ -14,6 +14,7 @@
             "spaces",
             4
         ],
+        "jsx-boolean-value": false,
         "no-unnecessary-callback-wrapper": true,
         "only-arrow-functions": true,
         "prefer-optional": true,
