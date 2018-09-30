@@ -7,6 +7,9 @@
 # SASS
 src/**/*.css
 
+# Firebase
+.firebase
+
 # Miscellaneous
 ## MAC
 .DS_Store
