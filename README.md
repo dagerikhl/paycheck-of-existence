@@ -1,4 +1,4 @@
-# Paycheck of Existence (PoE)
+# Paycheck of Existence (PoE) [![Build Status](https://travis-ci.org/dagerikhl/paycheck-of-existence.svg?branch=master)](https://travis-ci.org/dagerikhl/paycheck-of-existence)
 
 // TODO
 
