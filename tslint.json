@@ -17,6 +17,11 @@
         "no-unnecessary-callback-wrapper": true,
         "only-arrow-functions": true,
         "prefer-optional": true,
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ],
         "semicolon": [
             true,
             "always"
