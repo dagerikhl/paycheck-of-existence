@@ -15,9 +15,9 @@
         "build": "npm run build-css && react-scripts-ts build",
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-        "lint": "npm-run-all --aggregate-output -l -p lint-css lint-js",
+        "lint": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js",
         "lint-js": "tslint -p . -c tslint.json src/**/*.{ts,tsx}",
-        "lint-css": "stylelint --config=.stylelintrc 'src/**/*.scss'",
+        "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
         "eject": "react-scripts-ts eject"
     },
     "pre-commit": [
