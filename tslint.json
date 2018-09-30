@@ -3,8 +3,23 @@
         "tslint:recommended",
         "tslint-react",
         "tslint-config-prettier",
+        "tslint-eslint-rules",
         "tslint-sonarts"
     ],
+    "rules": {
+        "arrow-parens": true,
+        "arrow-return-shorthand": true,
+        "no-unnecessary-callback-wrapper": true,
+        "only-arrow-functions": true,
+        "prefer-optional": true,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "never",
+                "singleline": "never"
+            }
+        ]
+    },
     "linterOptions": {
         "exclude": [
             "config/**/*.js",
