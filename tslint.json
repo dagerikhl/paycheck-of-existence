@@ -9,9 +9,18 @@
     "rules": {
         "arrow-parens": true,
         "arrow-return-shorthand": true,
+        "indent": [
+            true,
+            "spaces",
+            4
+        ],
         "no-unnecessary-callback-wrapper": true,
         "only-arrow-functions": true,
         "prefer-optional": true,
+        "semicolon": [
+            true,
+            "always"
+        ],
         "trailing-comma": [
             true,
             {

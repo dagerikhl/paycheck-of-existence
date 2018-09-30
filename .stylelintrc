@@ -1,3 +1,9 @@
 {
-    "extends": "stylelint-config-standard"
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "color-hex-length": "long",
+        "indentation": 4,
+        "selector-class-pattern": "^[a-z]+(-[a-z]+)*$",
+        "string-quotes": "double"
+    }
 }
