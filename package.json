@@ -18,14 +18,12 @@
     "lint": "npm-run-all lint-css lint-js",
     "lint-js": "tslint -c tslint.json 'src/**/*.tsx?'",
     "lint-css": "stylelint --config=.stylelintrc 'src/**/*.scss'",
-    "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
   "pre-commit": [
     "lint"
   ],
   "devDependencies": {
-    "@types/jest": "^23.3.2",
     "@types/node": "^10.11.3",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.8",
