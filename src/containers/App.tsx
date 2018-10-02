@@ -8,8 +8,6 @@ import './App.scss';
 import { DummyAction, simpleAction } from '../actions/dummy.action';
 import { State } from '../states/state';
 
-import logo from '../logo.svg';
-
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;
 
@@ -36,7 +34,6 @@ class AppComponent extends React.Component<AppProps> {
         return (
             <div className="app">
                 <header className="app-header">
-                    <img src={logo} className="app-logo" alt="logo"/>
                     <h1 className="app-title">Welcome to React</h1>
                 </header>
                 <p className="a">
