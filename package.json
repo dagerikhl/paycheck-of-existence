@@ -12,6 +12,7 @@
         "lint": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js",
         "lint-js": "tslint -p . -c tslint.json src/**/*.{ts,tsx}",
         "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
+        "deploy": "firebase deploy",
         "eject": "react-scripts-ts eject"
     },
     "dependencies": {
@@ -31,6 +32,7 @@
         "@types/react-dom": "^16.0.8",
         "@types/react-redux": "^6.0.9",
         "@types/react-router-dom": "^4.3.1",
+        "firebase-tools": "^4.2.1",
         "pre-commit": "^1.2.2",
         "redux-devtools-extension": "^2.13.5",
         "stylelint": "^9.6.0",
