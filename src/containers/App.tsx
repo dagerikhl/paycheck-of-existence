@@ -5,9 +5,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import './App.scss';
 
-import { DummyAction, simpleAction } from './actions/action.dummy';
-import logo from './logo.svg';
-import { State } from './states/state.root';
+import { DummyAction, simpleAction } from '../actions/dummy.action';
+import { State } from '../states/state';
+
+import logo from '../logo.svg';
 
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;

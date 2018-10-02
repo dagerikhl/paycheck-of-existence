@@ -1,5 +1,5 @@
-import { DummyAction } from '../actions/action.dummy';
-import { DummyState, initialDummyState } from '../states/state.dummy';
+import { DummyAction } from '../actions/dummy.action';
+import { DummyState, initialDummyState } from '../states/dummy.state';
 
 export const dummyReducer = (state: DummyState = initialDummyState, action: DummyAction): DummyState => {
     switch (action.type) {
