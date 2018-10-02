@@ -1,15 +1,23 @@
 import * as React from 'react';
+import { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
+import DataSnapshot = firebase.database.DataSnapshot;
 
 import './App.scss';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
+import { fire } from '../database/fire';
 import { State } from '../states/state';
+
 
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;
+
+interface OwnState {
+    dummyMessage: string;
+}
 
 interface StateProps {
     dummyMember: string;
@@ -29,7 +37,20 @@ const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => b
 
 type AppProps = StateProps & DispatchProps;
 
-class AppComponent extends React.Component<AppProps> {
+class AppComponent extends React.PureComponent<AppProps, OwnState> {
+    public state: OwnState = {
+        dummyMessage: ''
+    };
+
+    private dummyMessageInputElement: HTMLInputElement | null;
+
+    public componentWillMount() {
+        const dummyMessageRef = fire.database().ref('dummyMessage').orderByKey().limitToLast(100);
+        dummyMessageRef.on('child_added', (snapshot: DataSnapshot) => {
+            this.setState({ dummyMessage: snapshot.val() });
+        });
+    }
+
     public render() {
         return (
             <div className="app">
@@ -55,6 +76,13 @@ class AppComponent extends React.Component<AppProps> {
                 >
                     Press to test
                 </button>
+
+                {/* Firebase dummy */}
+                <form onSubmit={this.addMessage}>
+                    <div><p>{this.state.dummyMessage}</p></div>
+                    <input type="text" ref={(element) => this.dummyMessageInputElement = element}/>
+                    <input type="submit"/>
+                </form>
             </div>
         );
     }
@@ -62,6 +90,16 @@ class AppComponent extends React.Component<AppProps> {
     // Redux dummy function
     private handleOnClick = () => {
         this.props.simpleAction('a new dummy value');
+    };
+
+    // Firebase dummy function
+    private addMessage = (e: FormEvent) => {
+        e.preventDefault();
+
+        if (this.dummyMessageInputElement) {
+            fire.database().ref('dummyMessage').push(this.dummyMessageInputElement.value);
+            this.dummyMessageInputElement.value = '';
+        }
     };
 }
 
