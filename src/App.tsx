@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => b
 
 type AppProps = StateProps & DispatchProps;
 
-class App extends React.Component<AppProps> {
+class AppComponent extends React.Component<AppProps> {
     public render() {
         return (
             <div className="app">
@@ -67,4 +67,4 @@ class App extends React.Component<AppProps> {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
