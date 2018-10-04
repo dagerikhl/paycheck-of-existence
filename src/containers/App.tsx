@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import './App.scss';
+import './App.css';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
 import { Routes } from '../constants/routes';
 import { firebaseDatabase } from '../firebase/firebase';
 import { State } from '../states/state';
 import { HomePage } from './HomePage';
-import { LoginPage } from './LoginPage';
+import { LoginPage } from './LoginPage/LoginPage';
 
 
 // TODO Remove when actual routing is implemented

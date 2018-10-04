@@ -1,4 +1,9 @@
 import { firebaseAuth } from '../firebase/firebase';
 
-export const login = firebaseAuth.signInWithEmailAndPassword;
-export const logout = firebaseAuth.signOut;
+const login = (email: string, password: string) => firebaseAuth.signInWithEmailAndPassword(email, password);
+const logout = () => firebaseAuth.signOut();
+
+export const auth = {
+    login,
+    logout
+};

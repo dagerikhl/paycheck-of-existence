@@ -1,15 +1,22 @@
 import * as React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import './LoginPage.scss';
+import './LoginPage.css';
 
-class LoginPageComponent extends React.PureComponent {
+import { LoginForm } from './LoginForm';
+
+class LoginPageComponent extends React.PureComponent<RouteComponentProps> {
     public render() {
+        const { history } = this.props;
+
         return (
             <section className="login">
                 <h1>Login page</h1>
+
+                <LoginForm history={history}/>
             </section>
         );
     }
 }
 
-export const LoginPage = LoginPageComponent;
+export const LoginPage = withRouter(LoginPageComponent);
