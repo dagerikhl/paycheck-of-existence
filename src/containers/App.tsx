@@ -4,12 +4,13 @@ import 'firebase/database';
 import * as React from 'react';
 import { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import './App.scss';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
+import { Routes } from '../constants/Routes';
 import { fire } from '../database/fire';
 import { State } from '../states/state';
 
@@ -67,9 +68,18 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
                 </p>
 
                 {/* Router dummy */}
+                <nav>
+                    <Link to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link>
+                    <Link to={Routes.ROOT.path}>{Routes.ROOT.name}</Link>
+                    <Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link>
+                    <Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link>
+                </nav>
+
                 <Switch>
-                    <Route exact path="/hours" render={dummyComponent('Hours')}/>
-                    <Route exact path="/summary" render={dummyComponent('Summary')}/>
+                    <Route exact path={Routes.ROOT.path} render={dummyComponent(Routes.ROOT.name)}/>
+                    <Route exact path={Routes.LOGIN.path} render={dummyComponent(Routes.LOGIN.name)}/>
+                    <Route exact path={Routes.HOURS.path} render={dummyComponent(Routes.HOURS.name)}/>
+                    <Route exact path={Routes.SUMMARY.path} render={dummyComponent(Routes.SUMMARY.name)}/>
                 </Switch>
 
                 {/* Redux dummy */}
