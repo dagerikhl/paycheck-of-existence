@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './Login.scss';
+import './LoginPage.scss';
 
 class LoginPageComponent extends React.PureComponent {
     public render() {

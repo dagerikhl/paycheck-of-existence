@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './Home.scss';
+import './HomePage.scss';
 
 class HomePageComponent extends React.PureComponent {
     public render() {
