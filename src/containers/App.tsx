@@ -10,9 +10,11 @@ import { bindActionCreators, Dispatch } from 'redux';
 import './App.scss';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
-import { Routes } from '../constants/Routes';
+import { Routes } from '../constants/routes';
 import { fire } from '../database/fire';
 import { State } from '../states/state';
+import { HomePage } from './HomePage';
+import { LoginPage } from './LoginPage';
 
 
 // TODO Remove when actual routing is implemented
@@ -69,15 +71,17 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
 
                 {/* Router dummy */}
                 <nav>
-                    <Link to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link>
-                    <Link to={Routes.ROOT.path}>{Routes.ROOT.name}</Link>
-                    <Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link>
-                    <Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link>
+                    <ul>
+                        <li><Link to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link></li>
+                        <li><Link to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
+                        <li><Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
+                        <li><Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
+                    </ul>
                 </nav>
 
                 <Switch>
-                    <Route exact path={Routes.ROOT.path} render={dummyComponent(Routes.ROOT.name)}/>
-                    <Route exact path={Routes.LOGIN.path} render={dummyComponent(Routes.LOGIN.name)}/>
+                    <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
+                    <Route exact path={Routes.HOME.path} component={HomePage}/>
                     <Route exact path={Routes.HOURS.path} render={dummyComponent(Routes.HOURS.name)}/>
                     <Route exact path={Routes.SUMMARY.path} render={dummyComponent(Routes.SUMMARY.name)}/>
                 </Switch>

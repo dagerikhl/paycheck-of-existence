@@ -4,16 +4,19 @@ interface Route {
 }
 
 interface Routes {
-    [key: string]: Route;
+    LOGIN: Route;
+    HOME: Route;
+    HOURS: Route;
+    SUMMARY: Route;
 }
 
 export const Routes: Routes = {
     LOGIN: {
-        name: 'Login',
+        name: 'LoginPage',
         path: '/login'
     },
-    ROOT: {
-        name: 'Home',
+    HOME: {
+        name: 'HomePage',
         path: '/'
     },
     HOURS: {
