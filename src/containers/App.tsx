@@ -1,9 +1,11 @@
+import DataSnapshot = firebase.database.DataSnapshot;
+// TODO Remove when database is taken out of this component
+import 'firebase/database';
 import * as React from 'react';
 import { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
-import DataSnapshot = firebase.database.DataSnapshot;
 
 import './App.scss';
 
