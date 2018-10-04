@@ -1,6 +1,3 @@
-import DataSnapshot = firebase.database.DataSnapshot;
-// TODO Remove when database is taken out of this component
-import 'firebase/database';
 import * as React from 'react';
 import { FormEvent } from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +8,7 @@ import './App.scss';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
 import { Routes } from '../constants/routes';
-import { fire } from '../database/fire';
+import { firebaseDatabase } from '../firebase/firebase';
 import { State } from '../states/state';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage';
@@ -50,8 +47,8 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
     private dummyMessageInputElement: HTMLInputElement | null;
 
     public componentWillMount() {
-        const dummyMessageRef = fire.database().ref('dummyMessage').orderByKey().limitToLast(100);
-        dummyMessageRef.on('child_added', (snapshot: DataSnapshot) => {
+        const dummyMessageRef = firebaseDatabase.ref('dummyMessage').orderByKey().limitToLast(100);
+        dummyMessageRef.on('child_added', (snapshot: any) => {
             this.setState({ dummyMessage: snapshot.val() });
         });
     }
@@ -113,7 +110,7 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
         e.preventDefault();
 
         if (this.dummyMessageInputElement) {
-            fire.database().ref('dummyMessage').push(this.dummyMessageInputElement.value);
+            firebaseDatabase.ref('dummyMessage').push(this.dummyMessageInputElement.value);
             this.dummyMessageInputElement.value = '';
         }
     };
