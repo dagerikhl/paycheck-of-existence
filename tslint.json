@@ -19,6 +19,7 @@
             "never-prefix"
         ],
         "jsx-boolean-value": false,
+        "no-console": false,
         "no-default-export": true,
         "no-small-switch": false,
         "no-unnecessary-callback-wrapper": true,
