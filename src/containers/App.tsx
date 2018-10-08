@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
+import { updateAuthUser } from '../actions/auth.action';
 import { DummyAction, simpleAction } from '../actions/dummy.action';
+import { auth } from '../auth/auth';
 import { LogoutButton } from '../components/LogoutButton';
 import { Routes } from '../constants/routes';
 import { firebaseDatabase } from '../firebase/firebase';
+import { AuthUser } from '../interfaces/AuthUser';
 import { State } from '../states/state';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage/LoginPage';
@@ -22,18 +25,22 @@ interface OwnState {
 }
 
 interface StateProps {
+    authUser: AuthUser | null;
     dummyMember: string;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
+    authUser: state.auth.authUser,
     dummyMember: state.dummy.dummyMember
 });
 
 interface DispatchProps {
+    updateAuthUser: (authUser: AuthUser | null) => void;
     simpleAction: (payload: string) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => bindActionCreators({
+    updateAuthUser,
     simpleAction
 }, dispatch);
 
@@ -53,7 +60,25 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
         });
     }
 
+    public componentDidMount() {
+        auth.onAuthUserUpdate((authUser: AuthUser) => this.props.updateAuthUser(authUser));
+    }
+
     public render() {
+        const { authUser } = this.props;
+
+        const navOptions = authUser
+            ? (<ul>
+                <li><Link to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
+                <li><Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
+                <li><Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
+                <li><LogoutButton/></li>
+            </ul>)
+            : (<ul>
+                <li><Link to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
+                <li><Link to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link></li>
+            </ul>);
+
         return (
             <div className="app">
                 <header className="app-header">
@@ -68,13 +93,7 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
 
                 {/* Router dummy */}
                 <nav>
-                    <ul>
-                        <li><Link to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link></li>
-                        <li><Link to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
-                        <li><Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
-                        <li><Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
-                        <li><LogoutButton/></li>
-                    </ul>
+                    {navOptions}
                 </nav>
 
                 <Switch>
