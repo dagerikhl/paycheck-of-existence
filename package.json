@@ -5,13 +5,16 @@
     "author": "Dag Erik Homdrum Løvgren <dagerikhl@gmail.com> (https://github.com/dagerikhl)",
     "scripts": {
         "start": "npm-run-all -l -p watch-css start-js",
-        "start-js": "react-scripts-ts start",
         "build": "npm run build-css && react-scripts-ts build",
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+        "start-js": "react-scripts-ts start",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "lint": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js",
+        "lint:prod": "npm-run-all --silent --aggregate-output -c -l -p lint-css:prod lint-js:prod",
         "lint-js": "tslint -p . -c tslint.json src/**/*.{ts,tsx}",
+        "lint-js:prod": "tslint -p . -c tslint.prod.json src/**/*.{ts,tsx}",
         "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
+        "lint-css:prod": "stylelint --config=.stylelintrc src/**/*.scss",
         "deploy": "firebase deploy",
         "eject": "react-scripts-ts eject"
     },
@@ -50,6 +53,6 @@
     },
     "private": false,
     "pre-commit": [
-        "lint"
+        "lint:prod"
     ]
 }
