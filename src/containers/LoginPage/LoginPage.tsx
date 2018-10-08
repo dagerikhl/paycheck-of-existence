@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import './LoginPage.css';
-
 import { LoginForm } from './LoginForm';
+
+import './LoginPage.css';
 
 class LoginPageComponent extends React.PureComponent<RouteComponentProps> {
     public render() {

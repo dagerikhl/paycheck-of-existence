@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import './App.css';
-
 import { DummyAction, simpleAction } from '../actions/dummy.action';
+import { LogoutButton } from '../components/LogoutButton';
 import { Routes } from '../constants/routes';
 import { firebaseDatabase } from '../firebase/firebase';
 import { State } from '../states/state';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage/LoginPage';
 
+import './App.css';
 
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;
@@ -73,6 +73,7 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
                         <li><Link to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
                         <li><Link to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
                         <li><Link to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
+                        <li><LogoutButton/></li>
                     </ul>
                 </nav>
 
