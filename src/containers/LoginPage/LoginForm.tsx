@@ -26,7 +26,7 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
     public render() {
         const { email, password, error } = this.state;
 
-        const isMissingRequired = email === '' || password === '';
+        const isMissingRequired = email === '';
 
         return (
             <form onSubmit={this.onSubmit}>
