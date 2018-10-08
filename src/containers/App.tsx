@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import './App.css';
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => b
     simpleAction
 }, dispatch);
 
-type AppProps = StateProps & DispatchProps;
+type AppProps = StateProps & DispatchProps & RouteComponentProps;
 
 class AppComponent extends React.PureComponent<AppProps, OwnState> {
     public state: OwnState = {
@@ -116,4 +116,4 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
     };
 }
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));
