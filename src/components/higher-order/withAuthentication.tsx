@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { AuthAction, updateAuthUser } from '../../actions/auth.action';
 import { AuthUser } from '../../interfaces/AuthUser';
 import { auth } from '../../services/auth';
-import { State } from '../../states/state';
+import { AuthAction, updateAuthUser } from '../../store/actions/auth.action';
+import { State } from '../../store/states/state';
 
 interface OwnState {
     isLoaded: boolean;

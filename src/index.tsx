@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './containers/App';
 import { registerServiceWorker } from './registerServiceWorker';
-import { configureStore } from './store';
+import { configureStore } from './store/store';
 
 import './styles/globals.css';
 

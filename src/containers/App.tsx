@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { DummyAction, simpleAction } from '../actions/dummy.action';
 import { withAuthentication } from '../components/higher-order/withAuthentication';
 import { LogoutButton } from '../components/LogoutButton';
 import { Routes } from '../constants/routes';
 import { AuthUser } from '../interfaces/AuthUser';
 import { firebaseDatabase } from '../services/firebase';
-import { State } from '../states/state';
+import { DummyAction, simpleAction } from '../store/actions/dummy.action';
+import { State } from '../store/states/state';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage/LoginPage';
 
