@@ -8,6 +8,10 @@ import { auth } from '../../auth/auth';
 import { AuthUser } from '../../interfaces/AuthUser';
 import { State } from '../../states/state';
 
+interface OwnState {
+    isLoaded: boolean;
+}
+
 interface StateProps {
     authUser: AuthUser | null;
 }
@@ -27,15 +31,22 @@ const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bi
 type WithAuthProps = StateProps & DispatchProps & RouteComponentProps;
 
 export const withAuth = (Component: React.ComponentClass) => {
-    class WithAuth extends React.Component<WithAuthProps> {
+    class WithAuth extends React.Component<WithAuthProps, OwnState> {
+        public state: OwnState = { isLoaded: false };
+
         public componentDidMount() {
-            auth.onAuthUserUpdate((authUser: AuthUser) => this.props.updateAuthUser(authUser));
+            auth.onAuthUserUpdate((authUser: AuthUser) => {
+                this.props.updateAuthUser(authUser);
+                this.setState({ isLoaded: true });
+            });
         }
 
         public render() {
-            return (
-                <Component {...this.props}/>
-            );
+            const { isLoaded } = this.state;
+
+            return isLoaded
+                ? <Component {...this.props}/>
+                : <div>TODO Loading component</div>;
         }
     }
 
