@@ -15,13 +15,11 @@ interface OwnState {
     error?: any;
 }
 
-const initialState: OwnState = {
-    email: '',
-    password: ''
-};
-
 class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
-    public state: OwnState = initialState;
+    public state: OwnState = {
+        email: '',
+        password: ''
+    };
 
     public render() {
         const { email, password, error } = this.state;
@@ -66,7 +64,6 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
 
         auth.login(email, password)
             .then(() => {
-                this.setState(initialState);
                 history.push(Routes.HOME.path);
             })
             .catch((error) => {
