@@ -4,8 +4,8 @@ import { RouteComponentProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { AuthAction, updateAuthUser } from '../../actions/auth.action';
-import { auth } from '../../auth/auth';
 import { AuthUser } from '../../interfaces/AuthUser';
+import { auth } from '../../services/auth';
 import { State } from '../../states/state';
 
 interface OwnState {
@@ -28,10 +28,10 @@ const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bi
     updateAuthUser
 }, dispatch);
 
-type WithAuthProps = StateProps & DispatchProps & RouteComponentProps;
+type WithAuthenticationProps = StateProps & DispatchProps & RouteComponentProps;
 
-export const withAuth = (Component: React.ComponentClass) => {
-    class WithAuth extends React.Component<WithAuthProps, OwnState> {
+export const withAuthentication = (Component: React.ComponentClass) => {
+    class WithAuthentication extends React.Component<WithAuthenticationProps, OwnState> {
         public state: OwnState = { isLoaded: false };
 
         public componentDidMount() {
@@ -50,5 +50,5 @@ export const withAuth = (Component: React.ComponentClass) => {
         }
     }
 
-    return connect(mapStateToProps, mapDispatchToProps)(WithAuth);
+    return connect(mapStateToProps, mapDispatchToProps)(WithAuthentication);
 };

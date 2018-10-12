@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { auth } from '../auth/auth';
+import { auth } from '../services/auth';
 
 import './LogoutButton.css';
 

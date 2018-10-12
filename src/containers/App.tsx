@@ -5,11 +5,11 @@ import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-rout
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { DummyAction, simpleAction } from '../actions/dummy.action';
-import { withAuth } from '../components/higher-order/withAuth';
+import { withAuthentication } from '../components/higher-order/withAuthentication';
 import { LogoutButton } from '../components/LogoutButton';
 import { Routes } from '../constants/routes';
-import { firebaseDatabase } from '../firebase/firebase';
 import { AuthUser } from '../interfaces/AuthUser';
+import { firebaseDatabase } from '../services/firebase';
 import { State } from '../states/state';
 import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage/LoginPage';
@@ -129,4 +129,4 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
     };
 }
 
-export const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(withAuth(AppComponent)));
+export const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(withAuthentication(AppComponent)));

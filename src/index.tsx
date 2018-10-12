@@ -3,11 +3,11 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import './styles/globals.css';
-
 import { App } from './containers/App';
 import { registerServiceWorker } from './registerServiceWorker';
 import { configureStore } from './store';
+
+import './styles/globals.css';
 
 ReactDOM.render(
     <Provider store={configureStore()}>
