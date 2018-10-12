@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { Link, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { updateAuthUser } from '../actions/auth.action';
 import { DummyAction, simpleAction } from '../actions/dummy.action';
-import { auth } from '../auth/auth';
+import { withAuth } from '../components/higher-order/withAuth';
 import { LogoutButton } from '../components/LogoutButton';
 import { Routes } from '../constants/routes';
 import { firebaseDatabase } from '../firebase/firebase';
@@ -35,12 +34,10 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 interface DispatchProps {
-    updateAuthUser: (authUser: AuthUser | null) => void;
     simpleAction: (payload: string) => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<DummyAction>): DispatchProps => bindActionCreators({
-    updateAuthUser,
     simpleAction
 }, dispatch);
 
@@ -58,10 +55,6 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
         dummyMessageRef.on('child_added', (snapshot: any) => {
             this.setState({ dummyMessage: snapshot.val() });
         });
-    }
-
-    public componentDidMount() {
-        auth.onAuthUserUpdate((authUser: AuthUser) => this.props.updateAuthUser(authUser));
     }
 
     public render() {
@@ -136,4 +129,4 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
     };
 }
 
-export const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));
+export const App = withRouter(connect(mapStateToProps, mapDispatchToProps)(withAuth(AppComponent)));
