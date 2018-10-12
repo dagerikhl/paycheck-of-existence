@@ -6,19 +6,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { AuthUser } from '../../interfaces/AuthUser';
 import { auth } from '../../services/auth';
 import { AuthAction, updateAuthUser } from '../../store/actions/auth.action';
-import { State } from '../../store/states/state';
 
 interface OwnState {
     isLoaded: boolean;
 }
-
-interface StateProps {
-    authUser: AuthUser | null;
-}
-
-const mapStateToProps = (state: State): StateProps => ({
-    authUser: state.auth.authUser
-});
 
 interface DispatchProps {
     updateAuthUser: (authUser: AuthUser | null) => void;
@@ -28,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bi
     updateAuthUser
 }, dispatch);
 
-type WithAuthenticationProps = StateProps & DispatchProps & RouteComponentProps;
+type WithAuthenticationProps = DispatchProps & RouteComponentProps;
 
 export const withAuthentication = (Component: React.ComponentClass) => {
     class WithAuthentication extends React.Component<WithAuthenticationProps, OwnState> {
@@ -50,5 +41,5 @@ export const withAuthentication = (Component: React.ComponentClass) => {
         }
     }
 
-    return connect(mapStateToProps, mapDispatchToProps)(WithAuthentication);
+    return connect(undefined, mapDispatchToProps)(WithAuthentication);
 };
