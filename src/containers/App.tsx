@@ -13,16 +13,18 @@ class AppComponent extends React.PureComponent {
     public render() {
         return (
             <div className="app">
-                <header className="app-header">
-                    <h1 className="app-title">Welcome to React</h1>
-                </header>
+                <header className="app-header">HEADER</header>
 
-                <Switch>
-                    <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
-                    <Route exact path={Routes.HOME.path} component={HomePage}/>
-                    <Route exact path={Routes.HOURS.path} component={HoursPage}/>
-                    {/*<Route exact path={Routes.SUMMARY.path} component={SummaryPage}/>*/}
-                </Switch>
+                <main className="app-main">
+                    <Switch>
+                        <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
+                        <Route exact path={Routes.HOME.path} component={HomePage}/>
+                        <Route exact path={Routes.HOURS.path} component={HoursPage}/>
+                        {/*<Route exact path={Routes.SUMMARY.path} component={SummaryPage}/>*/}
+                    </Switch>
+                </main>
+
+                <footer className="app-footer">FOOTER</footer>
             </div>
         );
     }

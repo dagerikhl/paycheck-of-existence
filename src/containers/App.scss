@@ -1,33 +1,37 @@
+@import "../styles/variables";
+
 .app {
-    text-align: center;
-}
+    display: grid;
+    grid-template-areas: "h h h " ". m ." "f f f";
+    grid-template-columns: 128px 1fr 128px;
+    grid-template-rows: $header-height 1fr $footer-height;
 
-.app-logo {
-    animation: app-logo-spin infinite 20s linear;
-    height: 80px;
-}
+    min-height: 100vh;
+    min-width: 1024px;
 
-.app-header {
-    background-color: #222222;
-    height: 150px;
-    padding: 20px;
-    color: white;
-}
+    .app-header {
+        grid-area: h;
 
-.app-title {
-    font-size: 1.5em;
-}
+        position: fixed;
 
-.a {
-    font-size: large;
-}
+        height: $header-height;
+        width: 100%;
 
-@keyframes app-logo-spin {
-    from {
-        transform: rotate(0deg);
+        // TODO Remove
+        background-color: hotpink;
     }
 
-    to {
-        transform: rotate(360deg);
+    .app-main {
+        grid-area: m;
+
+        // TODO Remove
+        background-color: yellow;
+    }
+
+    .app-footer {
+        grid-area: f;
+
+        // TODO Remove
+        background-color: hotpink;
     }
 }
