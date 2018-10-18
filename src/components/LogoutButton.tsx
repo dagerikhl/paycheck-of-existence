@@ -4,7 +4,7 @@ import { auth } from '../services/auth';
 
 import './LogoutButton.css';
 
-const LogoutButtonComponent = () => (
+const LogoutButtonComponent: React.SFC = () => (
     <button
         className="logout-button"
         type="button"
