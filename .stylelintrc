@@ -2,6 +2,7 @@
     "extends": "stylelint-config-standard",
     "rules": {
         "color-hex-length": "long",
+        "declaration-empty-line-before": null,
         "indentation": 4,
         "selector-class-pattern": "^[a-z]+(-[a-z]+)*$",
         "string-quotes": "double"
