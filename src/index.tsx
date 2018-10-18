@@ -7,6 +7,7 @@ import { App } from './containers/App';
 import { registerServiceWorker } from './registerServiceWorker';
 import { configureStore } from './store/store';
 
+import 'reset-css/reset.css';
 import './styles/globals.css';
 
 ReactDOM.render(
