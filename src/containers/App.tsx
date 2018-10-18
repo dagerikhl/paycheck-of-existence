@@ -15,6 +15,7 @@ import { HomePage } from './HomePage';
 import { LoginPage } from './LoginPage/LoginPage';
 
 import './App.css';
+import { HoursPage } from './HoursPage/HoursPage';
 
 // TODO Remove when actual routing is implemented
 const dummyComponent = (title: string) => () => <div>{title}</div>;
@@ -92,7 +93,7 @@ class AppComponent extends React.PureComponent<AppProps, OwnState> {
                 <Switch>
                     <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
                     <Route exact path={Routes.HOME.path} component={HomePage}/>
-                    <Route exact path={Routes.HOURS.path} render={dummyComponent(Routes.HOURS.name)}/>
+                    <Route exact path={Routes.HOURS.path} component={HoursPage}/>
                     <Route exact path={Routes.SUMMARY.path} render={dummyComponent(Routes.SUMMARY.name)}/>
                 </Switch>
 
