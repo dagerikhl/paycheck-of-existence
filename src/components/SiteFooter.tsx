@@ -13,13 +13,11 @@ interface OwnProps {
 
 const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
     <div className="container">
-        <div className="copyright">
-            <span>&copy;</span>
-            <span>{props.year}</span>
-            <span>{props.name}</span>
+        <div>
+            <span>&copy;</span> <span>{props.year}</span> <span>{props.name}</span>
         </div>
 
-        <div className="links">
+        <div>
             {props.links && props.links.map((link: ILink, i) => <Link key={i} link={link}/>)}
         </div>
     </div>

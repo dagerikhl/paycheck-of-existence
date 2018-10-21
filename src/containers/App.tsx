@@ -12,7 +12,7 @@ import './App.css';
 
 class AppComponent extends React.PureComponent {
     public render() {
-        const footerLinks = [{ name: 'dagerikhl', url: 'https://github.com/dagerikhl' }];
+        const footerLinks = [{ name: 'dagerikhl@GitHub', url: 'https://github.com/dagerikhl' }];
 
         return (
             <div className="app">
