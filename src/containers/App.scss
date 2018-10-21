@@ -3,7 +3,7 @@
 .app {
     display: grid;
     grid-template-areas: "h h h " ". m ." "f f f";
-    grid-template-columns: 128px 1fr 128px;
+    grid-template-columns: $main-side-margin 1fr $main-side-margin;
     grid-template-rows: $header-height 1fr $footer-height;
 
     min-height: 100vh;
@@ -30,8 +30,5 @@
 
     .app-footer {
         grid-area: f;
-
-        // TODO Remove
-        background-color: hotpink;
     }
 }

@@ -1,0 +1,18 @@
+@import "../styles/variables.scss";
+
+.link {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: $link-color_active;
+    }
+
+    &:visited {
+        color: $link-color_visited;
+    }
+}

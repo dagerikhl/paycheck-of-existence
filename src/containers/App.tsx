@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import { withAuthentication } from '../components/higher-order/withAuthentication';
+import { SiteFooter } from '../components/SiteFooter';
 import { Routes } from '../constants/routes';
 import { HomePage } from './HomePage';
 import { HoursPage } from './HoursPage/HoursPage';
@@ -11,6 +12,8 @@ import './App.css';
 
 class AppComponent extends React.PureComponent {
     public render() {
+        const footerLinks = [{ name: 'dagerikhl', url: 'https://github.com/dagerikhl' }];
+
         return (
             <div className="app">
                 <header className="app-header">HEADER</header>
@@ -24,7 +27,9 @@ class AppComponent extends React.PureComponent {
                     </Switch>
                 </main>
 
-                <footer className="app-footer">FOOTER</footer>
+                <footer className="app-footer">
+                    <SiteFooter year="2018" name="Dag Erik Homdrum Løvgren" links={footerLinks}/>
+                </footer>
             </div>
         );
     }

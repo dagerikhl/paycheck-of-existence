@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+
+    .copyright {
+        justify-self: flex-start;
+    }
+
+    .links {
+        justify-self: flex-end;
+    }
+}
