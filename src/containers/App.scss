@@ -9,7 +9,7 @@
     min-height: 100vh;
     min-width: 1024px;
 
-    .app-header {
+    .header {
         grid-area: h;
 
         position: fixed;
@@ -21,14 +21,14 @@
         background-color: hotpink;
     }
 
-    .app-main {
+    .main {
         grid-area: m;
 
         // TODO Remove
         background-color: yellow;
     }
 
-    .app-footer {
+    .footer {
         grid-area: f;
     }
 }

@@ -16,9 +16,9 @@ class AppComponent extends React.PureComponent {
 
         return (
             <div className="app">
-                <header className="app-header">HEADER</header>
+                <header className="header">HEADER</header>
 
-                <main className="app-main">
+                <main className="main">
                     <Switch>
                         <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
                         <Route exact path={Routes.HOME.path} component={HomePage}/>
@@ -27,7 +27,7 @@ class AppComponent extends React.PureComponent {
                     </Switch>
                 </main>
 
-                <footer className="app-footer">
+                <footer className="footer">
                     <SiteFooter year="2018" name="Dag Erik Homdrum Løvgren" links={footerLinks}/>
                 </footer>
             </div>
