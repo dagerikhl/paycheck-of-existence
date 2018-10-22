@@ -7,7 +7,7 @@ interface OwnProps {
 }
 
 const ErrorMessageComponent: React.SFC<OwnProps> = (props: OwnProps) => (
-    <div className="container">
+    <div className="error-message">
         <div className="content">
             {props.message}
         </div>

@@ -12,7 +12,7 @@ interface OwnProps {
 }
 
 const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
-    <div className="container">
+    <div className="site-footer">
         <div>
             <span>&copy;</span> <span>{props.year}</span> <span>{props.name}</span>
         </div>

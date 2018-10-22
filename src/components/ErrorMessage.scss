@@ -1,7 +1,9 @@
-.container {
+@import "../styles/variables.scss";
+
+.error-message {
     padding: 4px 16px;
 }
 
 .content {
-    color: red;
+    color: $error-color;
 }
