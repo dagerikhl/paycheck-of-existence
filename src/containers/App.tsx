@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import { withAuthentication } from '../components/higher-order/withAuthentication';
 import { SiteFooter } from '../components/SiteFooter';
+import { SiteHeader } from '../components/SiteHeader';
 import { Routes } from '../constants/routes';
 import { HomePage } from './HomePage';
 import { HoursPage } from './HoursPage/HoursPage';
@@ -16,7 +17,9 @@ class AppComponent extends React.PureComponent {
 
         return (
             <div className="app">
-                <header className="header">HEADER</header>
+                <header className="header">
+                    <SiteHeader title="Paycheck of Existence"/>
+                </header>
 
                 <main className="main">
                     <Switch>

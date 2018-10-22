@@ -1,13 +1,26 @@
-// Layout
-$header-height: 64px;
-$main-side-margin: 128px;
-$footer-height: 256px;
+// Color theme
+$theme-primary: #b30811;
+$theme-primary-light: #ed4c3a;
+$theme-primary-dark: #7c0000;
+$theme-primary-text: #ffffff;
+
+$theme-secondary: #d9a470;
+$theme-secondary-light: #ffd59f;
+$theme-secondary-dark: #a57544;
+$theme-secondary-text: #000000;
 
 // Colors
 $link-color: #86c5ff;
 $link-color_active: #5695f5;
 $link-color_visited: #9685c5;
-$error-color: #ed4c3a;
+
+$error-color: $theme-primary-dark;
 
 // Background colors
-$footer-background: #efefdf;
+$header-background: $theme-primary;
+$footer-background: $theme-secondary;
+
+// Layout
+$header-height: 64px;
+$main-side-margin: 128px;
+$footer-height: 256px;
