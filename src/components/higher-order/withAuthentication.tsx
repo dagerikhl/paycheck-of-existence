@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { AuthUser } from '../../interfaces/AuthUser';
+import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { auth } from '../../services/auth';
 import { AuthAction, updateAuthUser } from '../../store/actions/auth.action';
 

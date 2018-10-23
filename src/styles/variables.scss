@@ -10,11 +10,17 @@ $theme-secondary-dark: #a57544;
 $theme-secondary-text: #000000;
 
 // Colors
-$link-color: #86c5ff;
-$link-color_active: #5695f5;
-$link-color_visited: #9685c5;
+$link-color-primary: mix($theme-primary-text, #0000ff, 75%);
+$link-color-primary_hover: lighten($link-color-primary, 5%);
+$link-color-primary_active: darken($link-color-primary, 5%);
+$link-color-primary_visited: mix($link-color-primary, #ff00ff, 75%);
 
-$error-color: $theme-primary-dark;
+$link-color-secondary: mix($theme-secondary-text, #0000ff, 25%);
+$link-color-secondary_hover: lighten($link-color-secondary, 15%);
+$link-color-secondary_active: darken($link-color-secondary, 15%);
+$link-color-secondary_visited: mix($link-color-secondary, #ff00ff, 75%);
+
+$error-color: #ff0000;
 
 // Layout
 $header-height: 64px;

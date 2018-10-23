@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { Routes } from '../../constants/routes';
-import { AuthUser } from '../../interfaces/AuthUser';
 import { auth } from '../../services/auth';
 import { State } from '../../store/states/state';
 

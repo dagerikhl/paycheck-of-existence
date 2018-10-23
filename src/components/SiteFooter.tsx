@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { Link as ILink } from '../interfaces/Link';
+import { Theme } from '../constants/enums/Theme';
+import { Link as ILink } from '../constants/interfaces/Link';
 import { Link } from './Link';
 
 import './SiteFooter.css';
@@ -18,7 +19,7 @@ const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
 
         <div>
-            {props.links && props.links.map((link: ILink, i) => <Link key={i} link={link}/>)}
+            {props.links && props.links.map((link: ILink, i) => <Link key={i} link={link} theme={Theme.SECONDARY}/>)}
         </div>
     </div>
 );

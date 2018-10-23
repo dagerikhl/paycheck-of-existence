@@ -1,18 +1,41 @@
 @import "../styles/variables.scss";
 
 .link {
-    color: $link-color;
     text-decoration: none;
 
     &:hover {
         text-decoration: underline;
     }
 
-    &:active {
-        color: $link-color_active;
+    &.primary {
+        color: $link-color-primary;
+
+        &:hover {
+            color: $link-color-primary_hover;
+        }
+
+        &:active {
+            color: $link-color-primary_active;
+        }
+
+        &:visited {
+            color: $link-color-primary_visited;
+        }
     }
 
-    &:visited {
-        color: $link-color_visited;
+    &.secondary {
+        color: $link-color-secondary;
+
+        &:hover {
+            color: $link-color-secondary_hover;
+        }
+
+        &:active {
+            color: $link-color-secondary_active;
+        }
+
+        &:visited {
+            color: $link-color-secondary_visited;
+        }
     }
 }
