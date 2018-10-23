@@ -1,10 +1,14 @@
 {
     "extends": "stylelint-config-standard",
+    "plugins": [
+        "stylelint-scss"
+    ],
     "rules": {
+        "at-rule-no-unknown": null,
         "color-hex-length": "long",
         "declaration-empty-line-before": null,
         "indentation": 4,
-        "selector-class-pattern": "^[a-z]+(-[a-z]+)*$",
+        "selector-class-pattern": "^[a-z](-?[a-z0-9])*$",
         "string-quotes": "double"
     }
 }
