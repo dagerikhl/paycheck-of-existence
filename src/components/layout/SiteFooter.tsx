@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { Theme } from '../constants/enums/Theme';
-import { Link as ILink } from '../constants/interfaces/Link';
-import { Link } from './Link';
+import { Theme } from '../../constants/enums/Theme';
+import { Link as ILink } from '../../constants/interfaces/Link';
+import { Link } from '../Link';
 
 import './SiteFooter.css';
 

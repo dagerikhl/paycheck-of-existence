@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 import { withAuthentication } from '../components/higher-order/withAuthentication';
-import { SiteFooter } from '../components/SiteFooter';
-import { SiteHeader } from '../components/SiteHeader';
+import { SiteFooter } from '../components/layout/SiteFooter';
+import { SiteHeader } from '../components/layout/SiteHeader';
 import { Routes } from '../constants/routes';
 import { HomePage } from './HomePage';
 import { HoursPage } from './HoursPage/HoursPage';
