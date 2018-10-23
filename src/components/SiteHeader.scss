@@ -1,3 +1,4 @@
+@import "../styles/typography.scss";
 @import "../styles/variables.scss";
 
 .site-header {
@@ -9,5 +10,22 @@
 
     padding: 0 32px;
 
-    background-color: $header-background;
+    color: $theme-primary-text;
+    background-color: $theme-primary;
+
+    .title {
+        display: flex;
+        align-items: center;
+
+        .logo {
+            height: 32px;
+            width: 32px;
+
+            margin-right: 16px;
+        }
+
+        .label {
+            @extend %h1;
+        }
+    }
 }

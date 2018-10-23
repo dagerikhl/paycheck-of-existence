@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import logo from '../images/logo.svg';
+
 import './SiteHeader.css';
 
 interface OwnProps {
@@ -9,8 +11,8 @@ interface OwnProps {
 const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
     <div className="site-header">
         <div className="title">
-            {/* TODO Add logo <img/> */}
-            <span className="text">{props.title}</span>
+            <img className="logo" src={logo}/>
+            <span className="label">{props.title}</span>
         </div>
 
         {/* TODO Add <PeriodPicker/> */}

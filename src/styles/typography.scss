@@ -1,0 +1,10 @@
+// Headers
+%header {
+    font-weight: bold;
+}
+
+%h1 {
+    @extend %header;
+
+    font-size: 150%;
+}
