@@ -1,0 +1,15 @@
+@import "../../styles/typography.scss";
+@import "../../styles/variables.scss";
+
+.site-navigation {
+    ul {
+        display: flex;
+        align-items: center;
+
+        li {
+            @extend %h1;
+
+            margin-left: 32px;
+        }
+    }
+}

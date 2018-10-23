@@ -15,9 +15,9 @@ const mapStateToProps = (state: State): StateProps => ({
     authUser: state.auth.authUser
 });
 
-type WithAuthorizationProps = StateProps & RouteComponentProps;
+export type WithAuthorizationProps = StateProps & RouteComponentProps;
 
-export const withAuthorization = (Component: React.ComponentClass) => {
+export const withAuthorization = (Component: React.ComponentType) => {
     class WithAuthorization extends React.Component<WithAuthorizationProps> {
         public componentDidMount() {
             const { history } = this.props;

@@ -19,9 +19,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bi
     updateAuthUser
 }, dispatch);
 
-type WithAuthenticationProps = DispatchProps & RouteComponentProps;
+export type WithAuthenticationProps = DispatchProps & RouteComponentProps;
 
-export const withAuthentication = (Component: React.ComponentClass) => {
+export const withAuthentication = (Component: React.ComponentType) => {
     class WithAuthentication extends React.Component<WithAuthenticationProps, OwnState> {
         public state: OwnState = { isLoaded: false };
 

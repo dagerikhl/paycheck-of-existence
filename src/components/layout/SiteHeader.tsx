@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { SiteNavigation } from './SiteNavigation';
+
 import logo from '../../images/logo.svg';
 
 import './SiteHeader.css';
@@ -17,7 +19,7 @@ const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
 
         {/* TODO Add <PeriodPicker/> */}
 
-        {/* TODO Add <SiteNavigation/> */}
+        <SiteNavigation/>
     </div>
 );
 

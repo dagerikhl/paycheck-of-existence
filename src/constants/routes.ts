@@ -12,11 +12,11 @@ interface Routes {
 
 export const Routes: Routes = {
     LOGIN: {
-        name: 'LoginPage',
+        name: 'Login',
         path: '/login'
     },
     HOME: {
-        name: 'HomePage',
+        name: 'Home',
         path: '/'
     },
     HOURS: {
