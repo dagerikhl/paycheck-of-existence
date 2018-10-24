@@ -2,10 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { Theme } from '../../constants/enums/Theme';
 import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { Routes } from '../../constants/routes';
+import { auth } from '../../services/auth';
 import { State } from '../../store/states/state';
-import { LogoutButton } from '../LogoutButton';
+import { Button } from '../Button';
 
 import './SiteNavigation.css';
 
@@ -22,7 +24,7 @@ const authenticatedNavLinks = (<ul>
     <li><Link className="g-link primary" to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
     <li><Link className="g-link primary" to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
 
-    <li><LogoutButton/></li>
+    <li><Button theme={Theme.PRIMARY} onClick={auth.logout}>Logout</Button></li>
 </ul>);
 
 const notAuthenticatedNavLinks = (<ul>
