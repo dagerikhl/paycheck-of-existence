@@ -5,6 +5,7 @@ export const authReducer = (state: AuthState = initialAuthState, action: AuthAct
     switch (action.type) {
         case 'UPDATE_AUTH_USER':
             return {
+                ...state,
                 authUser: action.authUser
             };
         default:

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { PeriodPicker } from '../../containers/PeriodPicker';
 import { SiteNavigation } from './SiteNavigation';
 
 import logo from '../../images/logo.svg';
@@ -17,7 +18,7 @@ const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
             <span className="label">{props.title}</span>
         </div>
 
-        {/* TODO Add <PeriodPicker/> */}
+        <PeriodPicker/>
 
         <SiteNavigation/>
     </div>

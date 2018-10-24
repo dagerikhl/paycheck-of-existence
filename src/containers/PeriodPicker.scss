@@ -1,0 +1,7 @@
+@import "../styles/typography.scss";
+
+.period-picker {
+    @extend %h3;
+
+    width: 64px;
+}
