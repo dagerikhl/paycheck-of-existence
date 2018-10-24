@@ -8,10 +8,14 @@
 
     height: 100%;
 
+    // To account for bottom border
+    margin-bottom: -1px;
     padding: 0 32px;
 
     color: $theme-primary-text;
     background-color: $theme-primary;
+
+    border-bottom: 1px solid $theme-primary-dark;
 
     .title {
         display: flex;

@@ -7,7 +7,7 @@
         align-items: center;
 
         li {
-            @extend %h1;
+            @extend %h3;
 
             margin-left: 32px;
         }
