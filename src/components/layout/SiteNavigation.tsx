@@ -18,15 +18,15 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 const authenticatedNavLinks = (<ul>
-    <li><Link className="link primary" to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
-    <li><Link className="link primary" to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
-    <li><Link className="link primary" to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
+    <li><Link className="g-link primary" to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
+    <li><Link className="g-link primary" to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
+    <li><Link className="g-link primary" to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
     <li><LogoutButton/></li>
 </ul>);
 
 const notAuthenticatedNavLinks = (<ul>
-    <li><Link className="link primary" to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
-    <li><Link className="link primary" to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link></li>
+    <li><Link className="g-link primary" to={Routes.HOME.path}>{Routes.HOME.name}</Link></li>
+    <li><Link className="g-link primary" to={Routes.LOGIN.path}>{Routes.LOGIN.name}</Link></li>
 </ul>);
 
 const SiteNavigationComponent: React.SFC<StateProps> = (props: StateProps) => (

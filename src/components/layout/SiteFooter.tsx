@@ -1,15 +1,15 @@
 import * as React from 'react';
 
 import { Theme } from '../../constants/enums/Theme';
-import { Link as ILink } from '../../constants/interfaces/Link';
-import { Link } from '../Link';
+import { Link } from '../../constants/interfaces/Link';
+import { Href } from '../Href';
 
 import './SiteFooter.css';
 
 interface OwnProps {
     year: string;
     name: string;
-    links?: ILink[];
+    links?: Link[];
 }
 
 const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
@@ -19,7 +19,7 @@ const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
 
         <div>
-            {props.links && props.links.map((link: ILink, i) => <Link key={i} link={link} theme={Theme.SECONDARY}/>)}
+            {props.links && props.links.map((link: Link, i) => <Href key={i} link={link} theme={Theme.SECONDARY}/>)}
         </div>
     </div>
 );
