@@ -10,7 +10,7 @@ $theme-secondary-dark: #a57544;
 $theme-secondary-text: #000000;
 
 // Colors
-$link-color-primary: mix($theme-primary-text, #0000ff, 80%);
+$link-color-primary: mix($theme-primary-text, #ffff00, 75%);
 $link-color-primary_hover: lighten($link-color-primary, 5%);
 $link-color-primary_active: darken($link-color-primary, 5%);
 
