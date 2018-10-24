@@ -25,10 +25,6 @@ body {
         &:active {
             color: $link-color-primary_active;
         }
-
-        &:visited {
-            color: $link-color-primary_visited;
-        }
     }
 
     &.secondary {
@@ -40,10 +36,6 @@ body {
 
         &:active {
             color: $link-color-secondary_active;
-        }
-
-        &:visited {
-            color: $link-color-secondary_visited;
         }
     }
 }
