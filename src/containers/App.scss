@@ -12,7 +12,7 @@
     .header {
         grid-area: h;
 
-        position: fixed;
+        position: sticky;
 
         height: $header-height;
         width: 100%;
