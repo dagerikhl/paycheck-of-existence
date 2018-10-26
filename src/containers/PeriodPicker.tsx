@@ -34,10 +34,10 @@ class PeriodPickerComponent extends React.PureComponent<PeriodPickerProps> {
                 <span className="year">{year}</span>
 
                 <div className="controls">
-                    <button onClick={this.onChangePeriod(1)}>
+                    <button onClick={this.onChangePeriod(1)} aria-label="Increase">
                         <div className="control-icon-up"/>
                     </button>
-                    <button onClick={this.onChangePeriod(-1)}>
+                    <button onClick={this.onChangePeriod(-1)} aria-label="Decrease">
                         <div className="control-icon-down"/>
                     </button>
                 </div>
