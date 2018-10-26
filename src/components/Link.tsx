@@ -23,6 +23,7 @@ const LinkComponent: React.SFC<LinkProps> = ({ className, theme, externalLink, t
                 className={`${className} link ${theme}`}
                 href={externalLink.url}
                 target={externalLink.openInWindow ? undefined : '_blank'}
+                rel="noopener noreferrer"
                 {...rest}
             >
                 {externalLink.name}
