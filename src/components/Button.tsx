@@ -14,7 +14,7 @@ interface OwnProps {
 
 const ButtonComponent: React.SFC<OwnProps> = ({ className, theme, square, round, onClick, children }) => (
     <button
-        className={`${className} g-button ${theme} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
+        className={`${className} button ${theme} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
         type="button"
         onClick={onClick}
     >

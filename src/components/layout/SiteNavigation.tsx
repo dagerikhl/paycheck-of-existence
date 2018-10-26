@@ -24,7 +24,7 @@ const authenticatedNavLinks = (<ul>
     <li><Link className="g-link primary" to={Routes.HOURS.path}>{Routes.HOURS.name}</Link></li>
     <li><Link className="g-link primary" to={Routes.SUMMARY.path}>{Routes.SUMMARY.name}</Link></li>
 
-    <li><Button theme={Theme.PRIMARY} onClick={auth.logout}>Logout</Button></li>
+    <li><Button theme={Theme.PRIMARY} onClick={auth.logout}><div className="logout-label">Logout</div></Button></li>
 </ul>);
 
 const notAuthenticatedNavLinks = (<ul>

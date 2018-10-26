@@ -9,6 +9,10 @@
             @extend %h3;
 
             margin-left: 32px;
+
+            .logout-label {
+                font-weight: bold;
+            }
         }
     }
 }
