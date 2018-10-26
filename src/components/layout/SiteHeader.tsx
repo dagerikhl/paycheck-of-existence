@@ -15,7 +15,7 @@ const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
     <div className="site-header">
         <div className="title">
             <img className="logo" src={logo} alt="Logo"/>
-            <span className="label">{props.title}</span>
+            <h1>{props.title}</h1>
         </div>
 
         <div className="period-picker-container">

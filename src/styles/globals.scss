@@ -1,3 +1,4 @@
+@import "typography.scss";
 @import "variables.scss";
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
@@ -5,4 +6,16 @@ body {
     overflow-y: scroll;
 
     font-family: "Roboto", sans-serif;
+}
+
+h1 {
+    @extend %h1;
+}
+
+h2 {
+    @extend %h2;
+}
+
+h3 {
+    @extend %h3;
 }
