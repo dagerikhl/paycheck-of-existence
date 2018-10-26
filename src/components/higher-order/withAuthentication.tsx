@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { auth } from '../../services/auth';
-import { AuthAction, updateAuthUser } from '../../store/actions/auth.action';
+import { AuthAction, updateAuthUserAction } from '../../store/actions/auth.action';
 
 interface OwnState {
     isLoaded: boolean;
@@ -16,7 +16,7 @@ interface DispatchProps {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bindActionCreators({
-    updateAuthUser
+    updateAuthUser: updateAuthUserAction
 }, dispatch);
 
 export type WithAuthenticationProps = DispatchProps & RouteComponentProps;

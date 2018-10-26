@@ -6,7 +6,7 @@ export interface UpdatePeriodYear {
 export type PeriodAction =
     | UpdatePeriodYear;
 
-export const updatePeriodYear = (year: number): UpdatePeriodYear => ({
+export const updatePeriodYearAction = (year: number): UpdatePeriodYear => ({
     type: 'UPDATE_PERIOD_YEAR',
     year
 });

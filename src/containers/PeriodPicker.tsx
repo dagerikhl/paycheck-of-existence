@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { PeriodAction, updatePeriodYear } from '../store/actions/period.action';
+import { PeriodAction, updatePeriodYearAction } from '../store/actions/period.action';
 import { State } from '../store/states/state';
 
 import './PeriodPicker.css';
@@ -20,7 +20,7 @@ interface DispatchProps {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<PeriodAction>): DispatchProps => bindActionCreators({
-    updatePeriodYear
+    updatePeriodYear: updatePeriodYearAction
 }, dispatch);
 
 type PeriodPickerProps = StateProps & DispatchProps;
@@ -30,19 +30,25 @@ class PeriodPickerComponent extends React.PureComponent<PeriodPickerProps> {
         const { year } = this.props;
 
         return (
-            <input
-                className="period-picker"
-                type="number"
-                value={year}
-                onChange={this.onChangePeriod}
-            />
+            <div className="period-picker">
+                <span className="year">{year}</span>
+
+                <div className="controls">
+                    <button onClick={this.onChangePeriod(1)}>
+                        <div className="control-icon-up"/>
+                    </button>
+                    <button onClick={this.onChangePeriod(-1)}>
+                        <div className="control-icon-down"/>
+                    </button>
+                </div>
+            </div>
         );
     }
 
-    private onChangePeriod = (event: React.FormEvent<HTMLInputElement>) => {
-        const [max, min] = [2018, 2999];
-        const newYear = Math.min(min, Math.max(max, event.currentTarget.valueAsNumber));
-        this.props.updatePeriodYear(newYear);
+    private onChangePeriod = (value: number) => () => {
+        const { year, updatePeriodYear } = this.props;
+
+        updatePeriodYear(year + value);
     };
 }
 

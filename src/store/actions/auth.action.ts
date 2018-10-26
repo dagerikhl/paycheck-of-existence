@@ -8,7 +8,7 @@ export interface UpdateAuthUser {
 export type AuthAction =
     | UpdateAuthUser;
 
-export const updateAuthUser = (authUser: AuthUser): UpdateAuthUser => ({
+export const updateAuthUserAction = (authUser: AuthUser): UpdateAuthUser => ({
     type: 'UPDATE_AUTH_USER',
     authUser
 });

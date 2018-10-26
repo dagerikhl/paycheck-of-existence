@@ -18,9 +18,13 @@ const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
             <span className="label">{props.title}</span>
         </div>
 
-        <PeriodPicker/>
+        <div className="period-picker-container">
+            <PeriodPicker/>
+        </div>
 
-        <SiteNavigation/>
+        <div className="site-navigation-container">
+            <SiteNavigation/>
+        </div>
     </div>
 );
 
