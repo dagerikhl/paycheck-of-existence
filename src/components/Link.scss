@@ -1,0 +1,33 @@
+@import "../styles/variables.scss";
+
+.link {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &.primary {
+        color: $clickable-color-primary;
+
+        &:hover {
+            color: $clickable-color-primary_hover;
+        }
+
+        &:active {
+            color: $clickable-color-primary_active;
+        }
+    }
+
+    &.secondary {
+        color: $clickable-color-secondary;
+
+        &:hover {
+            color: $clickable-color-secondary_hover;
+        }
+
+        &:active {
+            color: $clickable-color-secondary_active;
+        }
+    }
+}
