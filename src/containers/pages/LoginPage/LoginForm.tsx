@@ -1,9 +1,13 @@
 import { History } from 'history';
 import * as React from 'react';
 
+import { Button } from '../../../components/Button';
 import { ErrorMessage } from '../../../components/ErrorMessage';
+import { Theme } from '../../../constants/enums/Theme';
 import { Routes } from '../../../constants/routes';
 import { auth } from '../../../services/auth';
+
+import './LoginForm.css';
 
 interface OwnProps {
     history: History;
@@ -27,7 +31,7 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
         const isMissingRequired = email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
+            <form className="login-form" onSubmit={this.onSubmit}>
                 <input
                     type="email"
                     placeholder="E-mail address"
@@ -41,7 +45,7 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
                     onChange={this.onPasswordChange}
                 />
 
-                <button type="submit" disabled={isMissingRequired}>Login</button>
+                <Button theme={Theme.SECONDARY} type="submit" disabled={isMissingRequired}>Login</Button>
 
                 {error && <ErrorMessage message={error.message}/>}
             </form>

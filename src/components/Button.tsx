@@ -12,11 +12,14 @@ interface OwnProps {
     onClick?: () => void;
 }
 
-const ButtonComponent: React.SFC<OwnProps> = ({ className, theme, square, round, onClick, children }) => (
+type ButtonProps = OwnProps & React.HTMLProps<HTMLButtonElement>;
+
+const ButtonComponent: React.SFC<ButtonProps> = ({ className, theme, square, round, onClick, children, ...rest }) => (
     <button
         className={`${className} button ${theme} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
         type="button"
         onClick={onClick}
+        {...rest}
     >
         {children}
     </button>

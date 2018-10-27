@@ -10,8 +10,8 @@ class LoginPageComponent extends React.PureComponent<RouteComponentProps> {
         const { history } = this.props;
 
         return (
-            <section className="login">
-                <h1>Login page</h1>
+            <section className="login-page">
+                <h1 className="title">Login</h1>
 
                 <LoginForm history={history}/>
             </section>
