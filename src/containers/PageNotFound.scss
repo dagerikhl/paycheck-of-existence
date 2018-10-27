@@ -3,7 +3,7 @@
 .page-not-found {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 
     height: 100%;
@@ -11,6 +11,12 @@
     background-color: $theme-primary-light;
 
     .title {
+        margin-bottom: 64px;
+
         font-size: 1000%;
+    }
+
+    .message {
+        text-align: center;
     }
 }
