@@ -1,48 +1,13 @@
+@import "../styles/bases.scss";
 @import "../styles/variables.scss";
 
 .button {
-    padding: 6px 12px;
+    @extend %input;
 
-    border: 1px solid $shadow-color;
-    border-radius: 2px;
-
+    // Patch for normalize font size on buttons
     font-size: 16px;
 
     &:hover {
         cursor: pointer;
-    }
-
-    &.square {
-        border-radius: 0;
-    }
-
-    &.round {
-        border-radius: 100%;
-    }
-
-    &.primary {
-        color: $theme-secondary-text;
-        background-color: $clickable-color-primary;
-
-        &:hover {
-            background-color: $clickable-color-primary_hover;
-        }
-
-        &:active {
-            background-color: $clickable-color-primary_active;
-        }
-    }
-
-    &.secondary {
-        color: $theme-primary-text;
-        background-color: $clickable-color-secondary;
-
-        &:hover {
-            background-color: $clickable-color-secondary_hover;
-        }
-
-        &:active {
-            background-color: $clickable-color-secondary_active;
-        }
     }
 }

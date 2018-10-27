@@ -20,7 +20,7 @@ const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
 
         <div>
             {props.links && props.links.map((link: ExternalLink, i) => {
-                return <Link key={i} externalLink={link} theme={Theme.SECONDARY}/>;
+                return <Link theme={Theme.ACCENT} key={i} externalLink={link}/>;
             })}
         </div>
     </div>

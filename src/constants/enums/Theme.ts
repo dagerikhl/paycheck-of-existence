@@ -1,5 +1,4 @@
 export enum Theme {
-    PRIMARY = 'primary',
-    SECONDARY = 'secondary',
-    NEUTRAL = 'neutral'
+    NEUTRAL = 'neutral',
+    ACCENT = 'accent'
 }

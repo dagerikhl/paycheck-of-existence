@@ -9,7 +9,7 @@ import './Link.css';
 
 interface OwnProps {
     className?: string;
-    theme: Theme;
+    theme?: Theme;
     externalLink?: ExternalLink;
     to?: Route;
 }
@@ -20,7 +20,7 @@ const LinkComponent: React.SFC<LinkProps> = ({ className, theme, externalLink, t
     if (externalLink) {
         return (
             <a
-                className={`${className} link ${theme}`}
+                className={`${className} link ${theme || Theme.NEUTRAL}`}
                 href={externalLink.url}
                 target={externalLink.openInWindow ? undefined : '_blank'}
                 rel="noopener noreferrer"
@@ -33,7 +33,7 @@ const LinkComponent: React.SFC<LinkProps> = ({ className, theme, externalLink, t
 
     if (to) {
         return <NavLink
-            className={`${className} link ${theme}`}
+            className={`${className} link ${theme || Theme.NEUTRAL}`}
             to={to.path}
         >
             {to.name}

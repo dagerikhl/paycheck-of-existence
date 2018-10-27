@@ -7,27 +7,27 @@
         text-decoration: underline;
     }
 
-    &.primary {
-        color: $clickable-color-primary;
+    &.neutral {
+        color: $color-neutral;
 
         &:hover {
-            color: $clickable-color-primary_hover;
+            color: $color-neutral_hover;
         }
 
         &:active {
-            color: $clickable-color-primary_active;
+            color: $color-neutral_active;
         }
     }
 
-    &.secondary {
-        color: $clickable-color-secondary;
+    &.accent {
+        color: $color-accent;
 
         &:hover {
-            color: $clickable-color-secondary_hover;
+            color: $color-accent_hover;
         }
 
         &:active {
-            color: $clickable-color-secondary_active;
+            color: $color-accent_active;
         }
     }
 }

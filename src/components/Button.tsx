@@ -6,7 +6,7 @@ import './Button.css';
 
 interface OwnProps {
     className?: string;
-    theme: Theme;
+    theme?: Theme;
     square?: boolean;
     round?: boolean;
     onClick?: () => void;
@@ -16,7 +16,7 @@ type ButtonProps = OwnProps & React.HTMLProps<HTMLButtonElement>;
 
 const ButtonComponent: React.SFC<ButtonProps> = ({ className, theme, square, round, children, ...rest }) => (
     <button
-        className={`${className} button ${theme} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
+        className={`${className} button ${theme || Theme.NEUTRAL} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
         type="button"
         {...rest}
     >

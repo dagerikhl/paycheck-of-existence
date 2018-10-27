@@ -1,0 +1,44 @@
+@import "../styles/variables.scss";
+
+%input {
+    padding: 6px 12px;
+
+    border: 1px solid $shadow-color;
+    border-radius: 2px;
+
+    &.square {
+        border-radius: 0;
+    }
+
+    &.round {
+        border-radius: 100%;
+    }
+
+    &.neutral {
+        color: $theme-secondary-text;
+        background-color: $color-neutral;
+
+        &:hover {
+            background-color: $color-neutral_hover;
+        }
+
+        &:active,
+        &:focus {
+            background-color: $color-neutral_active;
+        }
+    }
+
+    &.accent {
+        color: $theme-primary-text;
+        background-color: $color-accent;
+
+        &:hover {
+            background-color: $color-accent_hover;
+        }
+
+        &:active,
+        &:focus {
+            background-color: $color-accent_active;
+        }
+    }
+}

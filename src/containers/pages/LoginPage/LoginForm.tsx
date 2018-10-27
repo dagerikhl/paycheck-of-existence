@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button } from '../../../components/Button';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
-import { Theme } from '../../../constants/enums/Theme';
 import { Routes } from '../../../constants/routes';
 import { auth } from '../../../services/auth';
 
@@ -34,21 +33,19 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
         return (
             <form className="login-form" onSubmit={this.onSubmit}>
                 <Input
-                    theme={Theme.NEUTRAL}
                     type="email"
                     placeholder="E-mail address"
                     value={email}
                     onChange={this.onEmailChange}
                 />
                 <Input
-                    theme={Theme.NEUTRAL}
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={this.onPasswordChange}
                 />
 
-                <Button theme={Theme.SECONDARY} type="submit" disabled={isMissingRequired}>Login</Button>
+                <Button type="submit" disabled={isMissingRequired}>Login</Button>
 
                 {error && <ErrorMessage message={error.message}/>}
             </form>

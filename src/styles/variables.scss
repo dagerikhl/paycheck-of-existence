@@ -10,16 +10,13 @@ $theme-secondary-dark: #a57544;
 $theme-secondary-text: #000000;
 
 // Colors
-$clickable-color-primary: mix($theme-primary-text, #ffff00, 75%);
-$clickable-color-primary_hover: lighten($clickable-color-primary, 5%);
-$clickable-color-primary_active: darken($clickable-color-primary, 5%);
-
-$clickable-color-secondary: mix($theme-secondary-text, #0000ff, 25%);
-$clickable-color-secondary_hover: lighten($clickable-color-secondary, 15%);
-$clickable-color-secondary_active: darken($clickable-color-secondary, 15%);
-
 $color-neutral: #ffffff;
-$color-neutral_hover: darken($color-neutral, 10%);
+$color-neutral_hover: darken($color-neutral, 8%);
+$color-neutral_active: darken($color-neutral, 16%);
+
+$color-accent: #0000bf;
+$color-accent_hover: lighten($color-accent, 15%);
+$color-accent_active: darken($color-accent, 15%);
 
 $error-color: #ff0000;
 
