@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { pickRandomItem } from '../helpers/random-helper';
+import { pickRandomItem } from '../../../helpers/random-helper';
 
 import './PageNotFound.css';
 

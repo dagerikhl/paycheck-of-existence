@@ -5,10 +5,10 @@ import { withAuthentication } from '../components/higher-order/withAuthenticatio
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { Routes } from '../constants/routes';
-import { HomePage } from './HomePage';
-import { HoursPage } from './HoursPage/HoursPage';
-import { LoginPage } from './LoginPage/LoginPage';
-import { PageNotFound } from './PageNotFound';
+import { HomePage } from './pages/HomePage/HomePage';
+import { HoursPage } from './pages/HoursPage/HoursPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { PageNotFound } from './pages/PageNotFound/PageNotFound';
 
 import './App.css';
 

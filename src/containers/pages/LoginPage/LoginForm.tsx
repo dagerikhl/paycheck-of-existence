@@ -1,9 +1,9 @@
 import { History } from 'history';
 import * as React from 'react';
 
-import { ErrorMessage } from '../../components/ErrorMessage';
-import { Routes } from '../../constants/routes';
-import { auth } from '../../services/auth';
+import { ErrorMessage } from '../../../components/ErrorMessage';
+import { Routes } from '../../../constants/routes';
+import { auth } from '../../../services/auth';
 
 interface OwnProps {
     history: History;

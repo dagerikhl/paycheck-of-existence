@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { withAuthorization } from '../../components/higher-order/withAuthorization';
+import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 
 import './HoursPage.css';
 
