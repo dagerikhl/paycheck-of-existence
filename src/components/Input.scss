@@ -1,16 +1,12 @@
 @import "../styles/variables.scss";
 
-.button {
+.input {
     padding: 6px 12px;
 
     border: 1px solid $shadow-color;
     border-radius: 2px;
 
     font-size: 16px;
-
-    &:hover {
-        cursor: pointer;
-    }
 
     &.square {
         border-radius: 0;
@@ -43,6 +39,15 @@
 
         &:active {
             background-color: $clickable-color-secondary_active;
+        }
+    }
+
+    &.neutral {
+        color: $color-neutral;
+
+        &:hover,
+        &:focus {
+            background-color: $color-neutral_hover;
         }
     }
 }

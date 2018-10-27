@@ -18,6 +18,9 @@ $clickable-color-secondary: mix($theme-secondary-text, #0000ff, 25%);
 $clickable-color-secondary_hover: lighten($clickable-color-secondary, 15%);
 $clickable-color-secondary_active: darken($clickable-color-secondary, 15%);
 
+$color-neutral: #ffffff;
+$color-neutral_hover: darken($color-neutral, 10%);
+
 $error-color: #ff0000;
 
 $shadow-color: rgba(0, 0, 0, 0.75);
