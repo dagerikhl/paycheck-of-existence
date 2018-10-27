@@ -2,4 +2,11 @@
 
 .home-page {
     @extend %titlepage;
+
+    .logo {
+        height: 256px;
+        width: 256px;
+
+        margin-bottom: 64px;
+    }
 }
