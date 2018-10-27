@@ -1,3 +1,5 @@
+@import "../../../styles/bases.scss";
+
 .home-page {
-    padding: 16px;
+    @extend %titlepage;
 }

@@ -1,18 +1,12 @@
-@import "../../../styles/variables";
+@import "../../../styles/bases.scss";
+@import "../../../styles/variables.scss";
 
 .page-not-found {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    height: 100%;
+    @extend %titlepage;
 
     background-color: $theme-primary-light;
 
     .title {
-        margin-bottom: 64px;
-
         font-size: 1000%;
     }
 
