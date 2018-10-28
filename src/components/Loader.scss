@@ -1,0 +1,27 @@
+@import "../styles/animations.scss";
+@import "../styles/variables.scss";
+
+$border-width: 8px;
+
+.loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $shadow-color-light;
+
+    .spinner {
+        height: 64px;
+        width: 64px;
+
+        border: $border-width inset $theme-primary;
+        border-radius: 100%;
+
+        animation: spin 2s infinite ease-in-out;
+    }
+}

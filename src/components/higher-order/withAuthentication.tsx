@@ -6,6 +6,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { auth } from '../../services/auth';
 import { AuthAction, updateAuthUserAction } from '../../store/actions/auth.action';
+import { Loader } from '../Loader';
 
 interface OwnState {
     isLoaded: boolean;
@@ -37,7 +38,7 @@ export const withAuthentication = (Component: React.ComponentType) => {
 
             return isLoaded
                 ? <Component {...this.props}/>
-                : <div>TODO Loading component</div>;
+                : <Loader/>;
         }
     }
 
