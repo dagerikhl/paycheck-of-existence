@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { bindActionCreators, Dispatch } from 'redux';
 
 import { AuthUser } from '../../constants/interfaces/AuthUser';
+import { createDispatchToPropsFunction } from '../../helpers/redux-helper';
 import { auth } from '../../services/auth';
-import { AuthAction, updateAuthUserAction } from '../../store/actions/auth.action';
+import { updateAuthUserAction } from '../../store/actions/auth.action';
 import { Loader } from '../Loader';
 
 interface OwnState {
@@ -16,9 +16,9 @@ interface DispatchProps {
     updateAuthUser: (authUser: AuthUser | null) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<AuthAction>): DispatchProps => bindActionCreators({
+const mapDispatchToProps = createDispatchToPropsFunction({
     updateAuthUser: updateAuthUserAction
-}, dispatch);
+});
 
 export type WithAuthenticationProps = DispatchProps & RouteComponentProps;
 

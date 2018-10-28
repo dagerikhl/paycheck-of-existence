@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
 
-import { PeriodAction, updatePeriodYearAction } from '../store/actions/period.action';
+import { createDispatchToPropsFunction } from '../helpers/redux-helper';
+import { updatePeriodYearAction } from '../store/actions/period.action';
 import { State } from '../store/states/state';
 
 import './PeriodPicker.css';
@@ -19,9 +19,9 @@ interface DispatchProps {
     updatePeriodYear: (year: number) => void;
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<PeriodAction>): DispatchProps => bindActionCreators({
+const mapDispatchToProps = createDispatchToPropsFunction({
     updatePeriodYear: updatePeriodYearAction
-}, dispatch);
+});
 
 type PeriodPickerProps = StateProps & DispatchProps;
 
