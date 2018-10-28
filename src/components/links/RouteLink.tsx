@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { Theme } from '../../constants/enums/Theme';
 import { RouteRef } from '../../constants/routes';
@@ -13,12 +13,14 @@ interface OwnProps {
 }
 
 const RouteLinkComponent: React.SFC<OwnProps> = ({ className, theme, routeRef }) => (
-    <Link
+    <NavLink
         className={`${className} link ${theme || Theme.NEUTRAL}`}
+        activeClassName="active"
         to={routeRef.path}
+        exact
     >
         {routeRef.name}
-    </Link>
+    </NavLink>
 );
 
 export const RouteLink = RouteLinkComponent;

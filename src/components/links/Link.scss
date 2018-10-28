@@ -3,18 +3,25 @@
 .link {
     text-decoration: none;
 
-    &:hover {
+    &:hover:not(.active) {
         text-decoration: underline;
+    }
+
+    &.active {
+        &::before,
+        &::after {
+            content: " - ";
+        }
     }
 
     &.neutral {
         color: $color-neutral;
 
-        &:hover {
+        &:hover:not(.active) {
             color: $color-neutral_hover;
         }
 
-        &:active {
+        &.active {
             color: $color-neutral_active;
         }
     }
@@ -22,11 +29,11 @@
     &.accent {
         color: $color-accent;
 
-        &:hover {
+        &:hover:not(.active) {
             color: $color-accent_hover;
         }
 
-        &:active {
+        &.active {
             color: $color-accent_active;
         }
     }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import { AuthUser } from '../../constants/interfaces/AuthUser';
 import { Routes } from '../../constants/routes';
@@ -9,14 +10,6 @@ import { Button } from '../Button';
 import { RouteLink } from '../links/RouteLink';
 
 import './SiteNavigation.css';
-
-interface StateProps {
-    authUser: AuthUser | null;
-}
-
-const mapStateToProps = (state: State): StateProps => ({
-    authUser: state.auth.authUser
-});
 
 const authenticatedNavLinks = (<ul>
     <li><RouteLink routeRef={Routes.HOME}/></li>
@@ -35,12 +28,22 @@ const notAuthenticatedNavLinks = (<ul>
     <li><RouteLink routeRef={Routes.LOGIN}/></li>
 </ul>);
 
-const SiteNavigationComponent: React.SFC<StateProps> = (props: StateProps) => (
+interface StateProps {
+    authUser: AuthUser | null;
+}
+
+const mapStateToProps = (state: State): StateProps => ({
+    authUser: state.auth.authUser
+});
+
+type SiteNavigationProps = StateProps & RouteComponentProps;
+
+const SiteNavigationComponent: React.SFC<SiteNavigationProps> = ({ authUser }) => (
     <nav className="site-navigation">
-        {props.authUser
+        {authUser
             ? authenticatedNavLinks
             : notAuthenticatedNavLinks}
     </nav>
 );
 
-export const SiteNavigation = connect(mapStateToProps, undefined)(SiteNavigationComponent);
+export const SiteNavigation = withRouter(connect(mapStateToProps, undefined)(SiteNavigationComponent));
