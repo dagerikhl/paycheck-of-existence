@@ -1,13 +1,13 @@
-export interface Route {
+export interface RouteRef {
     name: string;
     path: string;
 }
 
 interface Routes {
-    LOGIN: Route;
-    HOME: Route;
-    HOURS: Route;
-    SUMMARY: Route;
+    LOGIN: RouteRef;
+    HOME: RouteRef;
+    HOURS: RouteRef;
+    SUMMARY: RouteRef;
 }
 
 export const Routes: Routes = {

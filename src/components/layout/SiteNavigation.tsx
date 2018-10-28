@@ -6,7 +6,7 @@ import { Routes } from '../../constants/routes';
 import { auth } from '../../services/auth';
 import { State } from '../../store/states/state';
 import { Button } from '../Button';
-import { Link } from '../Link';
+import { RouteLink } from '../links/RouteLink';
 
 import './SiteNavigation.css';
 
@@ -19,9 +19,9 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 const authenticatedNavLinks = (<ul>
-    <li><Link to={Routes.HOME}/></li>
-    <li><Link to={Routes.HOURS}/></li>
-    <li><Link to={Routes.SUMMARY}/></li>
+    <li><RouteLink routeRef={Routes.HOME}/></li>
+    <li><RouteLink routeRef={Routes.HOURS}/></li>
+    <li><RouteLink routeRef={Routes.SUMMARY}/></li>
 
     <li>
         <Button onClick={auth.logout}>
@@ -31,8 +31,8 @@ const authenticatedNavLinks = (<ul>
 </ul>);
 
 const notAuthenticatedNavLinks = (<ul>
-    <li><Link to={Routes.HOME}/></li>
-    <li><Link to={Routes.LOGIN}/></li>
+    <li><RouteLink routeRef={Routes.HOME}/></li>
+    <li><RouteLink routeRef={Routes.LOGIN}/></li>
 </ul>);
 
 const SiteNavigationComponent: React.SFC<StateProps> = (props: StateProps) => (
