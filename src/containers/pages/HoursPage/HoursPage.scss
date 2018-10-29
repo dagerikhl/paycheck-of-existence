@@ -1,3 +1,43 @@
-.hours {
-    padding: 16px;
+@import "../../../styles/variables.scss";
+
+.hours-page {
+    .controls {
+        position: sticky;
+        top: $header-height + 1px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        height: 0;
+
+        padding: 0 16px;
+
+        color: $theme-primary-text;
+        background-color: $theme-primary-light;
+        border-right: 1px solid $shadow-color;
+        border-left: 1px solid $shadow-color;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+
+        overflow: hidden;
+
+        transition: height 200ms ease-in-out;
+
+        &.open {
+            height: 64px;
+
+            border-bottom: 1px solid $shadow-color;
+        }
+
+        .control-buttons {
+            :first-child {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .weeks {
+        padding: 16px 0;
+    }
 }
