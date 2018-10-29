@@ -38,8 +38,7 @@
             background-color: $color-neutral_hover;
         }
 
-        &:active,
-        &:focus {
+        &:active {
             background-color: $color-neutral_active;
         }
     }
@@ -52,8 +51,7 @@
             background-color: $color-accent_hover;
         }
 
-        &:active,
-        &:focus {
+        &:active {
             background-color: $color-accent_active;
         }
     }
