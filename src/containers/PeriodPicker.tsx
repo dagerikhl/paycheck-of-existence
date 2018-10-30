@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -29,15 +30,25 @@ class PeriodPickerComponent extends React.PureComponent<PeriodPickerProps> {
     public render() {
         const { year } = this.props;
 
+        const isCurrentYear = year >= moment().year();
+
         return (
             <div className="period-picker">
                 <span className="year">{year}</span>
 
                 <div className="controls">
-                    <button onClick={this.onChangePeriod(1)} aria-label="Increase">
+                    <button
+                        aria-label="Increase"
+                        onClick={this.onChangePeriod(1)}
+                        disabled={isCurrentYear}
+                    >
                         <div className="control-icon-up"/>
                     </button>
-                    <button onClick={this.onChangePeriod(-1)} aria-label="Decrease">
+
+                    <button
+                        aria-label="Decrease"
+                        onClick={this.onChangePeriod(-1)}
+                    >
                         <div className="control-icon-down"/>
                     </button>
                 </div>
