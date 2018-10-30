@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { createArrayFromRange } from '../../../helpers/number-helper';
+import { DataControls } from './DataControls';
 
 import './HoursPage.css';
 
@@ -27,14 +28,15 @@ class HoursPageComponent extends React.PureComponent<OwnState> {
 
         return (
             <section className="hours-page">
-                <aside className={`controls ${isDirty ? 'open' : ''}`}>
-                    <h3>You have unsaved changes.</h3>
-
-                    <div className="control-buttons">
-                        <Button onClick={this.saveChanges} disabled={!isDirty}>Save</Button>
-                        <Button onClick={this.discardChanges} disabled={!isDirty}>Discard</Button>
-                    </div>
-                </aside>
+                <DataControls
+                    className="data-controls"
+                    label="You have unsaved changes."
+                    saveLabel="Save all"
+                    cancelLabel="Discard all"
+                    onSave={this.saveChanges}
+                    onCancel={this.discardChanges}
+                    hide={!isDirty}
+                />
 
                 {/* TODO Remove */}
                 <Button onClick={this.toggleControls}>Toggle dirty</Button>
