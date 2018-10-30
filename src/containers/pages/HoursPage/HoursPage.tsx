@@ -5,6 +5,7 @@ import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { createArrayFromRange } from '../../../helpers/number-helper';
 import { DataControls } from './DataControls';
+import { WeekTable } from './WeekTable';
 
 import './HoursPage.css';
 
@@ -29,12 +30,12 @@ class HoursPageComponent extends React.PureComponent<OwnState> {
         return (
             <section className="hours-page">
                 <DataControls
-                    className="data-controls"
+                    className="controls"
                     label="You have unsaved changes."
                     saveLabel="Save all"
                     cancelLabel="Discard all"
-                    onSave={this.saveChanges}
-                    onCancel={this.discardChanges}
+                    onSave={this.saveAllChanges}
+                    onCancel={this.discardAllChanges}
                     hide={!isDirty}
                 />
 
@@ -42,12 +43,11 @@ class HoursPageComponent extends React.PureComponent<OwnState> {
                 <Button onClick={this.toggleControls}>Toggle dirty</Button>
 
                 <div className="weeks">
-                    {this.weeks.map((weekNumber, i) => <div
+                    {this.weeks.map((weekNumber, i) => <WeekTable
                         key={i}
-                        style={{ border: '1px solid black', marginBottom: 8, background: i === 0 ? 'hotpink' : '' }}
-                    >
-                        TODO WEEKTABLE: {weekNumber}
-                    </div>)}
+                        weekNumber={weekNumber}
+                        isCurrent={i === 0}
+                    />)}
                 </div>
             </section>
         );
@@ -58,11 +58,11 @@ class HoursPageComponent extends React.PureComponent<OwnState> {
         this.setState({ isDirty: !this.state.isDirty });
     };
 
-    private saveChanges = () => {
+    private saveAllChanges = () => {
         // TODO Save changes to database
     };
 
-    private discardChanges = () => {
+    private discardAllChanges = () => {
         // TODO Reset all weektables to data from database
     };
 }

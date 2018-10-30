@@ -1,0 +1,7 @@
+.week-table {
+    background-color: lightgray;
+
+    &.current {
+        background-color: hotpink;
+    }
+}
