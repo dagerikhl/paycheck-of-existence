@@ -1,3 +1,21 @@
+@import "../styles/typography.scss";
+
 .table {
-    table-layout: fixed;
+    thead {
+        tr {
+            th {
+                height: 32px;
+
+                font-weight: bold;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                font-size: 50%;
+            }
+        }
+    }
 }

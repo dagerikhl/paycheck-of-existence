@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './Table.scss';
+import './Table.css';
 
 interface OwnProps {
     colums: Array<JSX.Element | string>;

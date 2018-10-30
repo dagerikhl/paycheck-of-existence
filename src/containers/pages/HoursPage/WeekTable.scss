@@ -1,7 +1,13 @@
 @import "../../../styles/variables.scss";
 
 .week-table {
+    box-shadow: 0 0 2px 2px $theme-secondary-light;
+
     &.current {
         box-shadow: 0 0 2px 2px $theme-primary-light;
+    }
+
+    .title {
+        margin-bottom: 16px;
     }
 }
