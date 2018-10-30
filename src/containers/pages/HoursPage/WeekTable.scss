@@ -1,7 +1,7 @@
-.week-table {
-    background-color: lightgray;
+@import "../../../styles/variables.scss";
 
+.week-table {
     &.current {
-        background-color: hotpink;
+        box-shadow: 0 0 2px 2px $theme-primary-light;
     }
 }

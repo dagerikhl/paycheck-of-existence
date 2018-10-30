@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { Input } from '../../../components/Input';
+import { Table } from '../../../components/Table';
 import { createDispatchToPropsFunction } from '../../../helpers/redux-helper';
 import { updatePeriodYearAction } from '../../../store/actions/period.action';
 import { State } from '../../../store/states/state';
@@ -41,6 +43,15 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         isDirty: false
     };
 
+    private columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
+    // TODO Use proper rows with data
+    private rows = [
+        ['2018-10-29: Monday', <Input key={0}/>, <Input key={0}/>, <Input key={0}/>, <Input key={0}/>,
+            <Input key={0}/>, 'Et lite notat.'],
+        ['2018-10-30: Tuesday', <Input key={0}/>, <Input key={0}/>, <Input key={0}/>, <Input key={0}/>,
+            <Input key={0}/>, 'Et ganske så mye lengre notat av en større magnitude.']
+    ];
+
     public render() {
         const { weekNumber, isCurrent } = this.props;
         const { isDirty } = this.state;
@@ -48,31 +59,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         return (
             <React.Fragment>
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Hours NO</th>
-                                <th>SS NO</th>
-                                <th>Hours GO</th>
-                                <th>SS GO</th>
-                                <th>Overtime</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Date</td>
-                                <td>Hours NO</td>
-                                <td>SS NO</td>
-                                <td>Hours GO</td>
-                                <td>SS GO</td>
-                                <td>Overtime</td>
-                                <td>Notes</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <Table
+                        colums={this.columns}
+                        rows={this.rows}
+                    />
                 </div>
 
                 <DataControls
