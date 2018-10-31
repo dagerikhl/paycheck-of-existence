@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { Theme } from '../../constants/enums/Theme';
-import { ExternalRef } from '../../constants/interfaces/ExternalRef';
+import { ExternalRef, Theme } from '../../constants';
 
 import './Link.css';
 

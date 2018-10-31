@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Theme } from '../../constants/enums/Theme';
-import { RouteRef } from '../../constants/routes';
+import { RouteRef, Theme } from '../../constants';
 
 import './Link.css';
 

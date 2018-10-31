@@ -1,12 +1,9 @@
 import { History } from 'history';
 import * as React from 'react';
 
-import { Button } from '../../../components/Button';
-import { ErrorMessage } from '../../../components/ErrorMessage';
-import { Input } from '../../../components/Input';
-import { Loader } from '../../../components/Loader';
-import { Routes } from '../../../constants/routes';
-import { auth } from '../../../services/auth';
+import { Button, ErrorMessage, Input, Loader } from '../../../components';
+import { Routes } from '../../../constants';
+import { auth } from '../../../services';
 
 import './LoginForm.css';
 

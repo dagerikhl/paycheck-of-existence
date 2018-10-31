@@ -1,5 +1,4 @@
-import { AuthUser } from '../constants/interfaces/AuthUser';
-import { Error } from '../constants/interfaces/Error';
+import { AuthUser, Error } from '../constants';
 import { firebaseAuth } from './firebase';
 
 const login = (email: string, password: string) => firebaseAuth.signInWithEmailAndPassword(email, password);

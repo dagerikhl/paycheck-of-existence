@@ -1,5 +1,5 @@
-import { HoursAction, HoursActionType } from '../actions/hours.action';
-import { HoursState, initialHoursState } from '../states/hours.state';
+import { HoursAction, HoursActionType } from '../actions';
+import { HoursState, initialHoursState } from '../states';
 
 export const hoursReducer = (state: HoursState = initialHoursState, action: HoursAction): HoursState => {
     switch (action.type) {

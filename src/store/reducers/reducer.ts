@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { State } from '../states/state';
+import { State } from '../states';
 import { authReducer } from './auth.reducer';
 import { hoursReducer } from './hours.reducer';
 import { periodReducer } from './period.reducer';

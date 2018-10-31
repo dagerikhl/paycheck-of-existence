@@ -1,4 +1,4 @@
-import { Weeks } from '../../constants/interfaces/Weeks';
+import { Weeks } from '../../constants';
 
 export interface HoursState {
     weeks: Weeks;

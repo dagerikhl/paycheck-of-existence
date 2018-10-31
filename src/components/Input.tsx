@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Theme } from '../constants/enums/Theme';
+import { Theme } from '../constants';
 
 import './Input.css';
 

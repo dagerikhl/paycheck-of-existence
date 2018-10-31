@@ -1,5 +1,4 @@
-import { Week } from '../../constants/interfaces/Week';
-import { Weeks } from '../../constants/interfaces/Weeks';
+import { Week, Weeks } from '../../constants';
 
 export enum HoursActionType {
     UpdateAllWeeks = 'HOURS/UPDATE_ALL_WEEKS',

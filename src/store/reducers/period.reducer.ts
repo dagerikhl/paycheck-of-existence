@@ -1,5 +1,5 @@
-import { PeriodAction, PeriodActionType } from '../actions/period.action';
-import { initialPeriodState, PeriodState } from '../states/period.state';
+import { PeriodAction, PeriodActionType } from '../actions';
+import { initialPeriodState, PeriodState } from '../states';
 
 export const periodReducer = (state: PeriodState = initialPeriodState, action: PeriodAction): PeriodState => {
     switch (action.type) {

@@ -2,13 +2,11 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Input } from '../../../components/Input';
-import { Table } from '../../../components/Table';
-import { Week } from '../../../constants/interfaces/Week';
-import { createArrayFromRange } from '../../../helpers/number-helper';
-import { createDispatchToPropsFunction } from '../../../helpers/redux-helper';
-import { updateWeekAction } from '../../../store/actions/hours.action';
-import { State } from '../../../store/states/state';
+import { Input, Table } from '../../../components';
+import { Week } from '../../../constants';
+import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
+import { updateWeekAction } from '../../../store/actions';
+import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
 
 import './WeekTable.css';

@@ -2,12 +2,10 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Button } from '../../../components/Button';
-import { withAuthorization } from '../../../components/higher-order/withAuthorization';
-import { Theme } from '../../../constants/enums/Theme';
-import { Weeks } from '../../../constants/interfaces/Weeks';
-import { createArrayFromRange } from '../../../helpers/number-helper';
-import { State } from '../../../store/states/state';
+import { Button, withAuthorization } from '../../../components';
+import { Theme, Weeks } from '../../../constants';
+import { createArrayFromRange } from '../../../helpers';
+import { State } from '../../../store/states';
 import { WeekTable } from './WeekTable';
 
 import './HoursPage.css';

@@ -2,12 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
-import { AuthUser } from '../../constants/interfaces/AuthUser';
-import { Routes } from '../../constants/routes';
-import { auth } from '../../services/auth';
-import { State } from '../../store/states/state';
+import { RouteLink } from '..';
+import { AuthUser, Routes } from '../../constants';
+import { auth } from '../../services';
+import { State } from '../../store/states';
 import { Button } from '../Button';
-import { RouteLink } from '../links/RouteLink';
 
 import './SiteNavigation.css';
 

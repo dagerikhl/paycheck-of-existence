@@ -2,9 +2,9 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { createDispatchToPropsFunction } from '../helpers/redux-helper';
-import { updatePeriodYearAction } from '../store/actions/period.action';
-import { State } from '../store/states/state';
+import { createDispatchToPropsFunction } from '../helpers';
+import { updatePeriodYearAction } from '../store/actions';
+import { State } from '../store/states';
 
 import './PeriodPicker.css';
 

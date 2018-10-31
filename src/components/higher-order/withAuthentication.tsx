@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { AuthUser } from '../../constants/interfaces/AuthUser';
-import { createDispatchToPropsFunction } from '../../helpers/redux-helper';
-import { auth } from '../../services/auth';
-import { updateAuthUserAction } from '../../store/actions/auth.action';
+import { AuthUser } from '../../constants';
+import { createDispatchToPropsFunction } from '../../helpers';
+import { auth } from '../../services';
+import { updateAuthUserAction } from '../../store/actions';
 import { Loader } from '../Loader';
 
 interface OwnState {
