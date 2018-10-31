@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
+import { createArrayFromRange } from '../../../helpers/number-helper';
 import { createDispatchToPropsFunction } from '../../../helpers/redux-helper';
 import { updatePeriodYearAction } from '../../../store/actions/period.action';
 import { State } from '../../../store/states/state';
@@ -44,14 +45,17 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         isDirty: false
     };
 
-    private columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
-    // TODO Use proper rows with data
-    private rows = [
-        ['2018-10-29: Monday', <Input key={0}/>, <Input key={0}/>, <Input key={0}/>, <Input key={0}/>,
-            <Input key={0}/>, 'Et lite notat.'],
-        ['2018-10-30: Tuesday', <Input key={0}/>, <Input key={0}/>, <Input key={0}/>, <Input key={0}/>,
-            <Input key={0}/>, 'Et ganske så mye lengre notat av en større magnitude.']
-    ];
+    private readonly numberOfColumns = 7;
+    private readonly numberOfRows = 7;
+
+    private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
+
+    // TODO Use proper rows with data for rows and footer
+    private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [
+        moment().startOf('isoWeek').add(i, 'day').format('YYYY-MM-DD dddd'),
+        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <Input key={0}/>),
+        'Noe som ligner på et litt stort prøvenotat.'
+    ]);
     private footer = [0, 0, 0, 0, 0, 0, 0];
 
     public render() {
