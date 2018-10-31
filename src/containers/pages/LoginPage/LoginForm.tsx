@@ -78,7 +78,6 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
         auth.login(email, password)
             .then(() => {
                 history.push(Routes.HOME.path);
-                this.setState({ isLoading: false });
             })
             .catch((error) => {
                 this.setState({ isLoading: false, error });
