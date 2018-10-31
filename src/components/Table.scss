@@ -1,10 +1,13 @@
 @import "../styles/typography.scss";
+@import "../styles/variables.scss";
 
 .table {
     thead {
         tr {
+            border-bottom: 1px solid $shadow-color;
+
             th {
-                height: 32px;
+                padding: 8px;
 
                 font-weight: bold;
             }
@@ -21,8 +24,10 @@
 
     tfoot {
         tr {
+            border-top: 1px solid $shadow-color;
+
             td {
-                font-size: 150%;
+                font-style: italic;
             }
         }
     }

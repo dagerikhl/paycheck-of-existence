@@ -53,7 +53,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     // TODO Use proper rows with data for rows and footer
     private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [
         moment().startOf('isoWeek').add(i, 'day').format('YYYY-MM-DD dddd'),
-        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <Input key={0}/>),
+        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input/></div>),
         'Noe som ligner på et litt stort prøvenotat.'
     ]);
     private footer = [0, 0, 0, 0, 0, 0, 0];

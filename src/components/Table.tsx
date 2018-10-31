@@ -8,7 +8,7 @@ interface OwnProps {
     className?: string;
     colums: AcceptedCells[];
     rows: AcceptedCells[][];
-    footerCells: AcceptedCells[];
+    footerCells?: AcceptedCells[];
 }
 
 const TableComponent: React.SFC<OwnProps> = ({ className, colums, rows, footerCells }) => (
@@ -29,11 +29,11 @@ const TableComponent: React.SFC<OwnProps> = ({ className, colums, rows, footerCe
             ))}
         </tbody>
 
-        <tfoot>
+        {footerCells && <tfoot>
             <tr>
                 {footerCells.map((cell, i) => <td key={i}>{cell}</td>)}
             </tr>
-        </tfoot>
+        </tfoot>}
     </table>
 );
 
