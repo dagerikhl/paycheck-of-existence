@@ -20,6 +20,7 @@
             "never-prefix"
         ],
         "jsx-boolean-value": false,
+        "member-ordering": false,
         "no-default-export": true,
         "no-small-switch": false,
         "no-unnecessary-callback-wrapper": true,
