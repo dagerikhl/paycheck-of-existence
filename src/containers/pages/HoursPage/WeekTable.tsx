@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
+import { Week } from '../../../constants/interfaces/Week';
 import { createArrayFromRange } from '../../../helpers/number-helper';
 import { createDispatchToPropsFunction } from '../../../helpers/redux-helper';
-import { updatePeriodYearAction } from '../../../store/actions/period.action';
+import { updateWeekAction } from '../../../store/actions/hours.action';
 import { State } from '../../../store/states/state';
 import { DataControls } from './DataControls';
 
@@ -30,12 +31,11 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 interface DispatchProps {
-    saveWeekHours: (hours: any) => void;
+    updateWeek: (weekNumber: number, week: Week) => void;
 }
 
 const mapDispatchToProps = createDispatchToPropsFunction({
-    // TODO Use proper action
-    saveWeekHours: updatePeriodYearAction
+    updateWeek: updateWeekAction
 });
 
 type WeekTableProps = OwnProps & StateProps & DispatchProps;

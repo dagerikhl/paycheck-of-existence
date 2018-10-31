@@ -1,9 +1,14 @@
 import * as moment from 'moment';
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
+import { Weeks } from '../../../constants/interfaces/Weeks';
 import { createArrayFromRange } from '../../../helpers/number-helper';
+import { createDispatchToPropsFunction } from '../../../helpers/redux-helper';
+import { updateAllWeeksAction } from '../../../store/actions/hours.action';
+import { State } from '../../../store/states/state';
 import { DataControls } from './DataControls';
 import { WeekTable } from './WeekTable';
 
@@ -13,7 +18,25 @@ interface OwnState {
     isDirty: boolean;
 }
 
-class HoursPageComponent extends React.PureComponent<OwnState> {
+interface StateProps {
+    year: number;
+}
+
+const mapStateToProps = (state: State): StateProps => ({
+    year: state.period.year
+});
+
+interface DispatchProps {
+    updateAllWeeks: (weeks: Weeks) => void;
+}
+
+const mapDispatchToProps = createDispatchToPropsFunction({
+    updateAllWeeks: updateAllWeeksAction
+});
+
+type HoursPageProps = StateProps & DispatchProps;
+
+class HoursPageComponent extends React.PureComponent<HoursPageProps, OwnState> {
     public state: OwnState = {
         isDirty: false
     };
@@ -67,4 +90,4 @@ class HoursPageComponent extends React.PureComponent<OwnState> {
     };
 }
 
-export const HoursPage = withAuthorization(HoursPageComponent);
+export const HoursPage = withAuthorization(connect(mapStateToProps, mapDispatchToProps)(HoursPageComponent));

@@ -15,7 +15,7 @@ export interface UpdateAllWeeks {
     weeks: Weeks;
 }
 
-export const updateAllWeeksAction = (weeks: Week[]): UpdateAllWeeks => ({
+export const updateAllWeeksAction = (weeks: Weeks): UpdateAllWeeks => ({
     type: HoursActionType.UpdateAllWeeks,
     weeks
 });
