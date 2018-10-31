@@ -1,11 +1,6 @@
 @import "../../../styles/variables.scss";
 
 .hours-page {
-    .controls {
-        position: sticky;
-        top: $header-height;
-    }
-
     .weeks {
         padding: 16px 0;
     }
