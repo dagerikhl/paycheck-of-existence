@@ -1,12 +1,16 @@
-export interface UpdatePeriodYear {
-    type: string;
-    year: number;
+export enum PeriodActionType {
+    UpdateYear = 'PERIOD/UPDATE_YEAR'
 }
 
 export type PeriodAction =
     | UpdatePeriodYear;
 
+export interface UpdatePeriodYear {
+    type: PeriodActionType.UpdateYear;
+    year: number;
+}
+
 export const updatePeriodYearAction = (year: number): UpdatePeriodYear => ({
-    type: 'UPDATE_PERIOD_YEAR',
+    type: PeriodActionType.UpdateYear,
     year
 });

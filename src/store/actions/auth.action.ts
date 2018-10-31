@@ -1,14 +1,18 @@
 import { AuthUser } from '../../constants/interfaces/AuthUser';
 
-export interface UpdateAuthUser {
-    type: string;
-    authUser: AuthUser;
+export enum AuthActionType {
+    UpdateAuthUser = 'AUTH/UPDATE_AUTH_USER'
 }
 
 export type AuthAction =
     | UpdateAuthUser;
 
+export interface UpdateAuthUser {
+    type: AuthActionType.UpdateAuthUser;
+    authUser: AuthUser;
+}
+
 export const updateAuthUserAction = (authUser: AuthUser): UpdateAuthUser => ({
-    type: 'UPDATE_AUTH_USER',
+    type: AuthActionType.UpdateAuthUser,
     authUser
 });
