@@ -2,7 +2,8 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Input, Table } from '../../../components';
+import { Input } from '../../../components/Input';
+import { Table } from '../../../components/Table';
 import { Week } from '../../../constants';
 import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
 import { updateWeekAction } from '../../../store/actions';

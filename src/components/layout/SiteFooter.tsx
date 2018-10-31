@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import { ExternalLink } from '..';
-import { Theme } from '../../constants';
-import { ExternalRef } from '../../constants';
+import { ExternalRef, Theme } from '../../constants';
+import { ExternalLink } from '../links/ExternalLink';
 
 import './SiteFooter.css';
 

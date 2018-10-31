@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { PeriodPicker } from '../../containers';
+import { PeriodPicker } from '../../containers/PeriodPicker';
 import { SiteNavigation } from './SiteNavigation';
 
 import logo from '../../images/logo.svg';

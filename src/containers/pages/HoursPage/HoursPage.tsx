@@ -2,7 +2,8 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Button, withAuthorization } from '../../../components';
+import { Button } from '../../../components/Button';
+import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { Theme, Weeks } from '../../../constants';
 import { createArrayFromRange } from '../../../helpers';
 import { State } from '../../../store/states';
