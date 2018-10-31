@@ -5,7 +5,7 @@ import { pickRandomItem } from '../../../helpers/random-helper';
 import './PageNotFound.css';
 
 class PageNotFoundComponent extends React.PureComponent {
-    private messages = [
+    private readonly messages = [
         'These aren\'t the droids you\'re looking for.',
         'Nothing to see here. Move along.',
         'Go about your business citizen.',

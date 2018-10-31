@@ -41,15 +41,15 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    public state: OwnState = {
-        isDirty: false
-    };
-
     private readonly numberOfColumns = 7;
     private readonly numberOfRows = 7;
 
     private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
     private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', 'notes'];
+
+    public state: OwnState = {
+        isDirty: false
+    };
 
     // TODO Use proper rows with data for rows and footer
     private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [

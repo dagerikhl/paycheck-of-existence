@@ -27,10 +27,12 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type PeriodPickerProps = StateProps & DispatchProps;
 
 class PeriodPickerComponent extends React.PureComponent<PeriodPickerProps> {
+    private readonly currentYear = moment().year();
+
     public render() {
         const { year } = this.props;
 
-        const isCurrentYear = year >= moment().year();
+        const isCurrentYear = year >= this.currentYear;
 
         return (
             <div className="period-picker">

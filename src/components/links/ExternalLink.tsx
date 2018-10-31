@@ -13,18 +13,16 @@ interface OwnProps {
 
 type ExternalLinkProps = OwnProps & React.HTMLProps<HTMLAnchorElement>;
 
-const ExternalLinkComponent: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => {
-    return (
-        <a
-            className={`${className} link ${theme || Theme.NEUTRAL}`}
-            href={externalRef.url}
-            target={externalRef.openInWindow ? undefined : '_blank'}
-            rel="noopener noreferrer"
-            {...rest}
-        >
-            {externalRef.name}
-        </a>
-    );
-};
+const ExternalLinkComponent: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => (
+    <a
+        className={`${className} link ${theme || Theme.NEUTRAL}`}
+        href={externalRef.url}
+        target={externalRef.openInWindow ? undefined : '_blank'}
+        rel="noopener noreferrer"
+        {...rest}
+    >
+        {externalRef.name}
+    </a>
+);
 
 export const ExternalLink = ExternalLinkComponent;

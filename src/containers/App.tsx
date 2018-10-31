@@ -13,9 +13,9 @@ import { PageNotFound } from './pages/PageNotFound/PageNotFound';
 import './App.css';
 
 class AppComponent extends React.PureComponent {
-    public render() {
-        const footerLinks = [{ name: 'dagerikhl@GitHub', url: 'https://github.com/dagerikhl' }];
+    private readonly footerLinks = [{ name: 'dagerikhl@GitHub', url: 'https://github.com/dagerikhl' }];
 
+    public render() {
         return (
             <div className="app">
                 <header className="header">
@@ -33,7 +33,7 @@ class AppComponent extends React.PureComponent {
                 </main>
 
                 <footer className="footer">
-                    <SiteFooter year="2018" name="Dag Erik Homdrum Løvgren" links={footerLinks}/>
+                    <SiteFooter year="2018" name="Dag Erik Homdrum Løvgren" links={this.footerLinks}/>
                 </footer>
             </div>
         );
