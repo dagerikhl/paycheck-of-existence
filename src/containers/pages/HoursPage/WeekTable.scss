@@ -1,5 +1,9 @@
 @import "../../../styles/variables.scss";
 
+%number-cell {
+    text-align: right;
+}
+
 .week-table {
     padding: 16px 32px;
 
@@ -21,5 +25,51 @@
 
     .table {
         width: 100%;
+    }
+
+    // Table columns
+    .date {
+        width: 20%;
+
+        padding: 0 8px;
+
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    .hours-no {
+        @extend %number-cell;
+
+        width: 8%;
+    }
+
+    .ss-no {
+        @extend %number-cell;
+
+        width: 8%;
+    }
+
+    .hours-go {
+        @extend %number-cell;
+
+        width: 8%;
+    }
+
+    .ss-go {
+        @extend %number-cell;
+
+        width: 8%;
+    }
+
+    .overtime {
+        @extend %number-cell;
+
+        width: 8%;
+    }
+
+    .notes {
+        width: auto;
+
+        padding: 0 8px;
     }
 }

@@ -49,11 +49,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private readonly numberOfRows = 7;
 
     private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
+    private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', 'notes'];
 
     // TODO Use proper rows with data for rows and footer
     private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [
         moment().startOf('isoWeek').add(i, 'day').format('YYYY-MM-DD dddd'),
-        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input/></div>),
+        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input type="number"/></div>),
         'Noe som ligner på et litt stort prøvenotat.'
     ]);
     private footer = [0, 0, 0, 0, 0, 0, 0];
@@ -63,7 +64,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const { isDirty } = this.state;
 
         const from = moment().year(year).isoWeek(weekNumber).startOf('week');
-        const to = from.endOf('week');
+        const to = from.clone().endOf('week');
 
         return (
             <React.Fragment>
@@ -75,7 +76,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
                     <Table
                         className="table"
-                        colums={this.columns}
+                        columns={this.columns}
+                        columnClassNames={this.columnClassNames}
                         rows={this.rows}
                         footerCells={this.footer}
                     />

@@ -2,9 +2,13 @@
 @import "../styles/variables.scss";
 
 .table {
+    padding: 0;
+
+    border-collapse: collapse;
+
     thead {
         tr {
-            border-bottom: 1px solid $shadow-color;
+            border-bottom: 2px solid $shadow-color;
 
             th {
                 padding: 8px;
@@ -17,16 +21,21 @@
     tbody {
         tr {
             td {
-                font-size: 50%;
+                padding-top: 4px;
+                padding-bottom: 4px;
+
+                font-size: 100%;
             }
         }
     }
 
     tfoot {
         tr {
-            border-top: 1px solid $shadow-color;
+            border-top: 2px solid $shadow-color;
 
             td {
+                padding: 8px;
+
                 font-style: italic;
             }
         }
