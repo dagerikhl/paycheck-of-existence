@@ -28,6 +28,9 @@
     }
 
     .control-buttons {
+        display: flex;
+        width: 256px;
+
         :first-child {
             margin-right: 8px;
         }
