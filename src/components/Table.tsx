@@ -2,16 +2,20 @@ import * as React from 'react';
 
 import './Table.css';
 
+type AcceptedCells = JSX.Element | string | number;
+
 interface OwnProps {
-    colums: Array<JSX.Element | string>;
-    rows: Array<Array<JSX.Element | string>>;
+    className?: string;
+    colums: AcceptedCells[];
+    rows: AcceptedCells[][];
+    footerCells: AcceptedCells[];
 }
 
-const TableComponent: React.SFC<OwnProps> = ({ colums, rows }) => (
-    <table className="table">
+const TableComponent: React.SFC<OwnProps> = ({ className, colums, rows, footerCells }) => (
+    <table className={`${className} table`}>
         <thead>
             <tr>
-                {colums.map((column, i) => <th key={i}>{column}</th>)}
+                {colums.map((cell, i) => <th key={i}>{cell}</th>)}
             </tr>
         </thead>
 
@@ -24,6 +28,12 @@ const TableComponent: React.SFC<OwnProps> = ({ colums, rows }) => (
                 </tr>
             ))}
         </tbody>
+
+        <tfoot>
+            <tr>
+                {footerCells.map((cell, i) => <td key={i}>{cell}</td>)}
+            </tr>
+        </tfoot>
     </table>
 );
 

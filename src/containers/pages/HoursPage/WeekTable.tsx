@@ -52,6 +52,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         ['2018-10-30: Tuesday', <Input key={0}/>, <Input key={0}/>, <Input key={0}/>, <Input key={0}/>,
             <Input key={0}/>, 'Et ganske så mye lengre notat av en større magnitude.']
     ];
+    private footer = [0, 0, 0, 0, 0, 0, 0];
 
     public render() {
         const { weekNumber, isCurrent, year } = this.props;
@@ -72,6 +73,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         className="table"
                         colums={this.columns}
                         rows={this.rows}
+                        footerCells={this.footer}
                     />
                 </div>
 
