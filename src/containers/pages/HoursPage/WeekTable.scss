@@ -1,6 +1,8 @@
 @import "../../../styles/variables.scss";
 
 .week-table {
+    padding: 16px 32px;
+
     box-shadow: 0 0 2px 2px $theme-secondary-light;
 
     &.current {
@@ -8,6 +10,16 @@
     }
 
     .title {
-        margin-bottom: 16px;
+        margin-bottom: 32px;
+
+        .dates {
+            float: right;
+
+            font-weight: normal;
+        }
+    }
+
+    .table {
+        width: 100%;
     }
 }

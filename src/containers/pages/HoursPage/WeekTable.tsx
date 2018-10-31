@@ -64,10 +64,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             <React.Fragment>
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
                     <h1 className="title">
-                        Week {weekNumber}: {from.format('DD.MM')} &ndash; {to.format('DD.MM')}
+                        <span>Week {weekNumber}</span>
+                        <span className="dates">{from.format('DD.MM')} &ndash; {to.format('DD.MM')}</span>
                     </h1>
 
                     <Table
+                        className="table"
                         colums={this.columns}
                         rows={this.rows}
                     />
