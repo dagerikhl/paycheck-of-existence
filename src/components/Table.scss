@@ -1,3 +1,4 @@
+@import "../styles/bases.scss";
 @import "../styles/typography.scss";
 @import "../styles/variables.scss";
 
@@ -6,11 +7,11 @@
 
     border-collapse: collapse;
 
-    thead {
-        tr {
+    > thead {
+        > tr {
             border-bottom: 2px solid $shadow-color;
 
-            th {
+            > th {
                 padding: 8px;
 
                 font-weight: bold;
@@ -18,25 +19,37 @@
         }
     }
 
-    tbody {
-        tr {
-            td {
-                padding-top: 4px;
-                padding-bottom: 4px;
+    > tfoot {
+        > tr {
+            border-top: 2px solid $shadow-color;
 
-                font-size: 100%;
+            > td {
+                @extend %table-number-cell;
+
+                padding: 8px;
+
+                font-style: italic;
             }
         }
     }
 
-    tfoot {
-        tr {
-            border-top: 2px solid $shadow-color;
+    > tbody {
+        > tr {
+            > td {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
 
-            td {
-                padding: 8px;
+            &:first-child {
+                > td {
+                    padding-top: 16px;
+                }
+            }
 
-                font-style: italic;
+            &:last-child {
+                > td {
+                    padding-bottom: 16px;
+                }
             }
         }
     }

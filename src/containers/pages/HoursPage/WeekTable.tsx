@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { Week } from '../../../constants';
+import { Week, Weeks } from '../../../constants';
 import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
 import { updateWeekAction } from '../../../store/actions';
 import { State } from '../../../store/states';
@@ -23,10 +23,12 @@ interface OwnState {
 
 interface StateProps {
     year: number;
+    weeks: Weeks;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-    year: state.period.year
+    year: state.period.year,
+    weeks: state.hours.weeks
 });
 
 interface DispatchProps {
@@ -56,21 +58,21 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input type="number"/></div>),
         'Noe som ligner på et litt stort prøvenotat.'
     ]);
-    private footer = [0, 0, 0, 0, 0, 0, 0];
+    private footer = [undefined, 0, 0, 0, 0, 0, undefined];
 
     public render() {
         const { weekNumber, isCurrent, year } = this.props;
         const { isDirty } = this.state;
 
-        const from = moment().year(year).isoWeek(weekNumber).startOf('week');
-        const to = from.clone().endOf('week');
+        const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
+        const to = from.clone().endOf('isoWeek');
 
         return (
             <React.Fragment>
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
-                        <span className="dates">{from.format('DD.MM')} &ndash; {to.format('DD.MM')}</span>
+                        <span className="dates">{from.format('DD.MM.YY')} &ndash; {to.format('DD.MM.YY')}</span>
                     </h1>
 
                     <Table
@@ -78,7 +80,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         columns={this.columns}
                         columnClassNames={this.columnClassNames}
                         rows={this.rows}
-                        footerCells={this.footer}
+                        footer={this.footer}
                     />
                 </div>
 
