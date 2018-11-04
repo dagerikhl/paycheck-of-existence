@@ -1,50 +1,47 @@
-import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
-import { Theme, Weeks } from '../../../constants';
-import { createArrayFromRange } from '../../../helpers';
+import { withData } from '../../../components/higher-order/withData';
+import { Theme } from '../../../constants';
+import { createArrayFromRange, getNewestWeekNumberInYear  } from '../../../helpers';
 import { State } from '../../../store/states';
 import { WeekTable } from './WeekTable';
 
 import './HoursPage.css';
 
 interface OwnState {
-    lastVisibleWeekNumber: number;
+    showAllWeeks: boolean;
 }
 
 interface StateProps {
-    weeks: Weeks;
+    year: number;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-    weeks: state.hours.weeks
+    year: state.period.year
 });
 
 class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
-    private readonly currentWeek = moment().isoWeek();
-
-    private weeks = createArrayFromRange(0, moment().isoWeek()).reverse();
-
     public state: OwnState = {
-        lastVisibleWeekNumber: Math.max(1, this.currentWeek - 1)
+        showAllWeeks: false
     };
 
-    public componentDidMount() {
-        // TODO Start loading documents from the database
-    }
-
     public render() {
-        const { lastVisibleWeekNumber } = this.state;
+        const { year } = this.props;
+        const { showAllWeeks } = this.state;
+
+        const highestWeekNumberOfYear = getNewestWeekNumberInYear(year);
+
+        const visibleWeekNumbers = createArrayFromRange(1, highestWeekNumberOfYear)
+            .reverse()
+            .slice(0, showAllWeeks ? undefined : 2);
 
         return (
             <section className="hours-page">
                 <div className="weeks">
-                    {/* TODO Should use weeks from Redux here */}
-                    {this.weeks
-                        .filter((weekNumber) => weekNumber >= lastVisibleWeekNumber)
+                    {visibleWeekNumbers
                         .map((weekNumber, i) => <WeekTable
                             key={i}
                             weekNumber={weekNumber}
@@ -52,25 +49,22 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
                         />)}
                 </div>
 
-                {this.currentWeek > 2 && <Button
+                {highestWeekNumberOfYear > 2 && <Button
                     className="show-all-button"
                     theme={Theme.ACCENT}
                     onClick={this.toggleShowAllWeeks}
                 >
-                    {lastVisibleWeekNumber === 1 ? 'Hide' : 'Load more...'}
+                    {showAllWeeks ? 'Hide early weeks' : 'Show all weeks'}
                 </Button>}
             </section>
         );
     }
 
     private toggleShowAllWeeks = () => {
-        const { lastVisibleWeekNumber } = this.state;
+        const { showAllWeeks } = this.state;
 
-        const newShowAllWeeks = lastVisibleWeekNumber === 1;
-        this.setState({
-            lastVisibleWeekNumber: newShowAllWeeks ? Math.max(1, this.currentWeek - 1) : 1
-        });
+        this.setState({ showAllWeeks: !showAllWeeks });
     };
 }
 
-export const HoursPage = withAuthorization(connect(mapStateToProps, undefined)(HoursPageComponent));
+export const HoursPage = withAuthorization(withData('weeks')(connect(mapStateToProps, undefined)(HoursPageComponent)));
