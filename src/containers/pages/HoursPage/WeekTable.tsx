@@ -2,10 +2,9 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { DATE_LONG, DATE_WITH_YEAR, Week, Weeks } from '../../../constants';
-import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
+import { DATE_WITH_YEAR, Week, Weeks } from '../../../constants';
+import { createDispatchToPropsFunction, objectKeys, objectValues } from '../../../helpers';
 import { updateWeekAction } from '../../../store/actions';
 import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
@@ -42,30 +41,24 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    private readonly numberOfColumns = 7;
-    private readonly numberOfRows = 7;
-
     private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
     private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', 'notes'];
+
+    private footer = [undefined, 0, 0, 0, 0, 0, undefined];
 
     public state: OwnState = {
         isDirty: false
     };
 
-    // TODO Use proper rows with data for rows and footer
-    private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [
-        moment().startOf('isoWeek').add(i, 'day').format(DATE_LONG),
-        ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input type="number"/></div>),
-        'Noe som ligner på et litt stort prøvenotat.'
-    ]);
-    private footer = [undefined, 0, 0, 0, 0, 0, undefined];
-
     public render() {
-        const { weekNumber, isCurrent, year } = this.props;
+        const { weekNumber, isCurrent, year, weeks } = this.props;
         const { isDirty } = this.state;
 
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
+
+        const week = weeks[weekNumber];
+        const rows = objectKeys(week).map((date) => objectValues(week[date]));
 
         return (
             <React.Fragment>
@@ -79,7 +72,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         className="table"
                         columns={this.columns}
                         columnClassNames={this.columnClassNames}
-                        rows={this.rows}
+                        rows={rows}
                         footer={this.footer}
                     />
                 </div>
