@@ -1,10 +1,10 @@
-import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 import { Weeks } from '../../constants';
-import { createArrayFromRange, createDispatchToPropsFunction } from '../../helpers';
+import { createArrayFromRange, createDispatchToPropsFunction, getNewestWeekNumberInYear } from '../../helpers';
+import { database } from '../../services';
 import { updateAllWeeksAction } from '../../store/actions';
 import { State } from '../../store/states';
 import { Loader } from '../Loader';
@@ -42,19 +42,20 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 public componentDidMount() {
                     const { year, updateAllWeeks } = this.props;
 
-                    // TODO Start loading documents from the database
-                    const weeks = null;
+                    database.hoursRef.on('value', (snapshot) => {
+                        let weeks: Weeks;
+                        if (snapshot) {
+                            weeks = snapshot.val()[year];
+                        } else {
+                            weeks = {};
+                            const initialWeekNumbers = createArrayFromRange(1, getNewestWeekNumberInYear(year));
+                            initialWeekNumbers.forEach((weekNumber) => weeks[weekNumber] = {});
+                        }
 
-                    // Initialize new weeks if we couldn't get them from the database
-                    if (!weeks) {
-                        const initialWeekNumbers = createArrayFromRange(1, moment().year(year).isoWeek());
-                        const initialWeeks = {};
-                        initialWeekNumbers.forEach((weekNumber) => initialWeeks[weekNumber] = {});
-
-                        updateAllWeeks(initialWeeks);
+                        updateAllWeeks(weeks);
 
                         this.setState({ isLoaded: true });
-                    }
+                    });
                 }
 
                 public render() {
@@ -72,5 +73,4 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
             return ((props) => <Component {...props}/>) as React.SFC;
         }
     }
-
 };
