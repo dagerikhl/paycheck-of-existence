@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { Week, Weeks } from '../../../constants';
+import { DATE_LONG, DATE_WITH_YEAR, Week, Weeks } from '../../../constants';
 import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
 import { updateWeekAction } from '../../../store/actions';
 import { State } from '../../../store/states';
@@ -54,7 +54,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     // TODO Use proper rows with data for rows and footer
     private rows = createArrayFromRange(0, this.numberOfRows).map((_, i) => [
-        moment().startOf('isoWeek').add(i, 'day').format('YYYY-MM-DD dddd'),
+        moment().startOf('isoWeek').add(i, 'day').format(DATE_LONG),
         ...createArrayFromRange(0, this.numberOfColumns - 2).map(() => <div key={0}><Input type="number"/></div>),
         'Noe som ligner på et litt stort prøvenotat.'
     ]);
@@ -72,7 +72,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
-                        <span className="dates">{from.format('DD.MM.YY')} &ndash; {to.format('DD.MM.YY')}</span>
+                        <span className="dates">{from.format(DATE_WITH_YEAR)} &ndash; {to.format(DATE_WITH_YEAR)}</span>
                     </h1>
 
                     <Table

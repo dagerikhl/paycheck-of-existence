@@ -8,3 +8,4 @@ export * from './interfaces/Week';
 export * from './interfaces/Weeks';
 
 export * from './routes';
+export * from './strings';
