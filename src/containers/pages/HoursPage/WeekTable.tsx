@@ -3,8 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Table } from '../../../components/Table';
-import { DATE_WITH_YEAR, Week, Weeks } from '../../../constants';
-import { createDispatchToPropsFunction, objectKeys, objectValues } from '../../../helpers';
+import { DATE_LONG, DATE_WITH_YEAR, Day, TableCell, Weeks } from '../../../constants';
+import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
 import { updateWeekAction } from '../../../store/actions';
 import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
@@ -18,6 +18,7 @@ interface OwnProps {
 
 interface OwnState {
     isDirty: boolean;
+    rows: TableCell[][];
 }
 
 interface StateProps {
@@ -31,7 +32,7 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 interface DispatchProps {
-    updateWeek: (weekNumber: number, week: Week) => void;
+    updateWeek: (weekNumber: number, week: Day[]) => void;
 }
 
 const mapDispatchToProps = createDispatchToPropsFunction({
@@ -47,18 +48,19 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private footer = [undefined, 0, 0, 0, 0, 0, undefined];
 
     public state: OwnState = {
-        isDirty: false
+        isDirty: false,
+        rows: WeekTableComponent.createWeekRows(
+            this.props.year,
+            this.props.weekNumber,
+            this.props.weeks[this.props.weekNumber])
     };
 
     public render() {
-        const { weekNumber, isCurrent, year, weeks } = this.props;
-        const { isDirty } = this.state;
+        const { weekNumber, isCurrent, year } = this.props;
+        const { isDirty, rows } = this.state;
 
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
-
-        const week = weeks[weekNumber];
-        const rows = objectKeys(week).map((date) => objectValues(week[date]));
 
         return (
             <React.Fragment>
@@ -96,6 +98,23 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private discardChanges = () => {
         // TODO Reset weektable to data from database
     };
+
+    private static createWeekRows = (year: number, weekNumber: number, week?: Day[]) => {
+        const populatedWeek = week || WeekTableComponent.populateEmptyWeek();
+
+        return populatedWeek.map((day, i) => WeekTableComponent.createDayRow(year, weekNumber, day, i));
+    };
+
+    private static createDayRow = (year: number, weekNumber: number, day: Day, i: number) => {
+        const date = moment().year(year).isoWeek(weekNumber).isoWeekday(i + 1).format(DATE_LONG);
+
+        return [date, day.hoursNo, day.ssNo, day.hoursGo, day.ssGo, day.overtime, day.notes];
+    };
+
+    private static populateEmptyWeek = (): Day[] =>
+        createArrayFromRange(0, 7).map(() => WeekTableComponent.populateEmptyDay());
+
+    private static populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, overtime: 0, notes: '' });
 }
 
 export const WeekTable = connect(mapStateToProps, mapDispatchToProps)(WeekTableComponent);

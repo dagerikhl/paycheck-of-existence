@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import './Table.css';
+import { TableCell } from '../constants';
 
-type AcceptedCells = JSX.Element | string | number | undefined;
+import './Table.css';
 
 interface OwnProps {
     className?: string;
-    columns?: AcceptedCells[];
+    columns?: TableCell[];
     columnClassNames?: Array<string | undefined>;
-    rows: AcceptedCells[][];
-    footer?: AcceptedCells[];
+    rows: TableCell[][];
+    footer?: TableCell[];
     footerClassName?: string;
 }
 

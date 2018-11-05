@@ -9,7 +9,6 @@ interface OwnProps {
     theme?: Theme;
     square?: boolean;
     round?: boolean;
-    onClick?: () => void;
 }
 
 type InputProps = OwnProps & React.HTMLProps<HTMLInputElement>;

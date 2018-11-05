@@ -1,5 +1,5 @@
-import { Week } from './Week';
+import { Day } from './Day';
 
 export interface Weeks {
-    [weekNumber: number]: Week;
+    [weekNumber: number]: Day[];
 }

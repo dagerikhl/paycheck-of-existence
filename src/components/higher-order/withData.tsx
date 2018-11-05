@@ -1,10 +1,9 @@
-import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { DATE_LONG, Week, Weeks } from '../../constants';
-import { createArrayFromRange, createDispatchToPropsFunction, getNewestWeekNumberInYear } from '../../helpers';
+import { Weeks } from '../../constants';
+import { createDispatchToPropsFunction } from '../../helpers';
 import { database } from '../../services';
 import { updateAllWeeksAction } from '../../store/actions';
 import { State } from '../../store/states';
@@ -44,25 +43,10 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                     const { year, updateAllWeeks } = this.props;
 
                     database.hoursRef.on('value', (snapshot) => {
-                        let weeks: Weeks = {};
-                        if (snapshot) {
-                            weeks = snapshot.val()[year];
-                        }
+                        const allValues = snapshot && snapshot.val();
+                        const yearValue = allValues && allValues[year];
 
-                        if (!this.isValidWeeks(weeks)) {
-                            const initialWeekNumbers = createArrayFromRange(1, getNewestWeekNumberInYear(year));
-                            initialWeekNumbers.forEach((weekNumber) => {
-                                const week: Week = {};
-                                createArrayFromRange(0, 7).forEach((_, i) => [
-                                    moment().startOf('isoWeek').add(i, 'day').format(DATE_LONG),
-                                    ...createArrayFromRange(0, 5).map(() => 0),
-                                    'place'
-                                ]);
-
-                                weeks[weekNumber] = week;
-                            });
-                        }
-
+                        const weeks: Weeks = yearValue || {};
 
                         updateAllWeeks(weeks);
 
@@ -77,10 +61,6 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                         ? <Component {...this.props}/>
                         : <Loader/>;
                 }
-
-                private isValidWeeks = (weeks: Weeks) => {
-                    return true;
-                };
             }
 
             return connect(mapStateToProps, mapDispatchToProps)(WithWeeksData);
