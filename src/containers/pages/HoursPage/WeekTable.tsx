@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
 import { DATE_LONG, DATE_WITH_YEAR, Day, TableCell, Weeks } from '../../../constants';
-import { createArrayFromRange, createDispatchToPropsFunction } from '../../../helpers';
+import {
+    createArrayFromRange,
+    createDispatchToPropsFunction,
+    getCurrentWeekdayDate,
+    objectKeys
+} from '../../../helpers';
+import { database } from '../../../services';
 import { updateWeekAction } from '../../../store/actions';
 import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
@@ -24,7 +30,6 @@ interface OwnProps {
 
 interface OwnState {
     isDirty: boolean;
-    rows?: Array<Array<number | string>>;
 }
 
 interface StateProps {
@@ -58,29 +63,42 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     public componentDidMount() {
-        this.resetChanges();
+        const { weekNumber, updateWeek } = this.props;
+
+        const week = this.getWeek();
+        if (!week) {
+            updateWeek(weekNumber, this.populateEmptyWeek());
+        }
     }
 
     public render() {
         const { weekNumber, isCurrent, year } = this.props;
-        const { isDirty, rows } = this.state;
+        const { isDirty } = this.state;
 
-        if (!rows) {
+        const week = this.getWeek();
+        if (!week) {
             return null;
         }
 
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
 
-        const displayRows: TableCell[][] = rows.map((row, i) => row.map((cell, j) => {
-            if (j === 0) {
-                return cell;
-            } else if (j < 6) {
-                return this.createInputCell(i, j, InputCellType.NUMBER);
-            } else {
-                return this.createInputCell(i, j, InputCellType.TEXT);
-            }
-        }));
+        const displayRows: TableCell[][] = week.map((day, dayIndex) => [
+            getCurrentWeekdayDate(year, weekNumber, dayIndex).format(DATE_LONG),
+            ...objectKeys(day).map((cellProperty) => {
+                switch (cellProperty) {
+                    case 'hoursNo':
+                    case 'ssNo':
+                    case 'hoursGo':
+                    case 'ssGo':
+                    case 'overtime':
+                        return this.createInputCell(dayIndex, cellProperty, InputCellType.NUMBER);
+                    case 'notes':
+                    default:
+                        return this.createInputCell(dayIndex, cellProperty, InputCellType.TEXT);
+                }
+            })]
+        );
 
         return (
             <React.Fragment>
@@ -104,7 +122,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     saveLabel="Save"
                     cancelLabel="Discard"
                     onSave={this.saveChanges}
-                    onCancel={this.resetChanges}
+                    onCancel={this.discardChanges}
                     hide={!isDirty}
                 />
             </React.Fragment>
@@ -115,49 +133,59 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         // TODO Save changes to database
     };
 
-    private resetChanges = () => {
-        const { weekNumber, weeks } = this.props;
+    private discardChanges = () => {
+        const { year, weekNumber, updateWeek } = this.props;
 
-        this.setState({ isDirty: false, rows: this.createWeekRows(weeks[weekNumber]) });
+        this.setState({ isDirty: false });
+
+        database.hoursRef.child(year.toString()).child(weekNumber.toString()).once('value')
+            .then((snapshot) => {
+                const week: Day[] = (snapshot && snapshot.val()) || this.populateEmptyWeek();
+
+                updateWeek(weekNumber, week);
+            });
     };
 
-    private onInputCellChange = (weekIndex: number, dayIndex: number, type: InputCellType) =>
+    private onInputCellChange = (weekIndex: number, cellProperty: string, type: InputCellType) =>
         (event: React.FormEvent<HTMLInputElement>) => {
             const newValue = type === InputCellType.NUMBER ? +event.currentTarget.value : event.currentTarget.value;
 
-            const { rows } = this.state;
+            const { weekNumber, updateWeek } = this.props;
 
-            if (!rows) {
-                return;
+            const week = this.getWeek();
+
+            const oldValue = week[weekIndex][cellProperty];
+
+            if (newValue !== oldValue) {
+                week[weekIndex][cellProperty] = newValue;
+
+                this.setState({ isDirty: true });
+                // TODO Make sure this works because of mutability
+                updateWeek(weekNumber, week);
             }
-
-            rows[weekIndex][dayIndex] = newValue;
-
-            this.setState({ isDirty: true, rows });
         };
 
-    private createWeekRows = (week?: Day[]) => {
-        const populatedWeek = week || this.populateEmptyWeek();
+    // private createWeekRows = (week?: Day[]) => {
+    //     const populatedWeek = week || this.populateEmptyWeek();
+    //
+    //     return populatedWeek.map(this.createDayRow);
+    // };
 
-        return populatedWeek.map(this.createDayRow);
-    };
-
-    private createDayRow = (day: any, i: number) => {
-        const { year, weekNumber } = this.props;
-
-        const date = moment().year(year).isoWeek(weekNumber).isoWeekday(i + 1).format(DATE_LONG);
-
-        return [date, day.hoursNo, day.ssNo, day.hoursGo, day.ssGo, day.overtime, day.notes];
-    };
+    // private createDayRow = (day: any, i: number) => {
+    //     const { year, weekNumber } = this.props;
+    //
+    //     const date = moment().year(year).isoWeek(weekNumber).isoWeekday(i + 1).format(DATE_LONG);
+    //
+    //     return [date, day.hoursNo, day.ssNo, day.hoursGo, day.ssGo, day.overtime, day.notes];
+    // };
 
     private populateEmptyWeek = (): Day[] => createArrayFromRange(0, 7).map(() => this.populateEmptyDay());
 
     private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, overtime: 0, notes: '' });
 
-    private createInputCell = (dayIndex: number, cellIndex: number, type: InputCellType) => {
-        const { rows } = this.state;
-
-        if (!rows) {
+    private createInputCell = (dayIndex: number, cellProperty: string, type: InputCellType) => {
+        const week = this.getWeek();
+        if (!week) {
             return undefined;
         }
 
@@ -168,16 +196,22 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     min={0}
                     max={24}
                     step={0.5}
-                    value={rows[dayIndex][cellIndex]}
-                    onChange={this.onInputCellChange(dayIndex, cellIndex, type)}
+                    value={week[dayIndex][cellProperty]}
+                    onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
                 />;
             default:
                 return <Input
                     type="text"
-                    value={rows[dayIndex][cellIndex]}
-                    onChange={this.onInputCellChange(dayIndex, cellIndex, type)}
+                    value={week[dayIndex][cellProperty]}
+                    onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
                 />;
         }
+    };
+
+    private getWeek = () => {
+        const { weekNumber, weeks } = this.props;
+
+        return weeks[weekNumber];
     };
 }
 
