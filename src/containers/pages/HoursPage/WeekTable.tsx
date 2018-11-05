@@ -24,7 +24,7 @@ interface OwnProps {
 
 interface OwnState {
     isDirty: boolean;
-    rows?: TableCell[][];
+    rows?: Array<Array<number | string>>;
 }
 
 interface StateProps {
@@ -58,10 +58,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     public componentDidMount() {
-        const { weekNumber, weeks } = this.props;
-
-        const rows = this.createWeekRows(weeks[weekNumber]);
-        this.setState({ rows });
+        this.resetChanges();
     }
 
     public render() {
@@ -75,6 +72,16 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
 
+        const displayRows: TableCell[][] = rows.map((row, i) => row.map((cell, j) => {
+            if (j === 0) {
+                return cell;
+            } else if (j < 6) {
+                return this.createInputCell(i, j, InputCellType.NUMBER);
+            } else {
+                return this.createInputCell(i, j, InputCellType.TEXT);
+            }
+        }));
+
         return (
             <React.Fragment>
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
@@ -87,7 +94,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         className="table"
                         columns={this.columns}
                         columnClassNames={this.columnClassNames}
-                        rows={rows}
+                        rows={displayRows}
                         footer={this.footer}
                     />
                 </div>
@@ -97,7 +104,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     saveLabel="Save"
                     cancelLabel="Discard"
                     onSave={this.saveChanges}
-                    onCancel={this.discardChanges}
+                    onCancel={this.resetChanges}
                     hide={!isDirty}
                 />
             </React.Fragment>
@@ -108,35 +115,31 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         // TODO Save changes to database
     };
 
-    private discardChanges = () => {
-        // TODO Reset weektable to data from database
+    private resetChanges = () => {
+        const { weekNumber, weeks } = this.props;
+
+        this.setState({ isDirty: false, rows: this.createWeekRows(weeks[weekNumber]) });
     };
 
-    private onInputCellChange = (weekIndex: number, dayIndex: number, type: InputCellType, value: number) =>
+    private onInputCellChange = (weekIndex: number, dayIndex: number, type: InputCellType) =>
         (event: React.FormEvent<HTMLInputElement>) => {
-            const newValue = +event.currentTarget.value;
+            const newValue = type === InputCellType.NUMBER ? +event.currentTarget.value : event.currentTarget.value;
 
             const { rows } = this.state;
 
-            if (newValue !== value && rows) {
-                rows[weekIndex][dayIndex] = this.createInputCell(weekIndex, dayIndex, type, newValue);
-
-                this.setState({ isDirty: true, rows });
+            if (!rows) {
+                return;
             }
+
+            rows[weekIndex][dayIndex] = newValue;
+
+            this.setState({ isDirty: true, rows });
         };
 
     private createWeekRows = (week?: Day[]) => {
         const populatedWeek = week || this.populateEmptyWeek();
 
-        return populatedWeek.map((day, i) => {
-            const dayRow = this.createDayRow(day, i);
-
-            return [
-                dayRow[0],
-                ...dayRow.splice(1, 5).map((value, j) => this.createInputCell(i, j + 1, InputCellType.NUMBER, value)),
-                this.createInputCell(i, 6, InputCellType.TEXT, dayRow[6])
-            ];
-        });
+        return populatedWeek.map(this.createDayRow);
     };
 
     private createDayRow = (day: any, i: number) => {
@@ -151,22 +154,28 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, overtime: 0, notes: '' });
 
-    private createInputCell = (weekIndex: number, dayIndex: number, type: InputCellType, value: number) => {
+    private createInputCell = (dayIndex: number, cellIndex: number, type: InputCellType) => {
+        const { rows } = this.state;
+
+        if (!rows) {
+            return undefined;
+        }
+
         switch (type) {
             case 'number':
-                const defaultValue = value || 0;
-
                 return <Input
                     type="number"
                     min={0}
                     max={24}
                     step={0.5}
-                    defaultValue={`${defaultValue}`}
-                    onChange={this.onInputCellChange(weekIndex, dayIndex, type, defaultValue)}
+                    value={rows[dayIndex][cellIndex]}
+                    onChange={this.onInputCellChange(dayIndex, cellIndex, type)}
                 />;
             default:
                 return <Input
                     type="text"
+                    value={rows[dayIndex][cellIndex]}
+                    onChange={this.onInputCellChange(dayIndex, cellIndex, type)}
                 />;
         }
     };
