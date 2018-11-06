@@ -46,7 +46,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                         const allValues = snapshot && snapshot.val();
                         const yearValue = allValues && allValues[year];
 
-                        const weeks: Weeks = yearValue || {};
+                        const weeks = yearValue || {};
 
                         updateAllWeeks(weeks);
 

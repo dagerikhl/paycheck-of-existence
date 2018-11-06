@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { DATE_LONG, DATE_WITH_YEAR, Day, TableCell, Weeks } from '../../../constants';
+import { DATE_LONG, DATE_WITH_YEAR, Day, TableCell, Week, Weeks } from '../../../constants';
 import {
     createArrayFromRange,
     createDispatchToPropsFunction,
@@ -43,7 +43,7 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 interface DispatchProps {
-    updateWeek: (weekNumber: number, week: Day[]) => void;
+    updateWeek: (weekNumber: number, week: Week) => void;
 }
 
 const mapDispatchToProps = createDispatchToPropsFunction({
@@ -83,7 +83,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
 
-        const displayRows: TableCell[][] = week.map((day, dayIndex) => [
+        const displayRows: TableCell[][] = week.days.map((day, dayIndex) => [
             getCurrentWeekdayDate(year, weekNumber, dayIndex).format(DATE_LONG),
             ...objectKeys(day).map((cellProperty) => {
                 switch (cellProperty) {
@@ -140,7 +140,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         database.hoursRef.child(year.toString()).child(weekNumber.toString()).once('value')
             .then((snapshot) => {
-                const week: Day[] = (snapshot && snapshot.val()) || this.populateEmptyWeek();
+                const week = (snapshot && snapshot.val()) || this.populateEmptyWeek();
 
                 updateWeek(weekNumber, week);
             });
@@ -154,10 +154,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
             const week = this.getWeek();
 
-            const oldValue = week[weekIndex][cellProperty];
+            const oldValue = week.days[weekIndex][cellProperty];
 
             if (newValue !== oldValue) {
-                week[weekIndex][cellProperty] = newValue;
+                week.days[weekIndex][cellProperty] = newValue;
 
                 this.setState({ isDirty: true });
                 // TODO Make sure this works because of mutability
@@ -165,21 +165,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             }
         };
 
-    // private createWeekRows = (week?: Day[]) => {
-    //     const populatedWeek = week || this.populateEmptyWeek();
-    //
-    //     return populatedWeek.map(this.createDayRow);
-    // };
-
-    // private createDayRow = (day: any, i: number) => {
-    //     const { year, weekNumber } = this.props;
-    //
-    //     const date = moment().year(year).isoWeek(weekNumber).isoWeekday(i + 1).format(DATE_LONG);
-    //
-    //     return [date, day.hoursNo, day.ssNo, day.hoursGo, day.ssGo, day.overtime, day.notes];
-    // };
-
-    private populateEmptyWeek = (): Day[] => createArrayFromRange(0, 7).map(() => this.populateEmptyDay());
+    private populateEmptyWeek = (): Week => ({ days: createArrayFromRange(0, 7).map(() => this.populateEmptyDay()) });
 
     private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, overtime: 0, notes: '' });
 
@@ -196,13 +182,13 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     min={0}
                     max={24}
                     step={0.5}
-                    value={week[dayIndex][cellProperty]}
+                    value={week.days[dayIndex][cellProperty]}
                     onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
                 />;
             default:
                 return <Input
                     type="text"
-                    value={week[dayIndex][cellProperty]}
+                    value={week.days[dayIndex][cellProperty]}
                     onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
                 />;
         }

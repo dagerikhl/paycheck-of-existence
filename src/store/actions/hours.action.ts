@@ -1,4 +1,4 @@
-import { Day, Weeks } from '../../constants';
+import { Week, Weeks } from '../../constants';
 
 export enum HoursActionType {
     UpdateAllWeeks = 'HOURS/UPDATE_ALL_WEEKS',
@@ -22,10 +22,10 @@ export const updateAllWeeksAction = (weeks: Weeks): UpdateAllWeeks => ({
 export interface UpdateWeek {
     type: HoursActionType.UpdateWeek;
     weekNumber: number;
-    week: Day[];
+    week: Week;
 }
 
-export const updateWeekAction = (weekNumber: number, week: Day[]): UpdateWeek => ({
+export const updateWeekAction = (weekNumber: number, week: Week): UpdateWeek => ({
     type: HoursActionType.UpdateWeek,
     weekNumber,
     week
