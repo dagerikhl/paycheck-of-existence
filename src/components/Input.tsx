@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { Theme } from '../constants';
+import { InputCellType, Theme } from '../constants';
+import { roundTo } from '../helpers';
 
 import './Input.css';
 
@@ -9,13 +10,20 @@ interface OwnProps {
     theme?: Theme;
     square?: boolean;
     round?: boolean;
+    type: InputCellType;
+    value?: number | string;
+    onValueChange?: (value: number | string) => void;
+    placeholder?: string;
+    step?: number;
+    min?: number;
+    max?: number;
+    minLength?: number;
+    maxLength?: number;
 }
 
-type InputProps = OwnProps & React.HTMLProps<HTMLInputElement>;
-
-class InputComponent extends React.PureComponent<InputProps> {
+class InputComponent extends React.PureComponent<OwnProps> {
     public render() {
-        const { className, theme, square, round, children, value, ...rest } = this.props;
+        const { className, theme, square, round, type, value, placeholder, step, children } = this.props;
 
         const classNames = `${className
             } input ${theme || Theme.NEUTRAL
@@ -25,11 +33,11 @@ class InputComponent extends React.PureComponent<InputProps> {
         return (
             <input
                 className={classNames}
+                type={type}
                 value={value}
                 onChange={this.onChange}
-                // TODO Implement onBlur to ensure a correct input at all times
-                // onBlur={this.onBlur}
-                {...rest}
+                placeholder={placeholder}
+                step={step}
             >
                 {children}
             </input>
@@ -37,34 +45,57 @@ class InputComponent extends React.PureComponent<InputProps> {
     }
 
     private onChange = (event: React.FormEvent<HTMLInputElement>) => {
-        const { value, onChange } = this.props;
+        const { onValueChange } = this.props;
 
-        if (!onChange) {
+        if (!onValueChange) {
             return;
         }
 
         const newValue = event.currentTarget.value;
-        if (newValue !== value && this.isValid(newValue)) {
-            onChange(event);
-        }
+
+        const validValue = this.enforceValidValue(newValue);
+
+        onValueChange(validValue);
     };
 
-    private isValid = (newValue: number | string) => {
-        const { min, max, maxLength } = this.props;
+    private enforceValidValue = (value: number | string): number | string => {
+        const { type, step, min, max, minLength, maxLength } = this.props;
 
-        if (min && min < newValue) {
-            return min;
+        let validValue = value;
+        switch (type) {
+            case InputCellType.NUMBER:
+                validValue = +value;
+
+                if (step !== undefined) {
+                    validValue = roundTo(validValue, step);
+                }
+
+                if (min !== undefined && min > validValue) {
+                    validValue = min;
+                }
+
+                if (max !== undefined && max < validValue) {
+                    validValue = max;
+                }
+
+                break;
+            case InputCellType.EMAIL:
+            case InputCellType.PASSWORD:
+            case InputCellType.TEXT:
+                validValue = value as string;
+
+                if (minLength !== undefined && minLength < validValue.length) {
+                    validValue = validValue.padStart(minLength - validValue.length, '-');
+                }
+
+                if (maxLength !== undefined && maxLength > validValue.length) {
+                    validValue = validValue.substr(0, maxLength);
+                }
+
+                break;
         }
 
-        if (max && max > newValue) {
-            return max;
-        }
-
-        if (typeof newValue === 'string' && maxLength && maxLength > newValue.length) {
-            return newValue.substr(0, maxLength);
-        }
-
-        return newValue;
+        return validValue;
     };
 }
 

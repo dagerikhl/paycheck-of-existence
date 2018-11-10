@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { DATE_LONG, DATE_WITH_YEAR, Day, TableCell, Week, Weeks } from '../../../constants';
+import { DATE_LONG, DATE_WITH_YEAR, Day, InputCellType, TableCell, Week, Weeks } from '../../../constants';
 import {
     createArrayFromRange,
     createDispatchToPropsFunction,
@@ -17,11 +17,6 @@ import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
 
 import './WeekTable.css';
-
-enum InputCellType {
-    NUMBER = 'number',
-    TEXT = 'text'
-}
 
 interface OwnProps {
     weekNumber: number;
@@ -146,24 +141,22 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             });
     };
 
-    private onInputCellChange = (weekIndex: number, cellProperty: string, type: InputCellType) =>
-        (event: React.FormEvent<HTMLInputElement>) => {
-            const newValue = type === InputCellType.NUMBER ? +event.currentTarget.value : event.currentTarget.value;
+    private onInputCellChange = (weekIndex: number, cellProperty: string) => (value: number | string) => {
+        const { weekNumber, updateWeek } = this.props;
 
-            const { weekNumber, updateWeek } = this.props;
+        const week = this.getWeek();
 
-            const week = this.getWeek();
+        const oldValue = week.days[weekIndex][cellProperty];
 
-            const oldValue = week.days[weekIndex][cellProperty];
+        // TODO Implement a proper check that marks it as not dirty if value is same as from server
+        if (value !== oldValue) {
+            this.setState({ isDirty: true });
+        }
 
-            if (newValue !== oldValue) {
-                week.days[weekIndex][cellProperty] = newValue;
-
-                this.setState({ isDirty: true });
-                // TODO Make sure this works because of mutability
-                updateWeek(weekNumber, week);
-            }
-        };
+        // TODO Make sure this works because of mutability
+        week.days[weekIndex][cellProperty] = value;
+        updateWeek(weekNumber, week);
+    };
 
     private populateEmptyWeek = (): Week => ({ days: createArrayFromRange(0, 7).map(() => this.populateEmptyDay()) });
 
@@ -175,23 +168,26 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             return undefined;
         }
 
+        let validations = {};
         switch (type) {
-            case 'number':
-                return <Input
-                    type="number"
-                    min={0}
-                    max={24}
-                    step={0.5}
-                    value={week.days[dayIndex][cellProperty]}
-                    onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
-                />;
-            default:
-                return <Input
-                    type="text"
-                    value={week.days[dayIndex][cellProperty]}
-                    onChange={this.onInputCellChange(dayIndex, cellProperty, type)}
-                />;
+            case InputCellType.NUMBER:
+                validations = {
+                    min: 0,
+                    max: 24,
+                    step: 0.5
+                };
+
+                break;
+            case InputCellType.TEXT:
+                break;
         }
+
+        return <Input
+            type={type}
+            value={week.days[dayIndex][cellProperty]}
+            onValueChange={this.onInputCellChange(dayIndex, cellProperty)}
+            {...validations}
+        />;
     };
 
     private getWeek = () => {

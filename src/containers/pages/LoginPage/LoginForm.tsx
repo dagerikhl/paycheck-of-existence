@@ -5,7 +5,7 @@ import { Button } from '../../../components/Button';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
-import { Routes } from '../../../constants';
+import { InputCellType, Routes } from '../../../constants';
 import { auth } from '../../../services';
 
 import './LoginForm.css';
@@ -37,16 +37,16 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
             <React.Fragment>
                 <form className="login-form" onSubmit={this.onSubmit}>
                     <Input
-                        type="email"
+                        type={InputCellType.EMAIL}
                         placeholder="E-mail address"
                         value={email}
-                        onChange={this.onEmailChange}
+                        onValueChange={this.onEmailChange}
                     />
                     <Input
-                        type="password"
+                        type={InputCellType.PASSWORD}
                         placeholder="Password"
                         value={password}
-                        onChange={this.onPasswordChange}
+                        onValueChange={this.onPasswordChange}
                     />
 
                     <Button type="submit" disabled={isMissingRequired}>Login</Button>
@@ -59,12 +59,12 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
         );
     }
 
-    private onEmailChange = (e: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ email: e.currentTarget.value });
+    private onEmailChange = (value: string) => {
+        this.setState({ email: value });
     };
 
-    private onPasswordChange = (e: React.FormEvent<HTMLInputElement>) => {
-        this.setState({ password: e.currentTarget.value });
+    private onPasswordChange = (value: string) => {
+        this.setState({ password: value });
     };
 
     private onSubmit = (e: React.FormEvent) => {
