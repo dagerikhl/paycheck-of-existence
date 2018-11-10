@@ -9,7 +9,8 @@ import {
     createArrayFromRange,
     createDispatchToPropsFunction,
     getCurrentWeekdayDate,
-    objectKeys
+    objectKeys,
+    toHourFormat
 } from '../../../helpers';
 import { database } from '../../../services';
 import { updateWeekAction } from '../../../store/actions';
@@ -53,8 +54,6 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
     private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', undefined];
     private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
-
-    private footer = [undefined, 0, 0, 0, 0, 0, undefined];
 
     public state: OwnState = {
         isDirty: false
@@ -100,6 +99,18 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 })]
         );
 
+        const footer = week.days
+            .reduce((result: number[], day) => [
+                undefined,
+                result[1] + day.hoursNo,
+                result[2] + day.ssNo,
+                result[3] + day.hoursGo,
+                result[4] + day.ssGo,
+                result[5] + day.overtime,
+                undefined
+            ], [undefined, 0, 0, 0, 0, 0, undefined])
+            .map((value) => value !== undefined ? toHourFormat(value) : undefined);
+
         return (
             <React.Fragment>
                 <div className={`week-table ${isCurrent ? 'current' : ''}`}>
@@ -114,7 +125,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         columnClassNames={this.columnClassNames}
                         rows={displayRows}
                         rowClassNames={this.rowClassNames}
-                        footer={this.footer}
+                        footer={footer}
                     />
                 </div>
 
