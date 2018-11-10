@@ -58,7 +58,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                     const { isLoaded } = this.state;
 
                     return isLoaded
-                        ? <Component {...this.props}/>
+                        ? <Component/>
                         : <Loader/>;
                 }
             }
@@ -66,7 +66,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
             return connect(mapStateToProps, mapDispatchToProps)(WithWeeksData);
         }
         default: {
-            return ((props) => <Component {...props}/>) as React.SFC;
+            return (() => <Component/>) as React.SFC;
         }
     }
 };

@@ -178,8 +178,6 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 };
 
                 break;
-            case InputCellType.TEXT:
-                break;
         }
 
         return <Input
