@@ -11,7 +11,7 @@ $theme-secondary-text: #000000;
 
 // Colors
 $color-neutral: #ffffff;
-$color-neutral_hover: darken($color-neutral, 8%);
+$color-neutral_hover: darken($color-neutral, 4%);
 $color-neutral_active: darken($color-neutral, 16%);
 
 $color-accent: #0000bf;
@@ -22,6 +22,7 @@ $error-color: #ff0000;
 
 $shadow-color: rgba(0, 0, 0, 0.75);
 $shadow-color-light: rgba(0, 0, 0, 0.25);
+$shadow-color-lighter: rgba(0, 0, 0, 0.1);
 
 // Layout
 $header-height: 64px;
