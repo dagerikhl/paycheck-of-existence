@@ -26,7 +26,7 @@
 
     // Table columns
     .date {
-        width: 21%;
+        width: 148px;
 
         padding: 0 8px;
 
@@ -37,36 +37,30 @@
     .hours-no {
         @extend %table-number-cell;
 
-        width: 8%;
+        width: 86px;
     }
 
     .ss-no {
         @extend %table-number-cell;
 
-        width: 8%;
+        width: 86px;
     }
 
     .hours-go {
         @extend %table-number-cell;
 
-        width: 8%;
+        width: 86px;
     }
 
     .ss-go {
         @extend %table-number-cell;
 
-        width: 8%;
+        width: 86px;
     }
 
     .overtime {
         @extend %table-number-cell;
 
-        width: 8%;
-    }
-
-    .notes {
-        width: auto;
-
-        padding: 0 8px;
+        width: 86px;
     }
 }
