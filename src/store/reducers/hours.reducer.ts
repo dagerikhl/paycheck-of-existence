@@ -8,6 +8,11 @@ export const hoursReducer = (state: HoursState = initialHoursState, action: Hour
                 ...state,
                 weeks: action.weeks
             };
+        case HoursActionType.UpdateInitialWeeks:
+            return {
+                ...state,
+                initialWeeks: action.weeks
+            };
         case HoursActionType.UpdateWeek:
             return {
                 ...state,

@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { Weeks } from '../../constants';
 import { createDispatchToPropsFunction } from '../../helpers';
 import { database } from '../../services';
-import { updateAllWeeksAction } from '../../store/actions';
+import { updateAllWeeksAction, updateInitialWeeksAction } from '../../store/actions';
 import { State } from '../../store/states';
 import { Loader } from '../Loader';
 
@@ -18,20 +18,20 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
         case 'weeks': {
             interface StateProps {
                 year: number;
-                weeks: Weeks;
             }
 
             const mapStateToProps = (state: State): StateProps => ({
-                year: state.period.year,
-                weeks: state.hours.weeks
+                year: state.period.year
             });
 
             interface DispatchProps {
                 updateAllWeeks: (weeks: Weeks) => void;
+                updateInitialWeeks: (weeks: Weeks) => void;
             }
 
             const mapDispatchToProps = createDispatchToPropsFunction({
-                updateAllWeeks: updateAllWeeksAction
+                updateAllWeeks: updateAllWeeksAction,
+                updateInitialWeeks: updateInitialWeeksAction
             });
 
             type WithDataPropsWeeks = StateProps & DispatchProps & RouteComponentProps;
@@ -40,7 +40,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 public state: OwnState = { isLoaded: false };
 
                 public componentDidMount() {
-                    const { year, updateAllWeeks } = this.props;
+                    const { year, updateAllWeeks, updateInitialWeeks } = this.props;
 
                     database.hoursRef.on('value', (snapshot) => {
                         const allValues = snapshot && snapshot.val();
@@ -49,6 +49,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                         const weeks = yearValue || {};
 
                         updateAllWeeks(weeks);
+                        updateInitialWeeks(weeks);
 
                         this.setState({ isLoaded: true });
                     });

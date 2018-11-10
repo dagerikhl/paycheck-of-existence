@@ -5,4 +5,7 @@ export interface Day {
     ssGo: number;
     overtime: number;
     notes: string;
+
+    // Presentational properties
+    isDirty?: boolean;
 }
