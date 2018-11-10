@@ -52,6 +52,7 @@ type WeekTableProps = OwnProps & StateProps & DispatchProps;
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
     private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', undefined];
+    private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
 
     private footer = [undefined, 0, 0, 0, 0, 0, undefined];
 
@@ -112,6 +113,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         columns={this.columns}
                         columnClassNames={this.columnClassNames}
                         rows={displayRows}
+                        rowClassNames={this.rowClassNames}
                         footer={this.footer}
                     />
                 </div>

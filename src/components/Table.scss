@@ -39,18 +39,6 @@
                 padding-top: 4px;
                 padding-bottom: 4px;
             }
-
-            &:first-child {
-                > td {
-                    padding-top: 16px;
-                }
-            }
-
-            &:last-child {
-                > td {
-                    padding-bottom: 16px;
-                }
-            }
         }
     }
 }

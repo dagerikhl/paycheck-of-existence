@@ -9,12 +9,13 @@ interface OwnProps {
     columns?: TableCell[];
     columnClassNames?: Array<string | undefined>;
     rows: TableCell[][];
+    rowClassNames?: Array<string | undefined>;
     footer?: TableCell[];
     footerClassName?: string;
 }
 
 const TableComponent: React.SFC<OwnProps> =
-    ({ className, columns, columnClassNames, rows, footer, footerClassName }) => (
+    ({ className, columns, columnClassNames, rows, rowClassNames, footer, footerClassName }) => (
         <table className={`${className} table`}>
             {columns && <thead>
                 <tr>
@@ -24,7 +25,7 @@ const TableComponent: React.SFC<OwnProps> =
 
             <tbody>
                 {rows.map((row, i) => (
-                    <tr key={i}>
+                    <tr key={i} className={rowClassNames && rowClassNames[i]}>
                         {row.map((cell, j) =>
                             <td key={j} className={columnClassNames && columnClassNames[j]}>{cell}</td>)}
                     </tr>
