@@ -16,13 +16,20 @@
     }
 }
 
-%input {
+%button {
     width: 100%;
 
     padding: 6px 12px;
 
     border: 1px solid $shadow-color;
     border-radius: 2px;
+
+    // Patch for normalize font size on buttons
+    font-size: 16px;
+
+    &:hover {
+        cursor: pointer;
+    }
 
     &.square {
         border-radius: 0;
@@ -56,6 +63,34 @@
         &:active {
             background-color: $color-accent_active;
         }
+    }
+}
+
+%input {
+    width: 100%;
+
+    padding: 6px 12px 4px 12px;
+
+    background: none;
+    border: none;
+    border-bottom: 2px solid $shadow-color-light;
+    border-radius: 2px;
+
+    &:hover {
+        background-color: $color-neutral_hover;
+    }
+
+    &:focus {
+        border-bottom: 2px solid $shadow-color;
+        outline: none;
+    }
+
+    &.neutral {
+        color: $theme-secondary-text;
+    }
+
+    &.accent {
+        color: $theme-primary-text;
     }
 }
 
