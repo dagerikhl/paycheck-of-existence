@@ -27,10 +27,6 @@
     // Patch for normalize font size on buttons
     font-size: 16px;
 
-    &:hover {
-        cursor: pointer;
-    }
-
     &.square {
         border-radius: 0;
     }
@@ -43,7 +39,7 @@
         color: $theme-secondary-text;
         background-color: $color-neutral;
 
-        &:hover {
+        &:hover:not(:disabled) {
             background-color: $color-neutral_hover;
         }
 
@@ -56,13 +52,22 @@
         color: $theme-primary-text;
         background-color: $color-accent;
 
-        &:hover {
+        &:hover:not(:disabled) {
             background-color: $color-accent_hover;
         }
 
         &:active {
             background-color: $color-accent_active;
         }
+    }
+
+    &:hover:not(:disabled) {
+        cursor: pointer;
+    }
+
+    &:disabled {
+        color: $shadow-color-light;
+        border: 1px solid $shadow-color-light;
     }
 }
 
@@ -76,7 +81,15 @@
     border-bottom: 2px solid $shadow-color-light;
     border-radius: 2px;
 
-    &:hover {
+    &.neutral {
+        color: $theme-secondary-text;
+    }
+
+    &.accent {
+        color: $theme-primary-text;
+    }
+
+    &:hover:not(:disabled) {
         background-color: $color-neutral_hover;
     }
 
@@ -85,12 +98,8 @@
         outline: none;
     }
 
-    &.neutral {
-        color: $theme-secondary-text;
-    }
-
-    &.accent {
-        color: $theme-primary-text;
+    &:disabled {
+        color: $shadow-color-light;
     }
 }
 

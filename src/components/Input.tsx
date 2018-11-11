@@ -14,6 +14,7 @@ interface OwnProps {
     value?: number | string;
     onValueChange?: (value: number | string) => void;
     placeholder?: string;
+    disabled?: boolean;
     step?: number;
     min?: number;
     max?: number;
@@ -23,7 +24,7 @@ interface OwnProps {
 
 class InputComponent extends React.PureComponent<OwnProps> {
     public render() {
-        const { className, theme, square, round, type, value, placeholder, step, children } = this.props;
+        const { className, theme, square, round, type, value, placeholder, disabled, step, children } = this.props;
 
         const classNames = `${className
             } input ${theme || Theme.NEUTRAL
@@ -37,6 +38,7 @@ class InputComponent extends React.PureComponent<OwnProps> {
                 value={value}
                 onChange={this.onChange}
                 placeholder={placeholder}
+                disabled={disabled}
                 step={step}
             >
                 {children}
