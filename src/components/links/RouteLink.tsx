@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ interface OwnProps {
 
 const RouteLinkComponent: React.SFC<OwnProps> = ({ className, theme, routeRef }) => (
     <NavLink
-        className={`${className} link ${theme || Theme.NEUTRAL}`}
+        className={classNames({ [className as string]: className, 'link': true, [theme || Theme.NEUTRAL]: true })}
         activeClassName="active"
         to={routeRef.path}
         exact

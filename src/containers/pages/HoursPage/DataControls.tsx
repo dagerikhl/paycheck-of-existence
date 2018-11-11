@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { Button } from '../../../components/Button';
@@ -16,7 +17,7 @@ interface OwnProps {
 
 const DataControlsComponent: React.SFC<OwnProps> =
     ({ className, label, saveLabel, cancelLabel, hide, onSave, onCancel }) => (
-        <div className={`${className} data-controls ${hide ? '' : 'open'}`}>
+        <div className={classNames({ [className as string]: true, 'data-controls': true, 'open': !hide })}>
             <h3>{label}</h3>
 
             <div className="control-buttons">

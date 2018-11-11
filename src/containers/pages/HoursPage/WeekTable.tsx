@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -55,9 +56,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', undefined];
     private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
 
-    public state: OwnState = {
-        isDirty: false
-    };
+    public state: OwnState = { isDirty: false };
 
     public componentDidMount() {
         const { weekNumber, updateWeek } = this.props;
@@ -121,7 +120,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         return (
             <React.Fragment>
-                <div className={`week-table ${isCurrent ? 'current' : ''}`}>
+                <div className={classNames({ 'week-table': true, 'current': isCurrent })}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
                         <span className="dates">{from.format(DATE_WITH_YEAR)} &ndash; {to.format(DATE_WITH_YEAR)}</span>

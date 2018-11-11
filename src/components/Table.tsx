@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { TableCell } from '../constants';
@@ -16,7 +17,7 @@ interface OwnProps {
 
 const TableComponent: React.SFC<OwnProps> =
     ({ className, columns, columnClassNames, rows, rowClassNames, footer, footerClassName }) => (
-        <table className={`${className} table`}>
+        <table className={classNames({ [className as string]: className, 'table': true })}>
             {columns && <thead>
                 <tr>
                     {columns.map((cell, i) => <th key={i}>{cell}</th>)}

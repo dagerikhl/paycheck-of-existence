@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { InputCellType, Theme } from '../constants';
@@ -26,14 +27,17 @@ class InputComponent extends React.PureComponent<OwnProps> {
     public render() {
         const { className, theme, square, round, type, value, placeholder, disabled, step, children } = this.props;
 
-        const classNames = `${className
-            } input ${theme || Theme.NEUTRAL
-            } ${square ? 'square' : ''
-            } ${round ? 'round' : ''}`;
+        const classes = classNames({
+            [className as string]: className,
+            'input': true,
+            [theme || Theme.NEUTRAL]: true,
+            'square': square,
+            'round': round
+        });
 
         return (
             <input
-                className={classNames}
+                className={classes}
                 type={type}
                 value={value}
                 onChange={this.onChange}

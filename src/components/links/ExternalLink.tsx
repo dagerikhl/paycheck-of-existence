@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { ExternalRef, Theme } from '../../constants';
@@ -14,7 +15,7 @@ type ExternalLinkProps = OwnProps & React.HTMLProps<HTMLAnchorElement>;
 
 const ExternalLinkComponent: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => (
     <a
-        className={`${className} link ${theme || Theme.NEUTRAL}`}
+        className={classNames({ [className as string]: className, 'link': true, [theme || Theme.NEUTRAL]: true })}
         href={externalRef.url}
         target={externalRef.openInWindow ? undefined : '_blank'}
         rel="noopener noreferrer"

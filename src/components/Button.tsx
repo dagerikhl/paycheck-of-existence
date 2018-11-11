@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react';
 
 import { Theme } from '../constants';
@@ -16,7 +17,13 @@ type ButtonProps = OwnProps & React.HTMLProps<HTMLButtonElement>;
 
 const ButtonComponent: React.SFC<ButtonProps> = ({ className, theme, square, round, children, ...rest }) => (
     <button
-        className={`${className} button ${theme || Theme.NEUTRAL} ${square ? 'square' : ''} ${round ? 'round' : ''}`}
+        className={classNames({
+            [className as string]: className,
+            'button': true,
+            [theme || Theme.NEUTRAL]: true,
+            'square': square,
+            'round': round
+        })}
         type="button"
         {...rest}
     >
