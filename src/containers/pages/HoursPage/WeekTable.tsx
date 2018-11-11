@@ -80,24 +80,32 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
         const to = from.clone().endOf('isoWeek');
 
-        const displayRows: TableCell[][] = week.days.map((day, dayIndex) => [
-            getCurrentWeekdayDate(year, weekNumber, dayIndex).format(DATE_LONG),
-            ...objectKeys(day)
-                .filter((cellProperty) => cellProperty !== 'isDirty')
-                .map((cellProperty) => {
-                    switch (cellProperty) {
-                        case 'hoursNo':
-                        case 'ssNo':
-                        case 'hoursGo':
-                        case 'ssGo':
-                        case 'overtime':
-                            return this.createInputCell(dayIndex, cellProperty, InputCellType.NUMBER);
-                        case 'notes':
-                        default:
-                            return this.createInputCell(dayIndex, cellProperty, InputCellType.TEXT);
-                    }
-                })]
-        );
+        const displayRows: TableCell[][] = week.days.map((day, dayIndex) => {
+            const date = getCurrentWeekdayDate(year, weekNumber, dayIndex);
+            const dateCell = <div className="current-date">
+                {date.isSame(moment(), 'date') && <div className="current-date-indicator">></div>}
+                {date.format(DATE_LONG)}
+            </div>;
+
+            return [
+                dateCell,
+                ...objectKeys(day)
+                    .filter((cellProperty) => cellProperty !== 'isDirty')
+                    .map((cellProperty) => {
+                        switch (cellProperty) {
+                            case 'hoursNo':
+                            case 'ssNo':
+                            case 'hoursGo':
+                            case 'ssGo':
+                            case 'overtime':
+                                return this.createInputCell(dayIndex, cellProperty, InputCellType.NUMBER);
+                            case 'notes':
+                            default:
+                                return this.createInputCell(dayIndex, cellProperty, InputCellType.TEXT);
+                        }
+                    })
+            ];
+        });
 
         const footer = week.days
             .reduce((result: number[], day) => [

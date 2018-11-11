@@ -20,6 +20,18 @@
         }
     }
 
+    .current-date {
+        position: relative;
+
+        .current-date-indicator {
+            position: absolute;
+            top: 0;
+            left: -24px;
+
+            font-style: normal;
+        }
+    }
+
     .table {
         width: 100%;
     }
