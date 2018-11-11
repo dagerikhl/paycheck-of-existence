@@ -1,8 +1,8 @@
-import * as classNames from 'classnames';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { Card } from '../../../components/Card';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
 import { DATE_LONG, DATE_WITH_YEAR, Day, InputCellType, TableCell, Week, Weeks } from '../../../constants';
@@ -120,7 +120,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         return (
             <React.Fragment>
-                <div className={classNames({ 'week-table': true, 'current': isCurrent })}>
+                <Card className="week-table" level={isCurrent ? 3 : 1}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
                         <span className="dates">{from.format(DATE_WITH_YEAR)} &ndash; {to.format(DATE_WITH_YEAR)}</span>
@@ -134,7 +134,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         rowClassNames={this.rowClassNames}
                         footer={footer}
                     />
-                </div>
+                </Card>
 
                 <DataControls
                     label={`You have unsaved changes in week ${weekNumber}.`}

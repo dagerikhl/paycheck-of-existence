@@ -9,6 +9,8 @@
     min-height: 100vh;
     min-width: 1024px;
 
+    background-color: $color-background;
+
     .header {
         grid-area: h;
 
@@ -17,6 +19,8 @@
 
         height: $header-height;
         width: 100%;
+
+        z-index: 1000;
     }
 
     .main {

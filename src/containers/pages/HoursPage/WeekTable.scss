@@ -4,12 +4,6 @@
 .week-table {
     padding: 16px 32px;
 
-    box-shadow: 0 0 2px 2px $theme-secondary-light;
-
-    &.current {
-        box-shadow: 0 0 2px 2px $theme-primary-light;
-    }
-
     .title {
         margin-bottom: 32px;
 

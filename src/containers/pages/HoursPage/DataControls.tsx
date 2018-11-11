@@ -17,7 +17,7 @@ interface OwnProps {
 
 const DataControlsComponent: React.SFC<OwnProps> =
     ({ className, label, saveLabel, cancelLabel, hide, onSave, onCancel }) => (
-        <div className={classNames({ [className as string]: true, 'data-controls': true, 'open': !hide })}>
+        <div className={classNames({ [className as string]: className, 'data-controls': true, 'open': !hide })}>
             <h3>{label}</h3>
 
             <div className="control-buttons">
