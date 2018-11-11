@@ -3,6 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Card } from '../../../components/Card';
+import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
 import { DATE_LONG, DATE_WITH_YEAR, Day, InputCellType, TableCell, Week, Weeks } from '../../../constants';
@@ -27,6 +28,7 @@ interface OwnProps {
 
 interface OwnState {
     isDirty: boolean;
+    error?: any;
 }
 
 interface StateProps {
@@ -69,7 +71,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     public render() {
         const { weekNumber, isCurrent, year } = this.props;
-        const { isDirty } = this.state;
+        const { error, isDirty } = this.state;
 
         const week = this.getWeek();
         if (!week) {
@@ -88,21 +90,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
             return [
                 dateCell,
-                ...objectKeys(day)
-                    .filter((cellProperty) => cellProperty !== 'isDirty')
-                    .map((cellProperty) => {
-                        switch (cellProperty) {
-                            case 'hoursNo':
-                            case 'ssNo':
-                            case 'hoursGo':
-                            case 'ssGo':
-                            case 'overtime':
-                                return this.createInputCell(dayIndex, cellProperty, InputCellType.NUMBER);
-                            case 'notes':
-                            default:
-                                return this.createInputCell(dayIndex, cellProperty, InputCellType.TEXT);
-                        }
-                    })
+                this.createInputCell(dayIndex, 'hoursNo', InputCellType.NUMBER),
+                this.createInputCell(dayIndex, 'ssNo', InputCellType.NUMBER),
+                this.createInputCell(dayIndex, 'hoursGo', InputCellType.NUMBER),
+                this.createInputCell(dayIndex, 'ssGo', InputCellType.NUMBER),
+                this.createInputCell(dayIndex, 'overtime', InputCellType.NUMBER),
+                this.createInputCell(dayIndex, 'notes', InputCellType.TEXT)
             ];
         });
 
@@ -134,6 +127,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         rowClassNames={this.rowClassNames}
                         footer={footer}
                     />
+
+                    {error && <ErrorMessage message={error.message}/>}
                 </Card>
 
                 <DataControls
@@ -149,13 +144,24 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     }
 
     private saveChanges = () => {
-        // TODO Save changes to database
+        const { year, weekNumber } = this.props;
+
+        const week = this.getWeek();
+        week.days.forEach((day) => delete day.isDirty);
+
+        database.hoursRef.child(year.toString()).child(weekNumber.toString()).update(week)
+            .then(() => {
+                this.setState({ error: undefined, isDirty: false });
+            })
+            .catch((error) => {
+                this.setState({ error });
+            });
     };
 
     private discardChanges = () => {
         const { year, weekNumber, updateWeek } = this.props;
 
-        this.setState({ isDirty: false });
+        this.setState({ error: undefined, isDirty: false });
 
         database.hoursRef.child(year.toString()).child(weekNumber.toString()).once('value')
             .then((snapshot) => {
@@ -171,14 +177,22 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const initialWeek = this.getInitialWeek();
         const week = this.getWeek();
 
+        const oldValue = week.days[dayIndex][cellProperty];
+        if (oldValue === value) {
+            return;
+        }
+
         // TODO Make sure this works because of mutability
         week.days[dayIndex][cellProperty] = value;
 
         // Set dirty status for day
         const dayProperties = objectKeys(week.days[dayIndex]).filter((property) => property !== 'isDirty');
-        week.days[dayIndex].isDirty = dayProperties.some((property) =>
-            (initialWeek && initialWeek.days[dayIndex][property] !== week.days[dayIndex][property]) ||
-            !!week.days[dayIndex][property]);
+        week.days[dayIndex].isDirty = dayProperties.some((property) => {
+            const isNotInitial = initialWeek && initialWeek.days[dayIndex][property] !== week.days[dayIndex][property];
+            const isStartValue = !initialWeek && !!week.days[dayIndex][property];
+
+            return isNotInitial || isStartValue;
+        });
 
         // Update dirty status for week
         this.setState({ isDirty: week.days.some((day) => !!day.isDirty) });
@@ -218,7 +232,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     private getInitialWeek = () => this.props.initialWeeks[this.props.weekNumber];
 
-    private getWeek = () => this.props.weeks[this.props.weekNumber];
+    private getWeek = (props = this.props) => props.weeks[props.weekNumber];
 }
 
 export const WeekTable = connect(mapStateToProps, mapDispatchToProps)(WeekTableComponent);
