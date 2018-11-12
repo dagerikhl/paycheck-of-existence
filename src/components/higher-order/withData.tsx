@@ -1,11 +1,12 @@
+import { Map } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { Weeks } from '../../constants';
+import { Day } from '../../constants';
 import { createDispatchToPropsFunction } from '../../helpers';
 import { database } from '../../services';
-import { updateAllWeeksAction, updateInitialWeeksAction } from '../../store/actions';
+import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
 import { State } from '../../store/states';
 import { Loader } from '../Loader';
 
@@ -15,7 +16,7 @@ interface OwnState {
 
 export const withData = (dataString: string) => (Component: React.ComponentType) => {
     switch (dataString) {
-        case 'weeks': {
+        case 'days': {
             interface StateProps {
                 year: number;
             }
@@ -25,31 +26,29 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
             });
 
             interface DispatchProps {
-                updateAllWeeks: (weeks: Weeks) => void;
-                updateInitialWeeks: (weeks: Weeks) => void;
+                updateAllDays: (days: Map<string, Day>) => void;
+                updateInitialDays: (days: Map<string, Day>) => void;
             }
 
             const mapDispatchToProps = createDispatchToPropsFunction({
-                updateAllWeeks: updateAllWeeksAction,
-                updateInitialWeeks: updateInitialWeeksAction
+                updateAllDays: updateAllDaysAction,
+                updateInitialDays: updateInitialDaysAction
             });
 
-            type WithDataPropsWeeks = StateProps & DispatchProps & RouteComponentProps;
+            type WithDaysDataProps = StateProps & DispatchProps & RouteComponentProps;
 
-            class WithWeeksData extends React.Component<WithDataPropsWeeks, OwnState> {
+            class WithDaysData extends React.Component<WithDaysDataProps, OwnState> {
                 public state: OwnState = { isLoaded: false };
 
                 public componentDidMount() {
-                    const { year, updateAllWeeks, updateInitialWeeks } = this.props;
+                    const { year, updateAllDays, updateInitialDays } = this.props;
 
                     database.hoursRef.on('value', (snapshot) => {
-                        const allValues = snapshot && snapshot.val();
-                        const yearValue = allValues && allValues[year];
+                        const allValues: { [year: number]: Map<string, Day> } = snapshot && snapshot.val();
+                        const days: Map<string, Day> = allValues && allValues[year] || Map<string, Day>();
 
-                        const weeks = yearValue || {};
-
-                        updateAllWeeks(weeks);
-                        updateInitialWeeks(weeks);
+                        updateAllDays(days);
+                        updateInitialDays(days);
 
                         this.setState({ isLoaded: true });
                     });
@@ -64,7 +63,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
             }
 
-            return connect(mapStateToProps, mapDispatchToProps)(WithWeeksData);
+            return connect(mapStateToProps, mapDispatchToProps)(WithDaysData);
         }
         default: {
             return (() => <Component/>) as React.SFC;

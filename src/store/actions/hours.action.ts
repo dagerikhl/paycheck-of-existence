@@ -1,44 +1,58 @@
-import { Week, Weeks } from '../../constants';
+import { Map } from 'immutable';
+
+import { Day } from '../../constants';
 
 export enum HoursActionType {
-    UpdateAllWeeks = 'HOURS/UPDATE_ALL_WEEKS',
-    UpdateInitialWeeks = 'HOURS/UPDATE_INITIAL_WEEKS',
-    UpdateWeek = 'HOURS/UPDATE_WEEK'
+    UpdateAllDays = 'HOURS/UPDATE_ALL_DAYS',
+    UpdateInitialDays = 'HOURS/UPDATE_INITIAL_DAYS',
+    UpdateWeek = 'HOURS/UPDATE_WEEK',
+    UpdateDay = 'HOURS/UPDATE_DAY'
 }
 
 export type HoursAction =
-    | UpdateAllWeeks
-    | UpdateInitialWeeks
-    | UpdateWeek;
+    | UpdateAllDays
+    | UpdateInitialDays
+    | UpdateWeek
+    | UpdateDay;
 
-export interface UpdateAllWeeks {
-    type: HoursActionType.UpdateAllWeeks;
-    weeks: Weeks;
+export interface UpdateAllDays {
+    type: HoursActionType.UpdateAllDays;
+    days: Map<string, Day>;
 }
 
-export const updateAllWeeksAction = (weeks: Weeks): UpdateAllWeeks => ({
-    type: HoursActionType.UpdateAllWeeks,
-    weeks
+export const updateAllDaysAction = (days: Map<string, Day>): UpdateAllDays => ({
+    type: HoursActionType.UpdateAllDays,
+    days
 });
 
-export interface UpdateInitialWeeks {
-    type: HoursActionType.UpdateInitialWeeks;
-    weeks: Weeks;
+export interface UpdateInitialDays {
+    type: HoursActionType.UpdateInitialDays;
+    days: Map<string, Day>;
 }
 
-export const updateInitialWeeksAction = (weeks: Weeks): UpdateInitialWeeks => ({
-    type: HoursActionType.UpdateInitialWeeks,
-    weeks
+export const updateInitialDaysAction = (days: Map<string, Day>): UpdateInitialDays => ({
+    type: HoursActionType.UpdateInitialDays,
+    days
 });
 
 export interface UpdateWeek {
     type: HoursActionType.UpdateWeek;
-    weekNumber: number;
-    week: Week;
+    week: Map<string, Day>;
 }
 
-export const updateWeekAction = (weekNumber: number, week: Week): UpdateWeek => ({
+export const updateWeekAction = (week: Map<string, Day>): UpdateWeek => ({
     type: HoursActionType.UpdateWeek,
-    weekNumber,
     week
+});
+
+export interface UpdateDay {
+    type: HoursActionType.UpdateDay;
+    dateString: string;
+    day: Day;
+}
+
+export const updateDayAction = (dateString: string, day: Day): UpdateDay => ({
+    type: HoursActionType.UpdateDay,
+    dateString,
+    day
 });

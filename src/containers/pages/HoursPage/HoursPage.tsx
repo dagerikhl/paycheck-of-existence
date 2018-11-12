@@ -67,4 +67,4 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
     };
 }
 
-export const HoursPage = withAuthorization(withData('weeks')(connect(mapStateToProps, undefined)(HoursPageComponent)));
+export const HoursPage = withAuthorization(withData('days')(connect(mapStateToProps, undefined)(HoursPageComponent)));

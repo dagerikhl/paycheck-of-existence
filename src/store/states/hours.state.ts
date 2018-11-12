@@ -1,11 +1,13 @@
-import { Weeks } from '../../constants';
+import { Map } from 'immutable';
+
+import { Day } from '../../constants';
 
 export interface HoursState {
-    initialWeeks: Weeks;
-    weeks: Weeks;
+    days: Map<string, Day>;
+    initialDays: Map<string, Day>;
 }
 
 export const initialHoursState: HoursState = {
-    initialWeeks: {},
-    weeks: {}
+    days: Map<string, Day>(),
+    initialDays: Map<string, Day>()
 };
