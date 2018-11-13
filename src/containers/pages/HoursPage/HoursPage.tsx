@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
@@ -40,10 +41,10 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
             <section className="hours-page">
                 <div className="weeks">
                     {visibleWeekNumbers
-                        .map((weekNumber, i) => <WeekTable
-                            key={i}
+                        .map((weekNumber) => <WeekTable
+                            key={weekNumber}
                             weekNumber={weekNumber}
-                            isCurrent={i === 0}
+                            isCurrent={year === moment().year() && weekNumber === visibleWeekNumbers[0]}
                         />)}
                 </div>
 
