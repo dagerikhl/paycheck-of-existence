@@ -53,18 +53,17 @@ type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private readonly columns = [undefined, 'Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
-    private readonly columnClassNames = ['date-indicator', 'date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime',
-        undefined];
+    private readonly columnClassNames = ['status', 'date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'ot', undefined];
     private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
 
     public state: OwnState = { isDirty: false };
 
     public componentDidMount() {
-        const { week, updateWeek } = this.props;
+        this.checkAndPopulateWeek();
+    }
 
-        if (week.isEmpty()) {
-            updateWeek(this.populateEmptyWeek());
-        }
+    public componentDidUpdate(prevProps: WeekTableProps) {
+        this.checkAndPopulateWeek();
     }
 
     public render() {
@@ -95,7 +94,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     this.createInputCell(dateString, 'ssNo', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'hoursGo', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'ssGo', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'overtime', InputCellType.NUMBER),
+                    this.createInputCell(dateString, 'ot', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'notes', InputCellType.TEXT)
                 ];
 
@@ -110,7 +109,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 result[3] + day.ssNo,
                 result[4] + day.hoursGo,
                 result[5] + day.ssGo,
-                result[6] + day.overtime,
+                result[6] + day.ot,
                 undefined
             ], [undefined, undefined, 0, 0, 0, 0, 0, undefined])
             .map((value) => value !== undefined ? toHourFormat(value) : undefined);
@@ -142,8 +141,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     label={`You have unsaved changes in week ${weekNumber}.`}
                     saveLabel="Save"
                     cancelLabel="Discard"
-                    onSave={this.saveChanges}
-                    onCancel={this.discardChanges}
+                    onSave={this.onSaveChanges}
+                    onCancel={this.onDiscardChanges}
                     // TODO Re-enable when dirty flag is set properly
                     // hide={!isDirty}
                 />
@@ -151,7 +150,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         );
     }
 
-    private saveChanges = () => {
+    private onSaveChanges = () => {
         const { year, week } = this.props;
 
         let possibleError: any;
@@ -173,7 +172,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         }
     };
 
-    private discardChanges = () => {
+    private onDiscardChanges = () => {
         const { initialWeek, updateWeek, updateDay } = this.props;
 
         if (initialWeek.isEmpty()) {
@@ -235,6 +234,14 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         />;
     };
 
+    private checkAndPopulateWeek = () => {
+        const { week, updateWeek } = this.props;
+
+        if (week.isEmpty()) {
+            updateWeek(this.populateEmptyWeek());
+        }
+    };
+
     private populateEmptyWeek = (): Map<string, Day> => {
         const { weekNumber, year } = this.props;
 
@@ -250,7 +257,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         return days;
     };
 
-    private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, overtime: 0, notes: '' });
+    private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, ot: 0, notes: '' });
 
     private getDay = (dateString: string): Day | undefined => this.props.week.get(dateString);
 }

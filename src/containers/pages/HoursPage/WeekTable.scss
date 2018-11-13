@@ -19,7 +19,7 @@
     }
 
     // Table columns
-    .date-indicator {
+    .status {
         width: 16px;
 
         text-align: center;
@@ -57,7 +57,7 @@
         width: 86px;
     }
 
-    .overtime {
+    .ot {
         @extend %table-number-cell;
 
         width: 86px;

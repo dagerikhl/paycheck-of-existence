@@ -5,7 +5,7 @@ import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { withData } from '../../../components/higher-order/withData';
 import { Theme } from '../../../constants';
-import { createArrayFromRange, getNewestWeekNumberInYear  } from '../../../helpers';
+import { createArrayFromRange, getNewestWeekNumberInYear } from '../../../helpers';
 import { State } from '../../../store/states';
 import { WeekTable } from './WeekTable';
 
@@ -24,9 +24,7 @@ const mapStateToProps = (state: State): StateProps => ({
 });
 
 class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
-    public state: OwnState = {
-        showAllWeeks: false
-    };
+    public state: OwnState = { showAllWeeks: false };
 
     public render() {
         const { year } = this.props;
