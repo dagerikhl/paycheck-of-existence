@@ -69,7 +69,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     public render() {
         const { weekNumber, isCurrent, year, week } = this.props;
-        const { error, isDirty } = this.state;
+        const { error } = this.state;
 
         if (week.isEmpty()) {
             return null;
@@ -144,7 +144,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     cancelLabel="Discard"
                     onSave={this.saveChanges}
                     onCancel={this.discardChanges}
-                    hide={!isDirty}
+                    // TODO Re-enable when dirty flag is set properly
+                    // hide={!isDirty}
                 />
             </React.Fragment>
         );
