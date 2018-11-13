@@ -14,14 +14,9 @@ export const hoursReducer = (state: HoursState = initialHoursState, action: Hour
                 initialDays: action.days
             };
         case HoursActionType.UpdateWeek:
-            let newDays = state.days;
-            action.week.forEach((day, dateString) => {
-                newDays = newDays.set(dateString, day);
-            });
-
             return {
                 ...state,
-                days: newDays
+                days: state.days.merge(action.week)
             };
         case HoursActionType.UpdateDay:
             return {
