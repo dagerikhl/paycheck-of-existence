@@ -45,7 +45,9 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 public componentDidUpdate(prevProps: WithDaysDataProps) {
-                    if (this.props.year !== prevProps.year) {
+                    const { year } = this.props;
+
+                    if (year !== prevProps.year) {
                         this.fetchDays();
                     }
                 }

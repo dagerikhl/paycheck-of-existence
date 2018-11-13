@@ -174,11 +174,15 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private discardChanges = () => {
-        const { initialWeek, updateDay } = this.props;
+        const { initialWeek, updateWeek, updateDay } = this.props;
 
-        initialWeek.forEach((day, dateString) => {
-            updateDay(dateString, day);
-        });
+        if (initialWeek.isEmpty()) {
+            updateWeek(this.populateEmptyWeek());
+        } else {
+            initialWeek.forEach((day, dateString) => {
+                updateDay(dateString, day);
+            });
+        }
 
         this.setState({ error: undefined, isDirty: false });
     };
