@@ -37,21 +37,17 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
 
             type WithDaysDataProps = StateProps & DispatchProps & RouteComponentProps;
 
-            class WithDaysData extends React.Component<WithDaysDataProps, OwnState> {
+            class WithDaysData extends React.PureComponent<WithDaysDataProps, OwnState> {
                 public state: OwnState = { isLoaded: false };
 
                 public componentDidMount() {
-                    const { year, updateAllDays, updateInitialDays } = this.props;
+                    this.fetchDays();
+                }
 
-                    database.hoursRef.on('value', (snapshot) => {
-                        const allValues: { [year: number]: Map<string, Day> } = snapshot && snapshot.val();
-                        const days: Map<string, Day> = allValues && allValues[year] || Map<string, Day>();
-
-                        updateAllDays(days);
-                        updateInitialDays(days);
-
-                        this.setState({ isLoaded: true });
-                    });
+                public componentDidUpdate(prevProps: WithDaysDataProps) {
+                    if (this.props.year !== prevProps.year) {
+                        this.fetchDays();
+                    }
                 }
 
                 public render() {
@@ -61,6 +57,20 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                         ? <Component/>
                         : <Loader/>;
                 }
+
+                private fetchDays = () => {
+                    const { year, updateAllDays, updateInitialDays } = this.props;
+
+                    database.hoursRef.on('value', (snapshot) => {
+                        const allValues = snapshot && snapshot.val();
+                        const days = allValues && Map<string, Day>(allValues[year]) || Map<string, Day>();
+
+                        updateAllDays(days);
+                        updateInitialDays(days);
+
+                        this.setState({ isLoaded: true });
+                    });
+                };
             }
 
             return connect(mapStateToProps, mapDispatchToProps)(WithDaysData);
