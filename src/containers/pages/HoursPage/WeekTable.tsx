@@ -183,13 +183,24 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private onInputCellChange = (dateString: string, cellProperty: string) => (value: number | string) => {
+        const { updateDay } = this.props;
+
         const day = this.getDay(dateString);
 
-        if (day && day[cellProperty] !== value) {
+        if (!day || (day && day[cellProperty] === value)) {
             return;
         }
 
-        // TODO Update day
+        // Create clone of old day
+        const dayClone = {
+            ...day,
+            [cellProperty]: value
+        };
+        delete dayClone.isDirty;
+
+        // TODO Set dirty status for day
+
+        updateDay(dateString, dayClone);
     };
 
     private createInputCell = (dateString: string, cellProperty: string, type: InputCellType) => {
