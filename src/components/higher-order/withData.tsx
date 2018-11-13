@@ -37,19 +37,21 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
 
             type WithDaysDataProps = StateProps & DispatchProps & RouteComponentProps;
 
-            class WithDaysData extends React.PureComponent<WithDaysDataProps, OwnState> {
+            class WithDaysData extends React.Component<WithDaysDataProps, OwnState> {
                 public state: OwnState = { isLoaded: false };
 
                 public componentDidMount() {
                     this.fetchDays();
                 }
 
-                public componentDidUpdate(prevProps: WithDaysDataProps) {
+                public shouldComponentUpdate(nextProps: WithDaysDataProps) {
                     const { year } = this.props;
 
-                    if (year !== prevProps.year) {
+                    if (nextProps.year !== year) {
                         this.fetchDays();
                     }
+
+                    return true;
                 }
 
                 public render() {
@@ -62,6 +64,8 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
 
                 private fetchDays = () => {
                     const { year, updateAllDays, updateInitialDays } = this.props;
+
+                    this.setState({ isLoaded: false });
 
                     database.hoursRef.on('value', (snapshot) => {
                         const allValues = snapshot && snapshot.val();
