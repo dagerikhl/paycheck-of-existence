@@ -1,1 +1,1 @@
-export type TableCell = JSX.Element | string | number | undefined;
+export type TableCell = JSX.Element | string | number | undefined | false;

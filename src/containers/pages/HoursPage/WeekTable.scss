@@ -14,23 +14,17 @@
         }
     }
 
-    .current-date {
-        position: relative;
-
-        .current-date-indicator {
-            position: absolute;
-            top: 0;
-            left: -24px;
-
-            font-style: normal;
-        }
-    }
-
     .table {
         width: 100%;
     }
 
     // Table columns
+    .date-indicator {
+        width: 16px;
+
+        text-align: center;
+    }
+
     .date {
         width: 148px;
 

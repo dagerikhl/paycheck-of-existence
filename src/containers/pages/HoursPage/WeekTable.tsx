@@ -52,8 +52,9 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    private readonly columns = ['Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
-    private readonly columnClassNames = ['date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime', undefined];
+    private readonly columns = [undefined, 'Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
+    private readonly columnClassNames = ['date-indicator', 'date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'overtime',
+        undefined];
     private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
 
     public state: OwnState = { isDirty: false };
@@ -84,12 +85,11 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             .sortBy((_, k) => moment(k, DATE_STORAGE).valueOf())
             .forEach((day, dateString) => {
                 const date = moment(dateString, DATE_STORAGE);
-                const dateCell = <div className="current-date">
-                    {date.isSame(moment(), 'date') && <div className="current-date-indicator">></div>}
-                    {date.format(DATE_LONG)}
-                </div>;
+                const dateIndicator = date.isSame(moment(), 'date') && '>';
+                const dateCell = date.format(DATE_LONG);
 
                 displayRows[i] = [
+                    dateIndicator,
                     dateCell,
                     this.createInputCell(dateString, 'hoursNo', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'ssNo', InputCellType.NUMBER),
@@ -105,13 +105,14 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const footer = week
             .reduce((result: number[], day) => [
                 undefined,
-                result[1] + day.hoursNo,
-                result[2] + day.ssNo,
-                result[3] + day.hoursGo,
-                result[4] + day.ssGo,
-                result[5] + day.overtime,
+                undefined,
+                result[2] + day.hoursNo,
+                result[3] + day.ssNo,
+                result[4] + day.hoursGo,
+                result[5] + day.ssGo,
+                result[6] + day.overtime,
                 undefined
-            ], [undefined, 0, 0, 0, 0, 0, undefined])
+            ], [undefined, undefined, 0, 0, 0, 0, 0, undefined])
             .map((value) => value !== undefined ? toHourFormat(value) : undefined);
 
         return (
