@@ -7,7 +7,17 @@ import { Card } from '../../../components/Card';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { DATE_LONG, DATE_STORAGE, DATE_WITH_YEAR, Day, InputCellType, TableCell } from '../../../constants';
+import {
+    COLUMN_CLASSES,
+    COLUMN_HEADERS,
+    DATE_LONG,
+    DATE_STORAGE,
+    DATE_WITH_YEAR,
+    Day,
+    InputCellType,
+    ROW_CLASSES,
+    TableCell
+} from '../../../constants';
 import { createDispatchToPropsFunction, getPeriodForWeek, toHourFormat } from '../../../helpers';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
@@ -52,10 +62,6 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    private readonly columns = [undefined, 'Date', 'Hours NO', 'SS NO', 'Hours GO', 'SS GO', 'Overtime', 'Notes'];
-    private readonly columnClassNames = ['status', 'date', 'hours-no', 'ss-no', 'hours-go', 'ss-go', 'ot', undefined];
-    private readonly rowClassNames = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
-
     public state: OwnState = { isDirty: false };
 
     public componentDidMount() {
@@ -127,10 +133,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
                     <Table
                         className="table"
-                        columns={this.columns}
-                        columnClassNames={this.columnClassNames}
+                        columns={COLUMN_HEADERS}
+                        columnClassNames={COLUMN_CLASSES}
                         rows={displayRows}
-                        rowClassNames={this.rowClassNames}
+                        rowClassNames={ROW_CLASSES}
                         footer={footer}
                     />
 

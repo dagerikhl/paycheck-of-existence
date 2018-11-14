@@ -9,5 +9,6 @@ export * from './interfaces/Period';
 
 export * from './types/TableCell';
 
+export * from './hours';
 export * from './routes';
 export * from './strings';
