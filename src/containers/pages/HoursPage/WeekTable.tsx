@@ -21,7 +21,7 @@ import {
 import { createDispatchToPropsFunction, getPeriodForWeek, toHourFormat } from '../../../helpers';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
-import { getDaysInWeek, getInitialDaysInWeek } from '../../../store/selectors';
+import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
 import { State } from '../../../store/states';
 import { DataControls } from './DataControls';
 
@@ -38,12 +38,14 @@ interface OwnState {
 }
 
 interface StateProps {
+    userId: string;
     year: number;
     week: Map<string, Day>;
     initialWeek: Map<string, Day>;
 }
 
 const mapStateToProps = (state: State, props: OwnProps): StateProps => ({
+    userId: getUserId(state),
     year: state.period.year,
     week: getDaysInWeek(state, props.weekNumber),
     initialWeek: getInitialDaysInWeek(state, props.weekNumber)
@@ -157,7 +159,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     }
 
     private onSaveChanges = () => {
-        const { year, week } = this.props;
+        const { userId, year, week } = this.props;
 
         let possibleError: any;
 
@@ -165,7 +167,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             const dayData = { ...day };
             delete dayData.isDirty;
 
-            database.hoursRef.child(year.toString()).child(dateString).update(dayData)
+            database.getUserRef(userId).child('hours').child(year.toString()).child(dateString).update(dayData)
                 .catch((error) => {
                     possibleError = error;
                 });

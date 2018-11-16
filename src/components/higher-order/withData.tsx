@@ -7,11 +7,17 @@ import { Day } from '../../constants';
 import { createDispatchToPropsFunction } from '../../helpers';
 import { database } from '../../services';
 import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
+import { getUserId } from '../../store/selectors';
 import { State } from '../../store/states';
 import { Loader } from '../Loader';
+import { withAuthorization } from './withAuthorization';
 
-interface OwnState {
+interface CommonState {
     isLoaded: boolean;
+}
+
+interface CommonStateProps {
+    userId: string;
 }
 
 export const withData = (dataString: string) => (Component: React.ComponentType) => {
@@ -21,7 +27,8 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 year: number;
             }
 
-            const mapStateToProps = (state: State): StateProps => ({
+            const mapStateToProps = (state: State): CommonStateProps & StateProps => ({
+                userId: getUserId(state),
                 year: state.period.year
             });
 
@@ -35,10 +42,10 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 updateInitialDays: updateInitialDaysAction
             });
 
-            type WithDaysDataProps = StateProps & DispatchProps & RouteComponentProps;
+            type WithDaysDataProps = CommonStateProps & StateProps & DispatchProps & RouteComponentProps;
 
-            class WithDaysData extends React.Component<WithDaysDataProps, OwnState> {
-                public state: OwnState = { isLoaded: false };
+            class WithDaysData extends React.Component<WithDaysDataProps, CommonState> {
+                public state: CommonState = { isLoaded: false };
 
                 public componentDidMount() {
                     this.fetchDays();
@@ -63,11 +70,11 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 private fetchDays = () => {
-                    const { year, updateAllDays, updateInitialDays } = this.props;
+                    const { userId, year, updateAllDays, updateInitialDays } = this.props;
 
                     this.setState({ isLoaded: false });
 
-                    database.hoursRef.on('value', (snapshot) => {
+                    database.getUserRef(userId).child('hours').on('value', (snapshot) => {
                         const allValues = snapshot && snapshot.val();
                         const days = allValues && Map<string, Day>(allValues[year]) || Map<string, Day>();
 
@@ -79,10 +86,10 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 };
             }
 
-            return connect(mapStateToProps, mapDispatchToProps)(WithDaysData);
+            return withAuthorization(connect(mapStateToProps, mapDispatchToProps)(WithDaysData));
         }
         default: {
-            return (() => <Component/>) as React.SFC;
+            return () => <Component/>;
         }
     }
 };

@@ -2,8 +2,8 @@ import { firebaseDatabase } from './firebase';
 
 const databaseRef = firebaseDatabase.ref();
 
-const hoursRef = databaseRef.child('hours');
+const getUserRef = (userId: string) => databaseRef.child('users').child(userId);
 
 export const database = {
-    hoursRef
+    getUserRef
 };
