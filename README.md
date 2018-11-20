@@ -1,4 +1,4 @@
-# Paycheck of Existence (PoE) [![Build Status](https://travis-ci.org/dagerikhl/paycheck-of-existence.svg?branch=master)](https://travis-ci.org/dagerikhl/paycheck-of-existence)
+# Paycheck of Existence (PoE) [![Build Status](https://travis-ci.org/dagerikhl/paycheck-of-existence.svg?branch=master)](https://travis-ci.org/dagerikhl/paycheck-of-existence) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 // TODO
 

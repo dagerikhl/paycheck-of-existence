@@ -16,6 +16,8 @@
         "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
         "lint-css:prod": "stylelint --config=.stylelintrc src/**/*.scss",
         "hint": "hint http://localhost:3000",
+        "commit": "git-cz",
+        "release": "standard-version",
         "deploy": "firebase deploy",
         "eject": "react-scripts-ts eject"
     },
@@ -42,10 +44,13 @@
         "@types/react-dom": "^16.0.8",
         "@types/react-redux": "^6.0.9",
         "@types/react-router-dom": "^4.3.1",
+        "commitizen": "^3.0.4",
+        "cz-conventional-changelog": "^2.1.0",
         "firebase-tools": "^4.2.1",
         "hint": "^3.4.13",
         "pre-commit": "^1.2.2",
         "redux-devtools-extension": "^2.13.5",
+        "standard-version": "^4.4.0",
         "stylelint": "^9.6.0",
         "stylelint-config-standard": "^18.2.0",
         "stylelint-scss": "^3.3.1",
@@ -62,5 +67,10 @@
     "private": false,
     "pre-commit": [
         "lint:prod"
-    ]
+    ],
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    }
 }
