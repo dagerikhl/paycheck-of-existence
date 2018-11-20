@@ -66,7 +66,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
 
                     return isLoaded
                         ? <Component/>
-                        : <Loader/>;
+                        : <Loader text="Fetching data from server..."/>;
                 }
 
                 private fetchDays = (props = this.props) => {

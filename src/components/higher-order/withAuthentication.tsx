@@ -38,7 +38,7 @@ export const withAuthentication = (Component: React.ComponentType) => {
 
             return isLoaded
                 ? <Component {...this.props}/>
-                : <Loader/>;
+                : <Loader text="Authenticating user..."/>;
         }
     }
 

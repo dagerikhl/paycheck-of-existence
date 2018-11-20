@@ -54,7 +54,7 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
                     {error && <ErrorMessage message={error.message}/>}
                 </form>
 
-                {isLoading && <Loader/>}
+                {isLoading && <Loader text="Checking user credentials..."/>}
             </React.Fragment>
         );
     }
