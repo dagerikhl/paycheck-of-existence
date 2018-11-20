@@ -55,7 +55,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                     const { year } = this.props;
 
                     if (nextProps.year !== year) {
-                        this.fetchDays();
+                        this.fetchDays(nextProps);
                     }
 
                     return true;
@@ -69,8 +69,8 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                         : <Loader/>;
                 }
 
-                private fetchDays = () => {
-                    const { userId, year, updateAllDays, updateInitialDays } = this.props;
+                private fetchDays = (props = this.props) => {
+                    const { userId, year, updateAllDays, updateInitialDays } = props;
 
                     this.setState({ isLoaded: false });
 
