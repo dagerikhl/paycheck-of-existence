@@ -1,12 +1,12 @@
 # Paycheck of Existence (PoE) [![Build Status](https://travis-ci.org/dagerikhl/paycheck-of-existence.svg?branch=master)](https://travis-ci.org/dagerikhl/paycheck-of-existence) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-// TODO
+Hosted at: [https://paycheck-of-existence.firebaseapp.com/](https://paycheck-of-existence.firebaseapp.com/). Requires login. Currently only available for me.
 
-Will be hosted at: [https://paycheck-of-existence.firebaseapp.com/](https://paycheck-of-existence.firebaseapp.com/). Contact me at [dagerikhl@gmail.com](mailto:dagerikhl@gmail.com) for questions about this app.
+For any questions about this app, you can contact me at [dagerikhl@gmail.com](mailto:dagerikhl@gmail.com).
 
 ## Introduction
 
-Personal tool to keep track of hours worked each week
+Personal tool to keep track of hours worked each week.
 
 ## Getting Started
 
@@ -25,12 +25,17 @@ Personal tool to keep track of hours worked each week
 
 ## Deployment
 
-// TODO
+1. Run `npm run commit` to commit using commitizen, creating a commit message on the conventional-changelog format.
+2. Run `npm run release` to generate a new `CHANGELOG.md` based on commit messages, increment the version, and tag the release.
+3. Run `npm run deploy` to deploy the app directly to Firebase.
+    - **Note!** This requires Firebase to be configured.
+    - **Note!** This requires certain environment variables to be set, see [Configuration](#configuration).
 
 ## Technologies
 
 - The app is written in TypeScript as a React app.
 - The app was bootstrapped with create-react-app.
+- The app connects to a back-end database: Google's Firebase.
 
 ### Configuration
 
