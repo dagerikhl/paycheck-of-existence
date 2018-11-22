@@ -15,7 +15,7 @@ interface OwnProps {
     onCancel: () => void;
 }
 
-const DataControlsComponent: React.SFC<OwnProps> =
+export const DataControls: React.SFC<OwnProps> =
     ({ className, label, saveLabel, cancelLabel, hide, onSave, onCancel }) => (
         <div className={classNames({ [className as string]: className, 'data-controls': true, 'open': !hide })}>
             <h3>{label}</h3>
@@ -26,5 +26,3 @@ const DataControlsComponent: React.SFC<OwnProps> =
             </div>
         </div>
     );
-
-export const DataControls = DataControlsComponent;

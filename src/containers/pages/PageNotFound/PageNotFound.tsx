@@ -4,7 +4,7 @@ import { pickRandomItem } from '../../../helpers';
 
 import './PageNotFound.css';
 
-class PageNotFoundComponent extends React.PureComponent {
+export class PageNotFound extends React.PureComponent {
     private readonly messages = [
         'These aren\'t the droids you\'re looking for.',
         'Nothing to see here. Move along.',
@@ -29,5 +29,3 @@ class PageNotFoundComponent extends React.PureComponent {
         );
     }
 }
-
-export const PageNotFound = PageNotFoundComponent;

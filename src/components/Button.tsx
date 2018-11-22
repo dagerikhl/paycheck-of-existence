@@ -15,7 +15,7 @@ interface OwnProps {
 
 type ButtonProps = OwnProps & React.HTMLProps<HTMLButtonElement>;
 
-const ButtonComponent: React.SFC<ButtonProps> = ({ className, theme, square, round, children, ...rest }) => (
+export const Button: React.SFC<ButtonProps> = ({ className, theme, square, round, children, ...rest }) => (
     <button
         className={classNames({
             [className as string]: className,
@@ -30,5 +30,3 @@ const ButtonComponent: React.SFC<ButtonProps> = ({ className, theme, square, rou
         {children}
     </button>
 );
-
-export const Button = ButtonComponent;

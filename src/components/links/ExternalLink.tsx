@@ -13,7 +13,7 @@ interface OwnProps {
 
 type ExternalLinkProps = OwnProps & React.HTMLProps<HTMLAnchorElement>;
 
-const ExternalLinkComponent: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => (
+export const ExternalLink: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => (
     <a
         className={classNames({ [className as string]: className, 'link': true, [theme || Theme.NEUTRAL]: true })}
         href={externalRef.url}
@@ -24,5 +24,3 @@ const ExternalLinkComponent: React.SFC<ExternalLinkProps> = ({ className, theme,
         {externalRef.name}
     </a>
 );
-
-export const ExternalLink = ExternalLinkComponent;

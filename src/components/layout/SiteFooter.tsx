@@ -11,7 +11,7 @@ interface OwnProps {
     links?: ExternalRef[];
 }
 
-const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
+export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
     <div className="site-footer">
         <div>
             <span>&copy;</span> <span>{props.year}</span> <span>{props.name}</span>
@@ -24,5 +24,3 @@ const SiteFooterComponent: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
     </div>
 );
-
-export const SiteFooter = SiteFooterComponent;

@@ -21,7 +21,7 @@ interface OwnState {
     error?: any;
 }
 
-class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
+export class LoginForm extends React.PureComponent<OwnProps, OwnState> {
     public state: OwnState = {
         email: '',
         password: '',
@@ -84,5 +84,3 @@ class LoginFormComponent extends React.PureComponent<OwnProps, OwnState> {
             });
     };
 }
-
-export const LoginForm = LoginFormComponent;

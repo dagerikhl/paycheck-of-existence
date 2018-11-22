@@ -4,7 +4,7 @@ import logo from '../../../images/logo.svg';
 
 import './HomePage.css';
 
-class HomePageComponent extends React.PureComponent {
+export class HomePage extends React.PureComponent {
     public render() {
         return (
             <section className="home-page">
@@ -22,5 +22,3 @@ class HomePageComponent extends React.PureComponent {
         );
     }
 }
-
-export const HomePage = HomePageComponent;

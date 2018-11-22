@@ -15,7 +15,7 @@ interface OwnProps {
     footerClassName?: string;
 }
 
-const TableComponent: React.SFC<OwnProps> =
+export const Table: React.SFC<OwnProps> =
     ({ className, columns, columnClassNames, rows, rowClassNames, footer, footerClassName }) => (
         <table className={classNames({ [className as string]: className, 'table': true })}>
             {columns && <thead>
@@ -40,5 +40,3 @@ const TableComponent: React.SFC<OwnProps> =
             </tfoot>}
         </table>
     );
-
-export const Table = TableComponent;

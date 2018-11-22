@@ -11,7 +11,7 @@ interface OwnProps {
     title: string;
 }
 
-const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
+export const SiteHeader: React.SFC<OwnProps> = (props: OwnProps) => (
     <div className="site-header">
         <div className="title">
             <img className="logo" src={logo} alt="Logo"/>
@@ -27,5 +27,3 @@ const SiteHeaderComponent: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
     </div>
 );
-
-export const SiteHeader = SiteHeaderComponent;

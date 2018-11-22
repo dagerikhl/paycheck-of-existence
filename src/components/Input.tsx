@@ -23,7 +23,7 @@ interface OwnProps {
     maxLength?: number;
 }
 
-class InputComponent extends React.PureComponent<OwnProps> {
+export class Input extends React.PureComponent<OwnProps> {
     public render() {
         const { className, theme, square, round, type, value, placeholder, disabled, step, children } = this.props;
 
@@ -104,5 +104,3 @@ class InputComponent extends React.PureComponent<OwnProps> {
         return validValue;
     };
 }
-
-export const Input = InputComponent;

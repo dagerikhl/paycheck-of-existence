@@ -9,7 +9,7 @@ interface OwnProps {
     onClick?: () => void;
 }
 
-class CardComponent extends React.PureComponent<OwnProps> {
+export class Card extends React.PureComponent<OwnProps> {
     public render() {
         const { className, level, onClick, children } = this.props;
 
@@ -27,5 +27,3 @@ class CardComponent extends React.PureComponent<OwnProps> {
         </div>;
     }
 }
-
-export const Card = CardComponent;
