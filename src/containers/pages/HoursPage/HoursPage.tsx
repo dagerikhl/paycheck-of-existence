@@ -6,7 +6,7 @@ import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { withData } from '../../../components/higher-order/withData';
 import { Theme } from '../../../constants';
-import { createArrayFromRange, getNewestWeekNumberInYear } from '../../../helpers';
+import { getNewestWeekNumberInYear, range } from '../../../helpers';
 import { State } from '../../../store/states';
 import { WeekTable } from './WeekTable';
 
@@ -33,7 +33,7 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
 
         const highestWeekNumberOfYear = getNewestWeekNumberInYear(year);
 
-        const visibleWeekNumbers = createArrayFromRange(1, highestWeekNumberOfYear)
+        const visibleWeekNumbers = range(1, highestWeekNumberOfYear)
             .reverse()
             .slice(0, showAllWeeks ? undefined : 2);
 
