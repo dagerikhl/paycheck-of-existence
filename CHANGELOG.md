@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v0.2.0...v0.3.0) (2018-11-22)
+
+
+### Features
+
+* **header:** Improve how active route links are styled in site header ([db650ab](https://github.com/dagerikhl/paycheck-of-existence/commit/db650ab))
+* **hours:** Properly indicate that cells in WeekTable are dirty, and show save/discard based on it ([f144db7](https://github.com/dagerikhl/paycheck-of-existence/commit/f144db7))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v0.1.0...v0.2.0) (2018-11-20)
 
