@@ -1,12 +1,23 @@
 @import "../../styles/typography.scss";
 
 .site-navigation {
+    height: 100%;
+
     ul {
         display: flex;
         align-items: center;
 
+        height: 100%;
+
+        margin: 0;
+
         li {
             @extend %h3;
+
+            display: flex;
+            align-items: center;
+
+            height: 100%;
 
             margin-left: 32px;
 

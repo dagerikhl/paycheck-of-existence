@@ -7,13 +7,6 @@
         text-decoration: underline;
     }
 
-    &.active {
-        &::before,
-        &::after {
-            content: " - ";
-        }
-    }
-
     &.neutral {
         color: $color-neutral;
 
@@ -36,5 +29,19 @@
         &.active {
             color: $color-accent_active;
         }
+    }
+}
+
+.route-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100%;
+
+    &.active {
+        padding-top: 2px;
+
+        border-bottom: 2px solid $color-neutral;
     }
 }
