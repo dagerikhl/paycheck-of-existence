@@ -18,7 +18,4 @@ export interface Day {
     // Notes concerning this day
     notes: string;
 
-    // Optional presentational properties
-    isDirty?: boolean;
-
 }

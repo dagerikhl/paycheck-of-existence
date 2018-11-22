@@ -18,6 +18,10 @@ export const getPeriodForWeek = (year: number, weekNumber: number): Period => {
     return { from, to };
 };
 
+export const getFirstDayOfWeek = (year: number, weekNumber: number) => {
+    return moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
+};
+
 export const filterDaysByPeriod = (days: Map<string, Day>, period: Period) => days.filter((_, dateString) => {
     const date = moment(dateString, DATE_STORAGE);
 

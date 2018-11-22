@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -10,6 +10,7 @@ import { Table } from '../../../components/Table';
 import {
     COLUMN_CLASSES,
     COLUMN_HEADERS,
+    COLUMN_PROPERTIES,
     DATE_LONG,
     DATE_STORAGE,
     DATE_WITH_YEAR,
@@ -18,7 +19,13 @@ import {
     ROW_CLASSES,
     TableCell
 } from '../../../constants';
-import { createDispatchToPropsFunction, getPeriodForWeek, toHourFormat } from '../../../helpers';
+import {
+    createDispatchToPropsFunction,
+    getFirstDayOfWeek,
+    getPeriodForWeek,
+    range,
+    toHourFormat
+} from '../../../helpers';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
 import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
@@ -27,13 +34,17 @@ import { DataControls } from './DataControls';
 
 import './WeekTable.css';
 
+interface ViewState {
+    isDirty: boolean;
+}
+
 interface OwnProps {
     weekNumber: number;
     isCurrent?: boolean;
 }
 
 interface OwnState {
-    isDirty: boolean;
+    viewState: Map<string, Map<string, ViewState>>;
     error?: any;
 }
 
@@ -64,7 +75,9 @@ const mapDispatchToProps = createDispatchToPropsFunction({
 type WeekTableProps = OwnProps & StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    public state: OwnState = { isDirty: false };
+    public state: OwnState = {
+        viewState: WeekTableComponent.populateViewState(getFirstDayOfWeek(this.props.year, this.props.weekNumber))
+    };
 
     public componentDidMount() {
         this.checkAndPopulateWeek();
@@ -151,8 +164,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     cancelLabel="Discard"
                     onSave={this.onSaveChanges}
                     onCancel={this.onDiscardChanges}
-                    // TODO Re-enable when dirty flag is set properly
-                    // hide={!isDirty}
+                    hide={!this.checkDirtyFlags()}
                 />
             </React.Fragment>
         );
@@ -164,10 +176,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         let possibleError: any;
 
         week.forEach((day, dateString) => {
-            const dayData = { ...day };
-            delete dayData.isDirty;
-
-            database.getUserRef(userId).child('hours').child(year.toString()).child(dateString).update(dayData)
+            database.getUserRef(userId).child('hours').child(year.toString()).child(dateString).update(day)
                 .catch((error) => {
                     possibleError = error;
                 });
@@ -176,7 +185,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         if (possibleError) {
             this.setState({ error: possibleError });
         } else {
-            this.setState({ error: undefined, isDirty: false });
+            this.resetState();
         }
     };
 
@@ -191,7 +200,16 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             });
         }
 
-        this.setState({ error: undefined, isDirty: false });
+        this.resetState();
+    };
+
+    private resetState = () => {
+        const { weekNumber, year } = this.props;
+
+        this.setState({
+            viewState: WeekTableComponent.populateViewState(getFirstDayOfWeek(year, weekNumber)),
+            error: undefined
+        });
     };
 
     private onInputCellChange = (dateString: string, cellProperty: string) => (value: number | string) => {
@@ -203,16 +221,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             return;
         }
 
-        // Create clone of old day
-        const dayClone = {
-            ...day,
-            [cellProperty]: value
-        };
-        delete dayClone.isDirty;
+        const newDay = { ...day, [cellProperty]: value };
 
-        // TODO Set dirty status for day
-
-        updateDay(dateString, dayClone);
+        this.updateDirtyFlag(dateString, cellProperty, value);
+        updateDay(dateString, newDay);
     };
 
     private createInputCell = (dateString: string, cellProperty: string, type: InputCellType) => {
@@ -267,7 +279,42 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, ot: 0, notes: '' });
 
+    private updateDirtyFlag = (dateString: string, cellProperty: string, value: number | string) => {
+        const { initialWeek } = this.props;
+        const { viewState } = this.state;
+
+        const initialDay = initialWeek.get(dateString);
+        const initialValue = initialDay && initialDay[cellProperty];
+        const hasInitialValue = !!initialValue;
+
+        const isDirty = (!hasInitialValue && !!value) || (hasInitialValue && value !== initialValue);
+
+        this.setState({
+            viewState: viewState.setIn(
+                [dateString, cellProperty],
+                { ...viewState.getIn([dateString, cellProperty]), isDirty }
+            )
+        });
+    };
+
+    private checkDirtyFlags = () => {
+        const { viewState } = this.state;
+
+        const dirtyFlags: List<boolean> = viewState.map((cells) => cells.map((cell) => cell.isDirty))
+            .toList().flatten().toList();
+
+        return dirtyFlags.some((dirtyFlag) => dirtyFlag);
+    };
+
     private getDay = (dateString: string): Day | undefined => this.props.week.get(dateString);
+
+    private static populateViewState = (firstDate: moment.Moment): Map<string, Map<string, ViewState>> => {
+        const cells = Map(COLUMN_PROPERTIES.map((header): [string, ViewState] => [header || '', { isDirty: false }]));
+
+        return Map(range(0, 7).map((i): [string, Map<string, ViewState>] => {
+            return [firstDate.clone().add(i, 'day').format(DATE_STORAGE), cells];
+        }));
+    };
 }
 
 export const WeekTable = connect(mapStateToProps, mapDispatchToProps)(WeekTableComponent);
