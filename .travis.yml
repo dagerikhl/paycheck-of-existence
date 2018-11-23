@@ -1,8 +1,19 @@
 language: node_js
 node_js:
   - "10.11.0"
-script:
+install:
+  - npm install -g firebase-tools
   - npm install
+# Patch to drop changes to package-lock because of Windows/Unix differences
+  - git checkout -- package-lock.json
+script:
   - npm run build
-after_success:
-  - npx firebase deploy --token $FIREBASE_TOKEN
+before_deploy:
+  - npx firebase use staging --token $FIREBASE_TOKEN
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  on:
+    branch: master
+  token:
+    secure: "mzjhYUeF02/XOp7wUziZj5y2UFQg5ELe++c7uY0MDxSTop8LXWulOM81JAv2YgNP1OsA7IrCyy9NFLLfOQXT3UHab7cBhoiMSE+g+w1sOaa9GxXlSHb57qijjgqgmXKRu8QnSQ73c3cB4uK5hEekTYQ/cjYQ6UiXeuaYDe8hUmBh31f+N98xo5RPYll6hruIslBAybSOIGQikGtX9r/hbogtWWVOzYy3Ez/DaPJKe2ZZJKCi8lPdOeJafE4FEMz1vbg2r+hnoty3iaQleRJu/LCRR2Jb5AOxbd6zV/MzRF+DFRDygKVRne0XCq18EQozMBY5+UObvsJs1pVtY/qNBJr0ba3g5cll7evH9U/p/CZM+Lv9A3z3TH3xb5i/H/s5JEvkwIENZ0hnniMLsxOgDiDFgCZZd6tTp3Fk22eJUvi0msGeJn9OR4fI6apXRy9petyYC9qsJu+7MIUS6BezcBxJHblJlI8NGFOa4vZhohbDSJtD4Q9ju+heAiD6cAH24a4c0k4jG/zC6Xg3d36fXkjqqHXwiX7302LfRMGOiSckfhondCuDvp7NtN/KAvgKSkaNkWMhITH1krfjiRuer67ZgPmeEQXHJ+wnI3C1Kcay0EoJ0isXaprhOfJ2kRCJ9ib4PJO+rH1CVdI/NoG4fGH0DtUtSKVeZ9uC3mF77x8="

@@ -82,7 +82,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             return null;
         }
 
-        const period = getPeriodForWeek(year, weekNumber);
+        const { from, to } = getPeriodForWeek(year, weekNumber);
 
         const displayRows: TableCell[][] = [];
 
@@ -133,9 +133,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         <span>Week {weekNumber}</span>
 
                         <span className="dates">
-                            {period.from.format(DATE_FORMATS.withYear)}
-                            &ndash;
-                            {period.to.format(DATE_FORMATS.withYear)}
+                            {from.format(DATE_FORMATS.withYear)} &ndash; {to.format(DATE_FORMATS.withYear)}
                         </span>
                     </h1>
 
