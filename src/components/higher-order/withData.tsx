@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 import { Day } from '../../constants';
-import { createDispatchToPropsFunction } from '../../helpers';
+import { mapDispatchProps } from '../../helpers';
 import { database } from '../../services';
 import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
 import { getUserId } from '../../store/selectors';
@@ -37,7 +37,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 updateInitialDays: (days: Map<string, Day>) => void;
             }
 
-            const mapDispatchToProps = createDispatchToPropsFunction({
+            const mapDispatchToProps = mapDispatchProps({
                 updateAllDays: updateAllDaysAction,
                 updateInitialDays: updateInitialDaysAction
             });

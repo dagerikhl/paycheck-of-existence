@@ -7,25 +7,8 @@ import { Card } from '../../../components/Card';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import {
-    COLUMN_CLASSES,
-    COLUMN_HEADERS,
-    COLUMN_PROPERTIES,
-    DATE_LONG,
-    DATE_STORAGE,
-    DATE_WITH_YEAR,
-    Day,
-    InputCellType,
-    ROW_CLASSES,
-    TableCell
-} from '../../../constants';
-import {
-    createDispatchToPropsFunction,
-    getFirstDayOfWeek,
-    getPeriodForWeek,
-    range,
-    toHourFormat
-} from '../../../helpers';
+import { DATE_FORMATS, Day, InputCellType, TableCell, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
+import { getFirstDayOfWeek, getPeriodForWeek, mapDispatchProps, range, toHourFormat } from '../../../helpers';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
 import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
@@ -67,7 +50,7 @@ interface DispatchProps {
     updateDay: (dateString: string, day: Day) => void;
 }
 
-const mapDispatchToProps = createDispatchToPropsFunction({
+const mapDispatchToProps = mapDispatchProps({
     updateWeek: updateWeekAction,
     updateDay: updateDayAction
 });
@@ -102,11 +85,11 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         let i = 0;
         week
             .toOrderedMap()
-            .sortBy((_, k) => moment(k, DATE_STORAGE).valueOf())
+            .sortBy((_, k) => moment(k, DATE_FORMATS.storage).valueOf())
             .forEach((day, dateString) => {
-                const date = moment(dateString, DATE_STORAGE);
+                const date = moment(dateString, DATE_FORMATS.storage);
                 const dateIndicator = date.isSame(moment(), 'date') && '>';
-                const dateCell = date.format(DATE_LONG);
+                const dateCell = date.format(DATE_FORMATS.long);
 
                 displayRows[i] = [
                     dateIndicator,
@@ -142,16 +125,18 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         <span>Week {weekNumber}</span>
 
                         <span className="dates">
-                            {period.from.format(DATE_WITH_YEAR)} &ndash; {period.to.format(DATE_WITH_YEAR)}
+                            {period.from.format(DATE_FORMATS.withYear)}
+                            &ndash;
+                            {period.to.format(DATE_FORMATS.withYear)}
                         </span>
                     </h1>
 
                     <Table
                         className="table"
-                        columns={COLUMN_HEADERS}
-                        columnClassNames={COLUMN_CLASSES}
+                        columns={WEEK_COLUMNS.headers}
+                        columnClassNames={WEEK_COLUMNS.classNames}
                         rows={displayRows}
-                        rowClassNames={ROW_CLASSES}
+                        rowClassNames={WEEK_ROWS_CSS}
                         footer={footer}
                     />
 
@@ -269,7 +254,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         let days = Map<string, Day>();
         for (let i = 0; i < 7; i++) {
-            const dateString = period.from.clone().add(i, 'day').format(DATE_STORAGE);
+            const dateString = period.from.clone().add(i, 'day').format(DATE_FORMATS.storage);
 
             days = days.set(dateString, this.populateEmptyDay());
         }
@@ -309,10 +294,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private getDay = (dateString: string): Day | undefined => this.props.week.get(dateString);
 
     private static populateViewState = (firstDate: moment.Moment): Map<string, Map<string, ViewState>> => {
-        const cells = Map(COLUMN_PROPERTIES.map((header): [string, ViewState] => [header || '', { isDirty: false }]));
+        const cells = Map(WEEK_COLUMNS.headers.map((header): [string, ViewState] => {
+            return [header || '', { isDirty: false }];
+        }));
 
         return Map(range(0, 7).map((i): [string, Map<string, ViewState>] => {
-            return [firstDate.clone().add(i, 'day').format(DATE_STORAGE), cells];
+            return [firstDate.clone().add(i, 'day').format(DATE_FORMATS.storage), cells];
         }));
     };
 }

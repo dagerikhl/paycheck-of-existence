@@ -1,4 +1,7 @@
-export const DATE_WITH_YEAR = 'DD.MM.YYYY';
-export const DATE_SHORT = 'DD.MM';
-export const DATE_LONG = 'DD.MM dddd';
-export const DATE_STORAGE = 'YYYY-MM-DD';
+export const DATE_FORMATS = {
+    withYear: 'DD.MM.YYYY',
+    short: 'DD.MM',
+    long: 'DD.MM dddd',
+    storage: 'YYYY-MM-DD'
+};
+

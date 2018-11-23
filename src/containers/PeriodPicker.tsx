@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { createDispatchToPropsFunction } from '../helpers';
+import { mapDispatchProps } from '../helpers';
 import { updatePeriodYearAction } from '../store/actions';
 import { State } from '../store/states';
 
@@ -20,7 +20,7 @@ interface DispatchProps {
     updatePeriodYear: (year: number) => void;
 }
 
-const mapDispatchToProps = createDispatchToPropsFunction({
+const mapDispatchToProps = mapDispatchProps({
     updatePeriodYear: updatePeriodYearAction
 });
 

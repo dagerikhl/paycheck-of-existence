@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import * as moment from 'moment';
 
-import { DATE_STORAGE, Day, Period } from '../constants';
+import { DATE_FORMATS, Day, Period } from '../constants';
 
 export const getNewestWeekNumberInYear = (year: number) => {
     const now = moment();
@@ -23,7 +23,7 @@ export const getFirstDayOfWeek = (year: number, weekNumber: number) => {
 };
 
 export const filterDaysByPeriod = (days: Map<string, Day>, period: Period) => days.filter((_, dateString) => {
-    const date = moment(dateString, DATE_STORAGE);
+    const date = moment(dateString, DATE_FORMATS.storage);
 
     return date.isBetween(period.from, period.to, undefined, '[]');
 });

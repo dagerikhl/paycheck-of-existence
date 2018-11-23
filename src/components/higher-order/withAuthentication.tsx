@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 import { AuthUser } from '../../constants';
-import { createDispatchToPropsFunction } from '../../helpers';
+import { mapDispatchProps } from '../../helpers';
 import { auth } from '../../services';
 import { updateAuthUserAction } from '../../store/actions';
 import { Loader } from '../Loader';
@@ -16,7 +16,7 @@ interface DispatchProps {
     updateAuthUser: (authUser: AuthUser | null) => void;
 }
 
-const mapDispatchToProps = createDispatchToPropsFunction({
+const mapDispatchToProps = mapDispatchProps({
     updateAuthUser: updateAuthUserAction
 });
 
