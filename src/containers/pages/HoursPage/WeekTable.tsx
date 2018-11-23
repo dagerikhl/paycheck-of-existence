@@ -2,6 +2,7 @@ import { List, Map } from 'immutable';
 import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Prompt } from 'react-router';
 
 import { Card } from '../../../components/Card';
 import { ErrorMessage } from '../../../components/ErrorMessage';
@@ -69,7 +70,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         this.checkAndPopulateWeek();
     }
 
-    public componentDidUpdate(prevProps: WeekTableProps) {
+    public componentDidUpdate() {
         this.checkAndPopulateWeek();
     }
 
@@ -121,8 +122,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             ], [undefined, undefined, 0, 0, 0, 0, 0, undefined])
             .map((value) => value !== undefined ? toHourFormat(value) : undefined);
 
+        const isDirty = this.checkDirtyFlags();
+
         return (
             <React.Fragment>
+                <Prompt when={isDirty} message="You have unsaved changes. Are you sure you want to leave?"/>
+
                 <Card className="week-table" level={isCurrent ? 3 : 1}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
@@ -152,7 +157,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     cancelLabel="Discard"
                     onSave={this.onSaveChanges}
                     onCancel={this.onDiscardChanges}
-                    hide={!this.checkDirtyFlags()}
+                    hide={!isDirty}
                 />
             </React.Fragment>
         );
