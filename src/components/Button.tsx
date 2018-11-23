@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { Theme } from '../constants';
+import { Theme } from '../enums';
 
 import './Button.css';
 

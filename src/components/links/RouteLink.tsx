@@ -2,7 +2,8 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { RouteRef, Theme } from '../../constants';
+import { RouteRef } from '../../constants';
+import { Theme } from '../../enums';
 
 import './Link.css';
 

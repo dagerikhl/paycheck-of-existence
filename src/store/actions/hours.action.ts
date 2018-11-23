@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-import { Day } from '../../constants';
+import { Day } from '../../interfaces';
 
 export enum HoursActionType {
     UpdateAllDays = 'HOURS/UPDATE_ALL_DAYS',

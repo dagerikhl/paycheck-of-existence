@@ -1,4 +1,4 @@
-import { AuthUser } from '../../constants';
+import { AuthUser } from '../../interfaces';
 
 export interface AuthState {
     authUser: AuthUser | null;

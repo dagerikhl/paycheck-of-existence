@@ -3,8 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { Day } from '../../constants';
 import { mapDispatchProps } from '../../helpers';
+import { Day } from '../../interfaces';
 import { database } from '../../services';
 import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
 import { getUserId } from '../../store/selectors';

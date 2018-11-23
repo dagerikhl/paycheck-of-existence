@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { TableCell } from '../constants';
+import { TableCell } from '../types';
 
 import './Table.css';
 

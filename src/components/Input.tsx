@@ -1,7 +1,7 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
 
-import { InputCellType, Theme } from '../constants';
+import { InputCellType, Theme } from '../enums';
 import { roundTo } from '../helpers';
 
 import './Input.css';

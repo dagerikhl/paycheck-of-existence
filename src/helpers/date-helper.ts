@@ -1,7 +1,8 @@
 import { Map } from 'immutable';
 import * as moment from 'moment';
 
-import { DATE_FORMATS, Day, Period } from '../constants';
+import { DATE_FORMATS } from '../constants';
+import { Day, Period } from '../interfaces';
 
 export const getNewestWeekNumberInYear = (year: number) => {
     const now = moment();

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Button } from '../../../components/Button';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 import { withData } from '../../../components/higher-order/withData';
-import { Theme } from '../../../constants';
+import { Theme } from '../../../enums';
 import { getNewestWeekNumberInYear, range } from '../../../helpers';
 import { State } from '../../../store/states';
 import { WeekTable } from './WeekTable';

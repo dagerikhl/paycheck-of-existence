@@ -1,4 +1,4 @@
-import { AuthUser } from '../../constants';
+import { AuthUser } from '../../interfaces';
 
 export enum AuthActionType {
     UpdateAuthUser = 'AUTH/UPDATE_AUTH_USER'

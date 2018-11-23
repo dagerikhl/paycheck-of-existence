@@ -7,12 +7,15 @@ import { Card } from '../../../components/Card';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
-import { DATE_FORMATS, Day, InputCellType, TableCell, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
+import { DATE_FORMATS, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
+import { InputCellType } from '../../../enums';
 import { getFirstDayOfWeek, getPeriodForWeek, mapDispatchProps, range, toHourFormat } from '../../../helpers';
+import { Day } from '../../../interfaces';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
 import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
 import { State } from '../../../store/states';
+import { TableCell } from '../../../types';
 import { DataControls } from './DataControls';
 
 import './WeekTable.css';

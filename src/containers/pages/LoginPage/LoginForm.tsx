@@ -5,7 +5,8 @@ import { Button } from '../../../components/Button';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
-import { InputCellType, Routes } from '../../../constants';
+import { Routes } from '../../../constants';
+import { InputCellType } from '../../../enums';
 import { auth } from '../../../services';
 
 import './LoginForm.css';
