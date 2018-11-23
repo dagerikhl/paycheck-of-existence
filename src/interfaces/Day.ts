@@ -7,10 +7,10 @@ export interface Day {
     ssNo: number;
 
     // Hours that grants overtime
-    hoursGo: number;
+    hoursO: number;
 
     // Shadowstack from hours that grants overtime
-    ssGo: number;
+    ssO: number;
 
     // Overtime hours
     ot: number;

@@ -99,8 +99,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     dateCell,
                     this.createInputCell(dateString, 'hoursNo', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'ssNo', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'hoursGo', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'ssGo', InputCellType.NUMBER),
+                    this.createInputCell(dateString, 'hoursO', InputCellType.NUMBER),
+                    this.createInputCell(dateString, 'ssO', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'ot', InputCellType.NUMBER),
                     this.createInputCell(dateString, 'notes', InputCellType.TEXT)
                 ];
@@ -114,8 +114,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 undefined,
                 result[2] + day.hoursNo,
                 result[3] + day.ssNo,
-                result[4] + day.hoursGo,
-                result[5] + day.ssGo,
+                result[4] + day.hoursO,
+                result[5] + day.ssO,
                 result[6] + day.ot,
                 undefined
             ], [undefined, undefined, 0, 0, 0, 0, 0, undefined])
@@ -265,7 +265,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         return days;
     };
 
-    private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursGo: 0, ssGo: 0, ot: 0, notes: '' });
+    private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursO: 0, ssO: 0, ot: 0, notes: '' });
 
     private updateDirtyFlag = (dateString: string, cellProperty: string, value: number | string) => {
         const { initialWeek } = this.props;
