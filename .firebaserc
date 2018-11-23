@@ -1,5 +1,6 @@
 {
     "projects": {
-        "default": "paycheck-of-existence"
+        "default": "paycheck-of-existence",
+        "staging": "staging-paycheck-of-existence"
     }
 }
