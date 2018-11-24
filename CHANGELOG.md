@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v0.3.0...v1.0.0) (2018-11-24)
+
+
+### Bug Fixes
+
+* **header:** Remove cursor: pointer from active link ([2e0a4a6](https://github.com/dagerikhl/paycheck-of-existence/commit/2e0a4a6))
+
+
+### ci
+
+* **database:** Update database rules to require the user to be logged in ([df6bd91](https://github.com/dagerikhl/paycheck-of-existence/commit/df6bd91))
+* **staging:** Add staging project and set it up in firebase ([c418ad4](https://github.com/dagerikhl/paycheck-of-existence/commit/c418ad4))
+
+
+### Features
+
+* **hours:** Change WeekTable headers to be more descriptive ([b2f5a1a](https://github.com/dagerikhl/paycheck-of-existence/commit/b2f5a1a))
+* **hours:** Prompt the user to leave or stay when they have unsaved changes in Hours ([815193e](https://github.com/dagerikhl/paycheck-of-existence/commit/815193e))
+
+
+### BREAKING CHANGES
+
+* **database:** Every user attempting to read or write to the database _must_ be logged in.
+* **staging:** The development environment now points to staging instead of production.
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v0.2.0...v0.3.0) (2018-11-22)
 
