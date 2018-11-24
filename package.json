@@ -16,8 +16,10 @@
         "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
         "hint": "hint http://localhost:3000",
         "commit": "git-cz",
+        "prodset": "npm run build && npm run release && npm run deploy:prod",
         "release": "standard-version",
-        "deploy": "firebase deploy",
+        "deploy": "firebase deploy -P staging",
+        "deploy:prod": "firebase deploy -P default",
         "eject": "react-scripts-ts eject"
     },
     "dependencies": {
