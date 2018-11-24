@@ -1,75 +1,75 @@
 {
-  "name": "paycheck-of-existence",
-  "version": "0.3.0",
-  "description": "Personal tool to keep track of hours worked each week",
-  "author": "Dag Erik Homdrum Løvgren <dagerikhl@gmail.com> (https://github.com/dagerikhl)",
-  "scripts": {
-    "start": "npm-run-all -l -p watch-css start-js",
-    "build": "npm run build-css && react-scripts-ts build",
-    "build-css": "node-sass --include-path ./node_modules/ src/ -o src/",
-    "start-js": "react-scripts-ts start",
-    "watch-css": "node-sass --include-path ./node_modules/ src/ -o src/ --watch",
-    "lint": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js",
-    "lint:prod": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js:prod",
-    "lint-js": "tslint -p . -c tslint.json src/**/*.{ts,tsx}",
-    "lint-js:prod": "tslint -p . -c tslint.prod.json src/**/*.{ts,tsx}",
-    "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
-    "hint": "hint http://localhost:3000",
-    "commit": "git-cz",
-    "release": "standard-version",
-    "deploy": "firebase deploy",
-    "eject": "react-scripts-ts eject"
-  },
-  "dependencies": {
-    "classnames": "^2.2.6",
-    "firebase": "^5.5.2",
-    "immutable": "^4.0.0-rc.12",
-    "moment": "^2.22.2",
-    "node-sass": "^4.10.0",
-    "normalize.css": "^8.0.0",
-    "npm-run-all": "^4.1.3",
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "3.1.0",
-    "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
-    "@types/classnames": "^2.2.6",
-    "@types/node": "^10.11.3",
-    "@types/react": "^16.4.14",
-    "@types/react-dom": "^16.0.8",
-    "@types/react-redux": "^6.0.9",
-    "@types/react-router-dom": "^4.3.1",
-    "commitizen": "^3.0.4",
-    "cz-conventional-changelog": "^2.1.0",
-    "firebase-tools": "^4.2.1",
-    "hint": "^3.4.13",
-    "pre-commit": "^1.2.2",
-    "redux-devtools-extension": "^2.13.5",
-    "standard-version": "^4.4.0",
-    "stylelint": "^9.6.0",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-scss": "^3.3.1",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-sonarts": "^1.8.0",
-    "typescript": "^3.1.1"
-  },
-  "main": "src/index.ts",
-  "license": "GPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dagerikhl/paycheck-of-existence"
-  },
-  "private": false,
-  "pre-commit": [
-    "lint:prod"
-  ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
+    "name": "paycheck-of-existence",
+    "version": "0.3.0",
+    "description": "Personal tool to keep track of hours worked each week",
+    "author": "Dag Erik Homdrum Løvgren <dagerikhl@gmail.com> (https://github.com/dagerikhl)",
+    "scripts": {
+        "start": "npm-run-all -l -p watch-css start-js",
+        "build": "npm run build-css && react-scripts-ts build",
+        "build-css": "node-sass --include-path ./node_modules/ src/ -o src/",
+        "start-js": "react-scripts-ts start",
+        "watch-css": "node-sass --include-path ./node_modules/ src/ -o src/ --watch",
+        "lint": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js",
+        "lint:prod": "npm-run-all --silent --aggregate-output -c -l -p lint-css lint-js:prod",
+        "lint-js": "tslint -p . -c tslint.json src/**/*.{ts,tsx}",
+        "lint-js:prod": "tslint -p . -c tslint.prod.json src/**/*.{ts,tsx}",
+        "lint-css": "stylelint --config=.stylelintrc src/**/*.scss",
+        "hint": "hint http://localhost:3000",
+        "commit": "git-cz",
+        "release": "standard-version",
+        "deploy": "firebase deploy",
+        "eject": "react-scripts-ts eject"
+    },
+    "dependencies": {
+        "classnames": "^2.2.6",
+        "firebase": "^5.5.2",
+        "immutable": "^4.0.0-rc.12",
+        "moment": "^2.22.2",
+        "node-sass": "^4.10.0",
+        "normalize.css": "^8.0.0",
+        "npm-run-all": "^4.1.3",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2",
+        "react-redux": "^5.0.7",
+        "react-router-dom": "^4.3.1",
+        "react-scripts-ts": "3.1.0",
+        "redux": "^4.0.0",
+        "redux-thunk": "^2.3.0"
+    },
+    "devDependencies": {
+        "@types/classnames": "^2.2.6",
+        "@types/node": "^10.11.3",
+        "@types/react": "^16.4.14",
+        "@types/react-dom": "^16.0.8",
+        "@types/react-redux": "^6.0.9",
+        "@types/react-router-dom": "^4.3.1",
+        "commitizen": "^3.0.4",
+        "cz-conventional-changelog": "^2.1.0",
+        "firebase-tools": "^4.2.1",
+        "hint": "^3.4.13",
+        "pre-commit": "^1.2.2",
+        "redux-devtools-extension": "^2.13.5",
+        "standard-version": "^4.4.0",
+        "stylelint": "^9.6.0",
+        "stylelint-config-standard": "^18.2.0",
+        "stylelint-scss": "^3.3.1",
+        "tslint-eslint-rules": "^5.4.0",
+        "tslint-sonarts": "^1.8.0",
+        "typescript": "^3.1.1"
+    },
+    "main": "src/index.ts",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dagerikhl/paycheck-of-existence"
+    },
+    "private": false,
+    "pre-commit": [
+        "lint:prod"
+    ],
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
-  }
 }
