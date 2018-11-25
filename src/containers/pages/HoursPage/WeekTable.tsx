@@ -249,7 +249,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         switch (type) {
             case InputCellType.NUMBER:
                 validations = {
-                    min: 0,
+                    min: cellProperty === 'ssNo' || cellProperty === 'ssO' ? -24 : 0,
                     max: 24,
                     step: 0.5
                 };

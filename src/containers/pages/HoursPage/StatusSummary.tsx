@@ -27,7 +27,9 @@ export const StatusSummary: React.SFC<OwnProps> = ({ totals: { hoursNo, ssNo, ho
 
         <div>
             <span>SS: </span>
-            <span className={classNames({ good: ssNo + ssO > 0 })}>{toHourFormat(ssNo + ssO)}</span>
+            <span className={classNames({ good: ssNo + ssO > 0, bad: ssNo + ssO < 0 })}>
+                {toHourFormat(ssNo + ssO)}
+            </span>
         </div>
 
         <div>
