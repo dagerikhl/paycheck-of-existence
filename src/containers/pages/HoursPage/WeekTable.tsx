@@ -11,13 +11,14 @@ import { Table } from '../../../components/Table';
 import { DATE_FORMATS, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
 import { InputCellType, KeyCode } from '../../../enums';
 import { getFirstDayOfWeek, getPeriodForWeek, mapDispatchProps, range, toHourFormat } from '../../../helpers';
-import { Day } from '../../../interfaces';
+import { Day, Totals } from '../../../interfaces';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
 import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
 import { State } from '../../../store/states';
 import { TableCell } from '../../../types';
 import { DataControls } from './DataControls';
+import { StatusSummary } from './StatusSummary';
 
 import './WeekTable.css';
 
@@ -115,18 +116,25 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 i++;
             });
 
-        const footer = week
-            .reduce((result: number[], day) => [
-                undefined,
-                undefined,
-                result[2] + day.hoursNo,
-                result[3] + day.ssNo,
-                result[4] + day.hoursO,
-                result[5] + day.ssO,
-                result[6] + day.ot,
-                undefined
-            ], [undefined, undefined, 0, 0, 0, 0, 0, undefined])
-            .map((value) => value !== undefined ? toHourFormat(value) : undefined);
+        const totals = week.reduce((result: Totals, day) => ({
+            hoursNo: result.hoursNo + day.hoursNo,
+            ssNo: result.ssNo + day.ssNo,
+            hoursO: result.hoursO + day.hoursO,
+            ssO: result.ssO + day.ssO,
+            ot: result.ot + day.ot
+        }), { hoursNo: 0, ssNo: 0, hoursO: 0, ssO: 0, ot: 0 });
+        const statusSummary = <StatusSummary totals={totals}/>;
+
+        const footer = [
+            undefined,
+            undefined,
+            toHourFormat(totals.hoursNo),
+            toHourFormat(totals.ssNo),
+            toHourFormat(totals.hoursO),
+            toHourFormat(totals.ssO),
+            toHourFormat(totals.ot),
+            statusSummary
+        ];
 
         const isDirty = this.checkDirtyFlags();
 

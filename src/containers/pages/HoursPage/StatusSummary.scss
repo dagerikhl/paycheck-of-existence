@@ -1,0 +1,22 @@
+@import "../../../styles/variables.scss";
+
+.status-summary {
+    display: flex;
+    justify-content: flex-end;
+
+    > :not(:last-child) {
+        margin-right: 8px;
+    }
+
+    .total {
+        margin-left: 8px;
+    }
+
+    .good {
+        color: $good-color;
+    }
+
+    .bad {
+        color: $bad-color;
+    }
+}

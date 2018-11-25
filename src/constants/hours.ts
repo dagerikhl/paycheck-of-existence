@@ -5,3 +5,7 @@ export const WEEK_COLUMNS = {
 };
 
 export const WEEK_ROWS_CSS = [undefined, undefined, undefined, undefined, undefined, 'weekend', 'weekend'];
+
+export const HOUR_LIMITS = {
+    maxHoursPerWeek: 40
+};
