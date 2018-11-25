@@ -9,6 +9,7 @@ import './SiteFooter.css';
 interface OwnProps {
     year: string;
     name: string;
+    version?: string;
     disclaimers?: string[];
     links?: ExternalRef[];
 }
@@ -19,8 +20,16 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
             <span>&copy;</span> <span>{props.year}</span> <span>{props.name}</span>
         </div>
 
+        {props.version && (
+            <div className="footer-section">
+                <h3>Version</h3>
+
+                <span className="version">{props.version}</span>
+            </div>
+        )}
+
         {props.disclaimers && (
-            <div className="disclaimers">
+            <div className="footer-section">
                 <h3>Disclaimers</h3>
 
                 {props.disclaimers.map((disclaimer, i) => <span key={i}>{disclaimer}</span>)}
@@ -28,12 +37,12 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
         )}
 
         {props.links && (
-            <div className="links">
+            <div className="footer-section">
                 <h3>Contact</h3>
 
-                {props.links.map((link: ExternalRef, i) => {
-                    return <span key={i}>{link.source}: <ExternalLink theme={Theme.ACCENT} externalRef={link}/></span>;
-                })}
+                {props.links.map((link: ExternalRef, i) => (
+                    <span key={i}>{link.source}: <ExternalLink theme={Theme.ACCENT} externalRef={link}/></span>
+                ))}
             </div>
         )}
     </div>

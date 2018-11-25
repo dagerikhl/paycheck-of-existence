@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
+import { version } from '../../package.json';
+
 import { withAuthentication } from '../components/higher-order/withAuthentication';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { SiteHeader } from '../components/layout/SiteHeader';
@@ -53,6 +55,7 @@ class AppComponent extends React.PureComponent {
                     <SiteFooter
                         year="2018"
                         name="Dag Erik Homdrum Løvgren"
+                        version={version}
                         disclaimers={this.disclaimers}
                         links={this.contactLinks}
                     />
