@@ -73,12 +73,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         window.addEventListener('keypress', this.onEnterPressed);
     }
 
-    public componentDidUpdate() {
-        this.checkAndPopulateWeek();
-    }
-
     public componentWillUnmount() {
         window.removeEventListener('keypress', this.onEnterPressed);
+    }
+
+    public componentDidUpdate() {
+        this.checkAndPopulateWeek();
     }
 
     public render() {
