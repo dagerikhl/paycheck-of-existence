@@ -16,7 +16,7 @@ import './App.css';
 
 class AppComponent extends React.PureComponent {
     private readonly disclaimers = [
-        'Date collected? None.',
+        'Data collected? None.',
         'Terms of Use? None. TL;DR: None.',
         'Dark pacts made by visiting site? "None".'
     ];
