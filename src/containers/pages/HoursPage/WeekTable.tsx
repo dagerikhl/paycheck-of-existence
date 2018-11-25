@@ -9,7 +9,7 @@ import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
 import { DATE_FORMATS, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
-import { InputCellType } from '../../../enums';
+import { InputCellType, KeyCode } from '../../../enums';
 import { getFirstDayOfWeek, getPeriodForWeek, mapDispatchProps, range, toHourFormat } from '../../../helpers';
 import { Day } from '../../../interfaces';
 import { database } from '../../../services';
@@ -68,10 +68,16 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     public componentDidMount() {
         this.checkAndPopulateWeek();
+
+        window.addEventListener('keypress', this.onEnterPressed);
     }
 
     public componentDidUpdate() {
         this.checkAndPopulateWeek();
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('keypress', this.onEnterPressed);
     }
 
     public render() {
@@ -192,6 +198,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         }
 
         this.resetState();
+    };
+
+    private onEnterPressed = (event: KeyboardEvent) => {
+        if (event.key === KeyCode.Enter && this.checkDirtyFlags()) {
+            this.onSaveChanges();
+        }
     };
 
     private resetState = () => {
