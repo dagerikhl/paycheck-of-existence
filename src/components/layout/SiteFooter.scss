@@ -2,12 +2,30 @@
 
 .site-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     height: 100%;
 
-    padding: 0 64px;
+    padding: 32px 64px;
 
     background-color: $theme-secondary;
+
+    > * {
+        margin: 0 32px;
+    }
+
+    .copyright {
+        flex-grow: 1;
+
+        margin: auto 0;
+    }
+
+    .disclaimers {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+    }
 }

@@ -13,7 +13,24 @@ import { PageNotFound } from './pages/PageNotFound/PageNotFound';
 import './App.css';
 
 class AppComponent extends React.PureComponent {
-    private readonly footerLinks = [{ name: 'dagerikhl@GitHub', url: 'https://github.com/dagerikhl' }];
+    private readonly disclaimers = [
+        'Date collected? None.',
+        'Terms of Use? None. TL;DR: None.',
+        'Dark pacts made by visiting site? "None".'
+    ];
+    private readonly contactLinks = [
+        {
+            name: 'dagerikhl',
+            url: 'https://github.com/dagerikhl',
+            source: 'GitHub'
+        },
+        {
+            name: 'dagerikhl@gmail.com',
+            url: 'mailto:dagerikhl@gmail.com',
+            source: 'E-mail',
+            emailSubject: 'Regarding Paycheck of Existence'
+        }
+    ];
 
     public render() {
         return (
@@ -33,7 +50,12 @@ class AppComponent extends React.PureComponent {
                 </main>
 
                 <footer className="footer">
-                    <SiteFooter year="2018" name="Dag Erik Homdrum Løvgren" links={this.footerLinks}/>
+                    <SiteFooter
+                        year="2018"
+                        name="Dag Erik Homdrum Løvgren"
+                        disclaimers={this.disclaimers}
+                        links={this.contactLinks}
+                    />
                 </footer>
             </div>
         );

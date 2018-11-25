@@ -17,7 +17,7 @@ type ExternalLinkProps = OwnProps & React.HTMLProps<HTMLAnchorElement>;
 export const ExternalLink: React.SFC<ExternalLinkProps> = ({ className, theme, externalRef, ...rest }) => (
     <a
         className={classNames({ [className as string]: className, 'link': true, [theme || Theme.NEUTRAL]: true })}
-        href={externalRef.url}
+        href={externalRef.url + externalRef.emailSubject ? `?${externalRef.emailSubject}` : ''}
         target={externalRef.openInWindow ? undefined : '_blank'}
         rel="noopener noreferrer"
         {...rest}
