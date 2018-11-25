@@ -35,7 +35,7 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
 
         const visibleWeekNumbers = range(1, highestWeekNumberOfYear)
             .reverse()
-            .slice(0, showAllWeeks ? undefined : 2);
+            .slice(0, showAllWeeks ? undefined : 1);
 
         return (
             <section className="hours-page">
@@ -48,7 +48,7 @@ class HoursPageComponent extends React.PureComponent<StateProps, OwnState> {
                         />)}
                 </div>
 
-                {highestWeekNumberOfYear > 2 && <Button
+                {highestWeekNumberOfYear > 1 && <Button
                     className="show-all-button"
                     theme={Theme.ACCENT}
                     onClick={this.toggleShowAllWeeks}
