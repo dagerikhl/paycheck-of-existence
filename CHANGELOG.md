@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v1.0.0...v1.1.0) (2018-11-25)
+
+
+### Features
+
+* **footer:** Add contact and disclaimers (super serial) in footer ([6f29106](https://github.com/dagerikhl/paycheck-of-existence/commit/6f29106))
+* **footer:** Add current version of app in footer ([7809457](https://github.com/dagerikhl/paycheck-of-existence/commit/7809457))
+* **hours:** Only show 1 (not 2) week by default on Hours page ([12c92fc](https://github.com/dagerikhl/paycheck-of-existence/commit/12c92fc))
+* **hours:** Save unsaved changes when Enter is pressed ([4d833bc](https://github.com/dagerikhl/paycheck-of-existence/commit/4d833bc))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v0.3.0...v1.0.0) (2018-11-24)
 
