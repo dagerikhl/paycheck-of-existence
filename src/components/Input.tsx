@@ -42,6 +42,7 @@ export class Input extends React.PureComponent<OwnProps> {
                 placeholder={placeholder}
                 disabled={disabled}
                 step={step}
+                title={'' + value}
             >
                 {children}
             </input>
