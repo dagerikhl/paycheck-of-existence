@@ -67,4 +67,8 @@
     .weekend {
         background-color: $shadow-color-lighter;
     }
+
+    @media print {
+        page-break-inside: avoid;
+    }
 }

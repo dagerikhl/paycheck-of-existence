@@ -43,6 +43,7 @@ export class Input extends React.PureComponent<OwnProps> {
                 disabled={disabled}
                 step={step}
                 title={'' + value}
+                aria-label={`${type} input`}
             >
                 {children}
             </input>

@@ -22,7 +22,7 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
 
         {props.version && (
             <div className="footer-section">
-                <h3>Version</h3>
+                <h2>Version</h2>
 
                 <span className="version">{props.version}</span>
             </div>
@@ -30,7 +30,7 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
 
         {props.disclaimers && (
             <div className="footer-section">
-                <h3>Disclaimers</h3>
+                <h2>Disclaimers</h2>
 
                 {props.disclaimers.map((disclaimer, i) => <span key={i}>{disclaimer}</span>)}
             </div>
@@ -38,7 +38,7 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
 
         {props.links && (
             <div className="footer-section">
-                <h3>Contact</h3>
+                <h2>Contact</h2>
 
                 {props.links.map((link: ExternalRef, i) => (
                     <span key={i}>{link.source}: <ExternalLink theme={Theme.ACCENT} externalRef={link}/></span>

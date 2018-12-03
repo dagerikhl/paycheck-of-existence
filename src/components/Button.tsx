@@ -25,6 +25,7 @@ export const Button: React.SFC<ButtonProps> = ({ className, theme, square, round
             'round': round
         })}
         type="button"
+        aria-label="Button"
         {...rest}
     >
         {children}

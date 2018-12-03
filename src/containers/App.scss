@@ -30,4 +30,8 @@
     .footer {
         grid-area: f;
     }
+
+    @media print {
+        grid-template-columns: 0 1fr 0;
+    }
 }
