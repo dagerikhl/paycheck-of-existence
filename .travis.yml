@@ -15,5 +15,6 @@ deploy:
   skip_cleanup: true
   on:
     branch: master
+    tags: true
   token:
     secure: "mzjhYUeF02/XOp7wUziZj5y2UFQg5ELe++c7uY0MDxSTop8LXWulOM81JAv2YgNP1OsA7IrCyy9NFLLfOQXT3UHab7cBhoiMSE+g+w1sOaa9GxXlSHb57qijjgqgmXKRu8QnSQ73c3cB4uK5hEekTYQ/cjYQ6UiXeuaYDe8hUmBh31f+N98xo5RPYll6hruIslBAybSOIGQikGtX9r/hbogtWWVOzYy3Ez/DaPJKe2ZZJKCi8lPdOeJafE4FEMz1vbg2r+hnoty3iaQleRJu/LCRR2Jb5AOxbd6zV/MzRF+DFRDygKVRne0XCq18EQozMBY5+UObvsJs1pVtY/qNBJr0ba3g5cll7evH9U/p/CZM+Lv9A3z3TH3xb5i/H/s5JEvkwIENZ0hnniMLsxOgDiDFgCZZd6tTp3Fk22eJUvi0msGeJn9OR4fI6apXRy9petyYC9qsJu+7MIUS6BezcBxJHblJlI8NGFOa4vZhohbDSJtD4Q9ju+heAiD6cAH24a4c0k4jG/zC6Xg3d36fXkjqqHXwiX7302LfRMGOiSckfhondCuDvp7NtN/KAvgKSkaNkWMhITH1krfjiRuer67ZgPmeEQXHJ+wnI3C1Kcay0EoJ0isXaprhOfJ2kRCJ9ib4PJO+rH1CVdI/NoG4fGH0DtUtSKVeZ9uC3mF77x8="
