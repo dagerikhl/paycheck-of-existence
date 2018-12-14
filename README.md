@@ -30,6 +30,11 @@ Personal tool to keep track of hours worked each week.
 3. Run `npm run deploy` to deploy the app directly to Firebase.
     - **Note!** This requires Firebase to be configured.
     - **Note!** This requires certain environment variables to be set, see [Configuration](#configuration).
+    - **Note!** This deploys the application a Firebase alias, `staging`.
+
+### CI/CD
+
+The project is setup to deploy automatically with Travis, _but only to staging_. To deploy the application to production, follow the steps in [Deployment](#deployment), and run `npm run deploy:prod` to deploy the newly generated release to production.
 
 ## Technologies
 
