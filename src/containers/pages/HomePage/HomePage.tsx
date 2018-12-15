@@ -8,7 +8,7 @@ export class HomePage extends React.PureComponent {
     public render() {
         return (
             <section className="home-page">
-                <h1>Home</h1>
+                <h1 className="title">Home</h1>
 
                 <img className="logo" src={logo} alt="Logo"/>
 
