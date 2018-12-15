@@ -26,11 +26,6 @@ interface ViewState {
     isDirty: boolean;
 }
 
-interface OwnProps {
-    weekNumber: number;
-    isCurrent?: boolean;
-}
-
 interface OwnState {
     viewState: Map<string, Map<string, ViewState>>;
     error?: any;
@@ -38,16 +33,18 @@ interface OwnState {
 
 interface StateProps {
     userId: string;
+    weekNumber: number;
     year: number;
     week: Map<string, Day>;
     initialWeek: Map<string, Day>;
 }
 
-const mapStateToProps = (state: State, props: OwnProps): StateProps => ({
+const mapStateToProps = (state: State): StateProps => ({
     userId: getUserId(state),
+    weekNumber: state.period.weekNumber,
     year: state.period.year,
-    week: getDaysInWeek(state, props),
-    initialWeek: getInitialDaysInWeek(state, props)
+    week: getDaysInWeek(state),
+    initialWeek: getInitialDaysInWeek(state)
 });
 
 interface DispatchProps {
@@ -60,7 +57,7 @@ const mapDispatchToProps = mapDispatchProps({
     updateDay: updateDayAction
 });
 
-type WeekTableProps = OwnProps & StateProps & DispatchProps;
+type WeekTableProps = StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     public state: OwnState = {
@@ -82,7 +79,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     }
 
     public render() {
-        const { weekNumber, isCurrent, year, week } = this.props;
+        const { weekNumber, year, week } = this.props;
         const { error } = this.state;
 
         if (week.isEmpty()) {
@@ -142,7 +139,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
             <React.Fragment>
                 <Prompt when={isDirty} message="You have unsaved changes. Are you sure you want to leave?"/>
 
-                <Card className="week-table" level={isCurrent ? 3 : 1}>
+                <Card className="week-table" level={3}>
                     <h1 className="title">
                         <span>Week {weekNumber}</span>
 

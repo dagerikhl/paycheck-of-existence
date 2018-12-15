@@ -1,4 +1,4 @@
-@import "../styles/variables.scss";
+@import "../../styles/variables.scss";
 
 $control-color: #e3e3e3;
 
@@ -22,7 +22,7 @@ $control-color: #e3e3e3;
     border: 1px solid $shadow-color;
     border-radius: 2px;
 
-    .year {
+    .value {
         margin: 0 8px;
 
         font-weight: bold;
@@ -56,6 +56,10 @@ $control-color: #e3e3e3;
             &:disabled {
                 .control-icon-up {
                     border-bottom: 5px solid $shadow-color-light;
+                }
+
+                .control-icon-down {
+                    border-top: 5px solid $shadow-color-light;
                 }
             }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { PeriodPicker } from '../../containers/PeriodPicker';
+import { PeriodControls } from '../../containers/period-picker/PeriodControls';
 import { SiteNavigation } from './SiteNavigation';
 
 import logo from '../../images/logo.svg';
@@ -19,7 +19,7 @@ export const SiteHeader: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
 
         <div className="period-picker-container">
-            <PeriodPicker/>
+            <PeriodControls/>
         </div>
 
         <div className="site-navigation-container">

@@ -1,12 +1,8 @@
-import createCachedSelector from 're-reselect';
+import { createSelector } from 'reselect';
 
 import { filterDaysByPeriod, getPeriodForWeek } from '../../helpers';
 import { State } from '../states';
-import { getYear } from './period.selector';
-
-// Prop selectors
-
-const getWeekNumber = (state: State, props: any) => props.weekNumber;
+import { getWeekNumber, getYear } from './period.selector';
 
 // Selectors
 
@@ -16,17 +12,17 @@ const getInitialDays = (state: State) => state.hours.initialDays;
 
 // Reselectors
 
-export const getDaysInWeek = createCachedSelector([getYear, getDays, getWeekNumber], (year, days, weekNumber) => {
+export const getDaysInWeek = createSelector([getYear, getWeekNumber, getDays], (year, weekNumber, days) => {
     const period = getPeriodForWeek(year, weekNumber);
 
     return filterDaysByPeriod(days, period);
-})((state, props) => props.weekNumber);
+});
 
-export const getInitialDaysInWeek = createCachedSelector(
-    [getYear, getInitialDays, getWeekNumber],
-    (year, initialDays, weekNumber) => {
+export const getInitialDaysInWeek = createSelector(
+    [getYear, getWeekNumber, getInitialDays],
+    (year, weekNumber, initialDays) => {
         const period = getPeriodForWeek(year, weekNumber);
 
         return filterDaysByPeriod(initialDays, period);
     }
-)((state, props) => props.weekNumber);
+);
