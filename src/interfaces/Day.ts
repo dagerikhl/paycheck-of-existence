@@ -3,13 +3,13 @@ export interface Day {
     // Hours that doesn't grant overtime
     hoursNo: number;
 
-    // Shadowstack from hours that doesn't grant overtime
+    // SS from hours that doesn't grant overtime
     ssNo: number;
 
     // Hours that grants overtime
     hoursO: number;
 
-    // Shadowstack from hours that grants overtime
+    // SS from hours that grants overtime
     ssO: number;
 
     // Overtime hours
