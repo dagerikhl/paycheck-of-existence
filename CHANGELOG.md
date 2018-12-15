@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v1.1.0...v2.0.0) (2018-12-15)
+
+
+### Bug Fixes
+
+* **typo:** Fix typo in data collection disclaimer in footer ([7372844](https://github.com/dagerikhl/paycheck-of-existence/commit/7372844))
+
+
+### Features
+
+* **hours:** Add total summary to footer of WeekTable with hours, ss, ot, total ([ed0f82d](https://github.com/dagerikhl/paycheck-of-existence/commit/ed0f82d))
+* **hours:** Allow negative values for ss input fields ([dfcb58e](https://github.com/dagerikhl/paycheck-of-existence/commit/dfcb58e))
+* **HoursPage:** Alter HoursPage to only show 1 week, and hoist week controls up to SiteHeader ([f7d06c2](https://github.com/dagerikhl/paycheck-of-existence/commit/f7d06c2))
+* **input:** Add title to inputs if to be able to read them if they aren't big enough ([3e53518](https://github.com/dagerikhl/paycheck-of-existence/commit/3e53518))
+
+
+### BREAKING CHANGES
+
+* **HoursPage:** It is no longer possible to view multiple weeks at the same time.
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v1.0.0...v1.1.0) (2018-11-25)
 
