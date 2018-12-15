@@ -1,9 +1,17 @@
+import { createSelector } from 'reselect';
+
 import { State } from '../states';
 
-export const getUserId = (state: State) => {
-    if (!state.auth.authUser) {
+// Selectors
+
+const getAuthUser = (state: State) => state.auth.authUser;
+
+// Reselectors
+
+export const getUserId = createSelector([getAuthUser], (authUser) => {
+    if (!authUser) {
         throw new Error('User not authenticated.');
     }
 
-    return state.auth.authUser.uid;
-};
+    return authUser.uid;
+});

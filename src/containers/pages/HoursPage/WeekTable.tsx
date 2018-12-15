@@ -46,8 +46,8 @@ interface StateProps {
 const mapStateToProps = (state: State, props: OwnProps): StateProps => ({
     userId: getUserId(state),
     year: state.period.year,
-    week: getDaysInWeek(state, props.weekNumber),
-    initialWeek: getInitialDaysInWeek(state, props.weekNumber)
+    week: getDaysInWeek(state, props),
+    initialWeek: getInitialDaysInWeek(state, props)
 });
 
 interface DispatchProps {
