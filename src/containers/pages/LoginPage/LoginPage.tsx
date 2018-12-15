@@ -11,7 +11,7 @@ class LoginPageComponent extends React.PureComponent<RouteComponentProps> {
 
         return (
             <section className="login-page">
-                <h1 className="title">Login</h1>
+                <h1>Login</h1>
 
                 <LoginForm history={history}/>
             </section>

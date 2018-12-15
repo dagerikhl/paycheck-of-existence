@@ -17,6 +17,7 @@ export const StatusSummary: React.SFC<OwnProps> = ({ totals: { hoursNo, ssNo, ho
             <span>Hours: </span>
             <span
                 className={classNames({
+                    'no-break': true,
                     good: hoursNo + hoursO === HOUR_LIMITS.maxHoursPerWeek,
                     bad: hoursNo + hoursO !== HOUR_LIMITS.maxHoursPerWeek
                 })}
@@ -27,19 +28,19 @@ export const StatusSummary: React.SFC<OwnProps> = ({ totals: { hoursNo, ssNo, ho
 
         <div>
             <span>SS: </span>
-            <span className={classNames({ good: ssNo + ssO > 0, bad: ssNo + ssO < 0 })}>
+            <span className={classNames({ 'no-break': true, good: ssNo + ssO > 0, bad: ssNo + ssO < 0 })}>
                 {toHourFormat(ssNo + ssO)}
             </span>
         </div>
 
         <div>
             <span>OT: </span>
-            <span className={classNames({ bad: ot > 0 })}>{toHourFormat(ot)}</span>
+            <span className={classNames({ 'no-break': true, bad: ot > 0 })}>{toHourFormat(ot)}</span>
         </div>
 
         <div className="total">
             <span>Total: </span>
-            <span>{toHourFormat(hoursNo + hoursO + ssNo + ssO + ot)}</span>
+            <span className="no-break">{toHourFormat(hoursNo + hoursO + ssNo + ssO + ot)}</span>
         </div>
     </div>
 );

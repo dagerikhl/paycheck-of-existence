@@ -19,4 +19,8 @@
     .bad {
         color: $bad-color;
     }
+
+    .no-break {
+        white-space: nowrap;
+    }
 }
