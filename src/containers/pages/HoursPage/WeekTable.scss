@@ -37,30 +37,35 @@
         @extend %table-number-cell;
 
         width: 99px;
+        min-width: 64px;
     }
 
     .ss-no {
         @extend %table-number-cell;
 
         width: 99px;
+        min-width: 64px;
     }
 
     .hours-o {
         @extend %table-number-cell;
 
         width: 99px;
+        min-width: 64px;
     }
 
     .ss-o {
         @extend %table-number-cell;
 
         width: 99px;
+        min-width: 64px;
     }
 
     .ot {
         @extend %table-number-cell;
 
         width: 99px;
+        min-width: 64px;
     }
 
     // Table rows
