@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
 
+    .title {
+        margin-bottom: 4px;
+    }
+
     .section-wrapper {
         max-width: 172px;
 

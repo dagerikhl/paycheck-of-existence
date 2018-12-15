@@ -8,7 +8,7 @@ interface OwnProps {
 
 export const FooterSection: React.SFC<OwnProps> = ({ title, children }) => (
     <div className="footer-section">
-        <h2>{title}</h2>
+        <h2 className="title">{title}</h2>
 
         <div className="section-wrapper">
             {children}
