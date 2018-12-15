@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Theme } from '../../enums';
 import { ExternalRef } from '../../interfaces';
 import { ExternalLink } from '../links/ExternalLink';
+import { FooterSection } from './FooterSection';
 
 import './SiteFooter.css';
 
@@ -21,29 +22,23 @@ export const SiteFooter: React.SFC<OwnProps> = (props: OwnProps) => (
         </div>
 
         {props.version && (
-            <div className="footer-section">
-                <h2>Version</h2>
-
-                <span className="version">{props.version}</span>
-            </div>
-        )}
-
-        {props.disclaimers && (
-            <div className="footer-section">
-                <h2>Disclaimers</h2>
-
-                {props.disclaimers.map((disclaimer, i) => <span key={i}>{disclaimer}</span>)}
-            </div>
+            <FooterSection title="Version">
+                <div className="version">{props.version}</div>
+            </FooterSection>
         )}
 
         {props.links && (
-            <div className="footer-section">
-                <h2>Contact</h2>
-
+            <FooterSection title="Contact">
                 {props.links.map((link: ExternalRef, i) => (
-                    <span key={i}>{link.source}: <ExternalLink theme={Theme.ACCENT} externalRef={link}/></span>
+                    <div key={i}><ExternalLink theme={Theme.ACCENT} externalRef={link}/></div>
                 ))}
-            </div>
+            </FooterSection>
+        )}
+
+        {props.disclaimers && (
+            <FooterSection title="Disclaimers">
+                {props.disclaimers.map((disclaimer, i) => <div key={i}>{disclaimer}</div>)}
+            </FooterSection>
         )}
     </div>
 );

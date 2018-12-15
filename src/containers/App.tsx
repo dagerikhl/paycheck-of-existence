@@ -22,14 +22,12 @@ class AppComponent extends React.PureComponent {
     ];
     private readonly contactLinks = [
         {
-            name: 'dagerikhl',
-            url: 'https://github.com/dagerikhl',
-            source: 'GitHub'
+            name: 'dagerikhl@GitHub',
+            url: 'https://github.com/dagerikhl'
         },
         {
             name: 'dagerikhl@gmail.com',
             url: 'mailto:dagerikhl@gmail.com',
-            source: 'E-mail',
             emailSubject: 'Regarding Paycheck of Existence'
         }
     ];
