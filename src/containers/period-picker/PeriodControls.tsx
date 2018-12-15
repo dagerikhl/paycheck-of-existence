@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import { withAuthorization } from '../../components/higher-order/withAuthorization';
 import { mapDispatchProps } from '../../helpers';
 import { updatePeriodWeekNumberAction, updatePeriodYearAction } from '../../store/actions';
 import { State } from '../../store/states';
@@ -71,4 +72,4 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
     };
 }
 
-export const PeriodControls = connect(mapStateToProps, mapDispatchToProps)(PeriodControlsComponent);
+export const PeriodControls = withAuthorization(connect(mapStateToProps, mapDispatchToProps)(PeriodControlsComponent));
