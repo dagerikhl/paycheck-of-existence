@@ -12,10 +12,6 @@
 
     color: $theme-primary-text;
     background-color: $theme-primary-light;
-    border-right: 1px solid $shadow-color;
-    border-left: 1px solid $shadow-color;
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
 
     overflow: hidden;
 
@@ -23,8 +19,6 @@
 
     &.open {
         height: 64px;
-
-        border-bottom: 1px solid $shadow-color;
     }
 
     .control-buttons {
