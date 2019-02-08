@@ -1,10 +1,11 @@
 import { Map } from 'immutable';
+import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { mapDispatchProps } from '../../helpers';
-import { Day } from '../../interfaces';
+import { mapDispatchProps, objectKeys } from '../../helpers';
+import { Day, Period } from '../../interfaces';
 import { database } from '../../services';
 import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
 import { getUserId } from '../../store/selectors';
@@ -24,12 +25,12 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
     switch (dataString) {
         case 'days': {
             interface StateProps {
-                year: number;
+                period: Period;
             }
 
             const mapStateToProps = (state: State): CommonStateProps & StateProps => ({
                 userId: getUserId(state),
-                year: state.period.year
+                period: state.period.period
             });
 
             interface DispatchProps {
@@ -52,9 +53,9 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 public shouldComponentUpdate(nextProps: WithDaysDataProps) {
-                    const { year } = this.props;
+                    const { period } = this.props;
 
-                    if (nextProps.year !== year) {
+                    if (nextProps.period.from !== period.from || nextProps.period.to !== period.to) {
                         this.fetchDays(nextProps);
                     }
 
@@ -70,13 +71,32 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 private fetchDays = (props = this.props) => {
-                    const { userId, year, updateAllDays, updateInitialDays } = props;
+                    const { userId, period, updateAllDays, updateInitialDays } = props;
 
                     this.setState({ isLoaded: false });
 
                     database.getUserRef(userId).child('hours').on('value', (snapshot) => {
                         const allValues = snapshot && snapshot.val();
-                        const days = allValues && Map<string, Day>(allValues[year]) || Map<string, Day>();
+
+                        let days = Map<string, Day>();
+                        if (allValues) {
+                            const flattened = {};
+                            for (const year of objectKeys(allValues)) {
+                                for (const dateString of objectKeys(allValues[year])) {
+                                    flattened[dateString] = allValues[year][dateString];
+                                }
+                            }
+
+                            const filtered = {};
+                            for (const dateString of objectKeys(flattened)) {
+                                const date = moment(dateString, 'YYYY-MM-DD');
+                                if (date.isBetween(period.from, period.to, undefined, '[]')) {
+                                    filtered[dateString] = flattened[dateString];
+                                }
+                            }
+
+                            days = Map<string, Day>(filtered as any);
+                        }
 
                         updateAllDays(days);
                         updateInitialDays(days);

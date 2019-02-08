@@ -1,12 +1,14 @@
 import * as moment from 'moment';
+import { Period } from '../../interfaces';
 
 export interface PeriodState {
-    year: number;
-    weekNumber: number;
+    period: Period;
 }
 
 const now = moment();
 export const initialPeriodState: PeriodState = {
-    year: now.year(),
-    weekNumber: now.isoWeek()
+    period: {
+        from: now.clone().startOf('isoWeek'),
+        to: now.clone().endOf('isoWeek')
+    }
 };

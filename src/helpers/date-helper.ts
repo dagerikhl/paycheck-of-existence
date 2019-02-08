@@ -12,17 +12,6 @@ export const getNewestWeekNumberInYear = (year: number) => {
         : now.year(year).isoWeeksInYear();
 };
 
-export const getPeriodForWeek = (year: number, weekNumber: number): Period => {
-    const from = moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
-    const to = from.clone().endOf('isoWeek');
-
-    return { from, to };
-};
-
-export const getFirstDayOfWeek = (year: number, weekNumber: number) => {
-    return moment().year(year).isoWeek(weekNumber).startOf('isoWeek');
-};
-
 export const filterDaysByPeriod = (days: Map<string, Day>, period: Period) => days.filter((_, dateString) => {
     const date = moment(dateString, DATE_FORMATS.storage);
 

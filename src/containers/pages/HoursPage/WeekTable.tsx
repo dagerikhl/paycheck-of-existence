@@ -10,8 +10,8 @@ import { Input } from '../../../components/Input';
 import { Table } from '../../../components/Table';
 import { DATE_FORMATS, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
 import { InputCellType, KeyCode } from '../../../enums';
-import { getFirstDayOfWeek, getPeriodForWeek, mapDispatchProps, range, toHourFormat } from '../../../helpers';
-import { Day, Totals } from '../../../interfaces';
+import { mapDispatchProps, range, toHourFormat } from '../../../helpers';
+import { Day, Period, Totals } from '../../../interfaces';
 import { database } from '../../../services';
 import { updateDayAction, updateWeekAction } from '../../../store/actions';
 import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
@@ -33,16 +33,14 @@ interface OwnState {
 
 interface StateProps {
     userId: string;
-    weekNumber: number;
-    year: number;
+    period: Period;
     week: Map<string, Day>;
     initialWeek: Map<string, Day>;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
     userId: getUserId(state),
-    weekNumber: state.period.weekNumber,
-    year: state.period.year,
+    period: state.period.period,
     week: getDaysInWeek(state),
     initialWeek: getInitialDaysInWeek(state)
 });
@@ -61,7 +59,7 @@ type WeekTableProps = StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     public state: OwnState = {
-        viewState: WeekTableComponent.populateViewState(getFirstDayOfWeek(this.props.year, this.props.weekNumber))
+        viewState: WeekTableComponent.populateViewState(this.props.period)
     };
 
     public componentDidMount() {
@@ -79,14 +77,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     }
 
     public render() {
-        const { weekNumber, year, week } = this.props;
+        const { period, week } = this.props;
         const { error } = this.state;
 
         if (week.isEmpty()) {
             return null;
         }
-
-        const { from, to } = getPeriodForWeek(year, weekNumber);
 
         const displayRows: TableCell[][] = [];
 
@@ -141,10 +137,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
                 <Card className="week-table" level={3}>
                     <h1 className="title">
-                        <span>Week {weekNumber}</span>
+                        <span>Week {period.from.isoWeek()}</span>
 
                         <span className="dates">
-                            {from.format(DATE_FORMATS.withYear)} &ndash; {to.format(DATE_FORMATS.withYear)}
+                            {period.from.format(DATE_FORMATS.withYear)} &ndash; {period.to.format(DATE_FORMATS.withYear)}
                         </span>
                     </h1>
 
@@ -161,7 +157,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 </Card>
 
                 <DataControls
-                    label={`You have unsaved changes in week ${weekNumber}.`}
+                    label={`You have unsaved changes in week ${period.from.isoWeek()}.`}
                     saveLabel="Save"
                     cancelLabel="Discard"
                     onSave={this.onSaveChanges}
@@ -173,12 +169,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     }
 
     private onSaveChanges = () => {
-        const { userId, year, week } = this.props;
+        const { userId, period, week } = this.props;
 
         let possibleError: any;
 
         week.forEach((day, dateString) => {
-            database.getUserRef(userId).child('hours').child(year.toString()).child(dateString).update(day)
+            database.getUserRef(userId).child('hours').child(period.from.year().toString()).child(dateString).update(day)
                 .catch((error) => {
                     possibleError = error;
                 });
@@ -212,10 +208,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private resetState = () => {
-        const { weekNumber, year } = this.props;
+        const { period } = this.props;
 
         this.setState({
-            viewState: WeekTableComponent.populateViewState(getFirstDayOfWeek(year, weekNumber)),
+            viewState: WeekTableComponent.populateViewState(period),
             error: undefined
         });
     };
@@ -271,9 +267,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private populateEmptyWeek = (): Map<string, Day> => {
-        const { weekNumber, year } = this.props;
-
-        const period = getPeriodForWeek(year, weekNumber);
+        const { period } = this.props;
 
         let days = Map<string, Day>();
         for (let i = 0; i < 7; i++) {
@@ -316,13 +310,13 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
     private getDay = (dateString: string): Day | undefined => this.props.week.get(dateString);
 
-    private static populateViewState = (firstDate: moment.Moment): Map<string, Map<string, ViewState>> => {
+    private static populateViewState = (period: Period): Map<string, Map<string, ViewState>> => {
         const cells = Map(WEEK_COLUMNS.headers.map((header): [string, ViewState] => {
             return [header || '', { isDirty: false }];
         }));
 
         return Map(range(0, 7).map((i): [string, Map<string, ViewState>] => {
-            return [firstDate.clone().add(i, 'day').format(DATE_FORMATS.storage), cells];
+            return [period.from.clone().add(i, 'day').format(DATE_FORMATS.storage), cells];
         }));
     };
 }

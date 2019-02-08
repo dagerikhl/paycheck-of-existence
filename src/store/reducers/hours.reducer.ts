@@ -16,7 +16,7 @@ export const hoursReducer = (state: HoursState = initialHoursState, action: Hour
         case HoursActionType.UpdateWeek:
             return {
                 ...state,
-                days: state.days.merge(action.week)
+                days: action.week.merge(state.days)
             };
         case HoursActionType.UpdateDay:
             return {

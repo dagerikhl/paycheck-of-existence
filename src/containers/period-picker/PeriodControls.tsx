@@ -3,52 +3,53 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { withAuthorization } from '../../components/higher-order/withAuthorization';
-import { mapDispatchProps } from '../../helpers';
-import { updatePeriodWeekNumberAction, updatePeriodYearAction } from '../../store/actions';
+import { getNewestWeekNumberInYear, mapDispatchProps } from '../../helpers';
+import { Period } from '../../interfaces';
+import { updatePeriodAction } from '../../store/actions';
 import { State } from '../../store/states';
 import { PeriodPicker } from './PeriodPicker';
 
 import './PeriodControls.css';
 
 interface StateProps {
-    weekNumber: number;
-    year: number;
+    period: Period;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-    weekNumber: state.period.weekNumber,
-    year: state.period.year
+    period: state.period.period
 });
 
 interface DispatchProps {
-    updatePeriodWeekNumber: (year: number) => void;
-    updatePeriodYear: (year: number) => void;
+    updatePeriod: (period: Period) => void;
 }
 
 const mapDispatchToProps = mapDispatchProps({
-    updatePeriodWeekNumber: updatePeriodWeekNumberAction,
-    updatePeriodYear: updatePeriodYearAction
+    updatePeriod: updatePeriodAction
 });
 
 type PeriodControlsProps = StateProps & DispatchProps;
 
 class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
     public render() {
-        const { weekNumber, year } = this.props;
+        const { period } = this.props;
 
         const now = moment();
+
+        const year = this.getYearCorrectedForNewyear();
+        // This has to use period.to to ensure the week containing January 1st is counted as the first week of the year
+        const weekNumber = period.to.isoWeek();
 
         return (
             <div className="period-controls">
                 <PeriodPicker
                     value={year}
-                    onUpdate={this.onUpdatePeriodYear}
+                    onUpdate={this.onUpdateYear}
                     disableIncrease={year === now.year()}
                 />
 
                 <PeriodPicker
                     value={weekNumber}
-                    onUpdate={this.onUpdatePeriodWeekNumber}
+                    onUpdate={this.onUpdateWeekNumber}
                     disableIncrease={
                         year === now.year() && weekNumber === now.isoWeek() ||
                         weekNumber === moment().year(year).isoWeeksInYear()
@@ -59,16 +60,34 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
         );
     }
 
-    private onUpdatePeriodWeekNumber = (weekNumber: number) => () => {
-        const { updatePeriodWeekNumber } = this.props;
+    private onUpdateYear = (year: number) => () => {
+        const { updatePeriod } = this.props;
 
-        updatePeriodWeekNumber(weekNumber);
+        const newestWeekNumber = getNewestWeekNumberInYear(year);
+        const newWeek = moment().year(year).isoWeek(newestWeekNumber);
+
+        updatePeriod({
+            from: newWeek.clone().startOf('isoWeek'),
+            to: newWeek.clone().endOf('isoWeek')
+        });
     };
 
-    private onUpdatePeriodYear = (year: number) => () => {
-        const { updatePeriodYear } = this.props;
+    private onUpdateWeekNumber = (weekNumber: number) => () => {
+        const { updatePeriod } = this.props;
 
-        updatePeriodYear(year);
+        const year = this.getYearCorrectedForNewyear();
+        const newWeek = moment().year(year).isoWeek(weekNumber);
+
+        updatePeriod({
+            from: newWeek.clone().startOf('isoWeek'),
+            to: newWeek.clone().endOf('isoWeek')
+        });
+    };
+
+    private getYearCorrectedForNewyear = () => {
+        const { period } = this.props;
+
+        return (period.from.isoWeek() === 1 ? period.to : period.from).year();
     };
 }
 
