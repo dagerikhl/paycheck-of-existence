@@ -1,3 +1,3 @@
 export * from './auth.action';
 export * from './hours.action';
-export * from './period.action';
+export * from './controls.action';

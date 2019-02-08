@@ -1,18 +1,18 @@
 import { Period } from '../../interfaces';
 
-export enum PeriodActionType {
+export enum ControlsActionType {
     UpdatePeriod = 'PERIOD/UPDATE_PERIOD'
 }
 
-export type PeriodAction =
+export type ControlsAction =
     | UpdatePeriod;
 
 export interface UpdatePeriod {
-    type: PeriodActionType.UpdatePeriod;
+    type: ControlsActionType.UpdatePeriod;
     period: Period;
 }
 
 export const updatePeriodAction = (period: Period): UpdatePeriod => ({
-    type: PeriodActionType.UpdatePeriod,
+    type: ControlsActionType.UpdatePeriod,
     period
 });

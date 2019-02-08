@@ -16,7 +16,7 @@ interface StateProps {
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-    period: state.period.period
+    period: state.controls.period
 });
 
 interface DispatchProps {

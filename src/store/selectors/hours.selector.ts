@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { filterDaysByPeriod } from '../../helpers';
 import { State } from '../states';
-import { getPeriod } from './period.selector';
+import { getPeriod } from './controls.selector';
 
 // Selectors
 

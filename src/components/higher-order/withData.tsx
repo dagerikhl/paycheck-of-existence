@@ -30,7 +30,7 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
 
             const mapStateToProps = (state: State): CommonStateProps & StateProps => ({
                 userId: getUserId(state),
-                period: state.period.period
+                period: state.controls.period
             });
 
             interface DispatchProps {

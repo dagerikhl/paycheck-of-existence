@@ -40,7 +40,7 @@ interface StateProps {
 
 const mapStateToProps = (state: State): StateProps => ({
     userId: getUserId(state),
-    period: state.period.period,
+    period: state.controls.period,
     week: getDaysInWeek(state),
     initialWeek: getInitialDaysInWeek(state)
 });
