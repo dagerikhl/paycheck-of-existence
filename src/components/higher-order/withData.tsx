@@ -1,17 +1,14 @@
-import { Map } from 'immutable';
-import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { mapDispatchProps, objectKeys } from '../../helpers';
-import { Day, Period } from '../../interfaces';
+import { mapDispatchProps } from '../../helpers';
 import { database } from '../../services';
-import { updateAllDaysAction, updateInitialDaysAction } from '../../store/actions';
+import { updateWorkdaysAction } from '../../store/actions';
 import { getUserId } from '../../store/selectors';
 import { State } from '../../store/states';
+import { Period, Workdays } from '../../types';
 import { Loader } from '../Loader';
-import { withAuthorization } from './withAuthorization';
 
 interface CommonState {
     isLoaded: boolean;
@@ -23,7 +20,7 @@ interface CommonStateProps {
 
 export const withData = (dataString: string) => (Component: React.ComponentType) => {
     switch (dataString) {
-        case 'days': {
+        case 'workdays': {
             interface StateProps {
                 period: Period;
             }
@@ -34,13 +31,11 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
             });
 
             interface DispatchProps {
-                updateAllDays: (days: Map<string, Day>) => void;
-                updateInitialDays: (days: Map<string, Day>) => void;
+                updateWorkdays: (workdays: Workdays) => void;
             }
 
             const mapDispatchToProps = mapDispatchProps({
-                updateAllDays: updateAllDaysAction,
-                updateInitialDays: updateInitialDaysAction
+                updateWorkdays: updateWorkdaysAction
             });
 
             type WithDaysDataProps = CommonStateProps & StateProps & DispatchProps & RouteComponentProps;
@@ -71,42 +66,26 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 private fetchDays = (props = this.props) => {
-                    const { userId, period, updateAllDays, updateInitialDays } = props;
+                    const { userId, period, updateWorkdays } = props;
 
                     this.setState({ isLoaded: false });
 
-                    database.getUserRef(userId).child('hours').on('value', (snapshot) => {
-                        const allValues = snapshot && snapshot.val();
+                    database(userId).workdays.getInPeriod(period.from, period.to)
+                        .then((workdays) => {
+                            updateWorkdays(workdays);
 
-                        let days = Map<string, Day>();
-                        if (allValues) {
-                            const flattened = {};
-                            for (const year of objectKeys(allValues)) {
-                                for (const dateString of objectKeys(allValues[year])) {
-                                    flattened[dateString] = allValues[year][dateString];
-                                }
-                            }
+                            this.setState({ isLoaded: true });
+                        })
+                        .catch((error) => {
+                            // TODO Handle and display this error to the user
+                            console.error(error);
 
-                            const filtered = {};
-                            for (const dateString of objectKeys(flattened)) {
-                                const date = moment(dateString, 'YYYY-MM-DD');
-                                if (date.isBetween(period.from, period.to, undefined, '[]')) {
-                                    filtered[dateString] = flattened[dateString];
-                                }
-                            }
-
-                            days = Map<string, Day>(filtered as any);
-                        }
-
-                        updateAllDays(days);
-                        updateInitialDays(days);
-
-                        this.setState({ isLoaded: true });
-                    });
+                            this.setState({ isLoaded: true });
+                        });
                 };
             }
 
-            return withAuthorization(connect(mapStateToProps, mapDispatchToProps)(WithDaysData));
+            return connect(mapStateToProps, mapDispatchToProps)(WithDaysData);
         }
         default: {
             return () => <Component/>;

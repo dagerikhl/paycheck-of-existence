@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import { withAuthorization } from '../../components/higher-order/withAuthorization';
 import { getNewestWeekNumberInYear, mapDispatchProps } from '../../helpers';
-import { Period } from '../../interfaces';
 import { updatePeriodAction } from '../../store/actions';
 import { State } from '../../store/states';
+import { Period } from '../../types';
 import { PeriodPicker } from './PeriodPicker';
 
 import './PeriodControls.css';

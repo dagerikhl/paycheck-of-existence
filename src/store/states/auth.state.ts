@@ -1,4 +1,4 @@
-import { AuthUser } from '../../interfaces';
+import { AuthUser } from '../../types';
 
 export interface AuthState {
     authUser: AuthUser | null;

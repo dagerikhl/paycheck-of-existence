@@ -21,6 +21,7 @@
         ],
         "jsx-boolean-value": false,
         "member-ordering": false,
+        "no-console": [true, "log"],
         "no-default-export": true,
         "no-small-switch": false,
         "no-unnecessary-callback-wrapper": true,

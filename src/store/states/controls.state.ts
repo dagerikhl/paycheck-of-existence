@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-import { Period } from '../../interfaces';
+import { Period } from '../../types';
 
 export interface ControlsState {
     period: Period;

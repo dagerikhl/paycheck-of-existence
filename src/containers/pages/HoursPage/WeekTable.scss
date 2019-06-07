@@ -1,76 +1,62 @@
 @import "../../../styles/bases.scss";
 @import "../../../styles/variables.scss";
+@import "../../../styles/typography.scss";
 
 .week-table {
     padding: 16px 32px;
 
     .title {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 32px;
 
         .dates {
-            float: right;
-
             font-weight: normal;
         }
     }
 
-    .table {
-        width: 100%;
-    }
+    .content {
+        .date {
+            // Table rows
+            .date-header {
+                @extend %header;
 
-    // Table columns
-    .status {
-        width: 16px;
+                background-color: $shadow-color-lighter;
+                font-style: italic;
+                padding: 4px 8px;
+            }
 
-        text-align: center;
-    }
+            .project {
+                display: flex;
+                padding: 4px 8px;
 
-    .date {
-        width: 148px;
+                // Table columns
+                .project-header {
+                    @extend %header;
 
-        padding: 0 8px;
+                    display: flex;
+                    align-items: center;
+                    width: 196px;
+                }
 
-        font-style: italic;
-    }
+                .hours {
+                    @extend %table-number-cell;
 
-    .hours-no {
-        @extend %table-number-cell;
+                    width: 78px;
+                }
 
-        width: 99px;
-        min-width: 64px;
-    }
+                .ss {
+                    @extend %table-number-cell;
 
-    .ss-no {
-        @extend %table-number-cell;
+                    width: 78px;
+                }
 
-        width: 99px;
-        min-width: 64px;
-    }
-
-    .hours-o {
-        @extend %table-number-cell;
-
-        width: 99px;
-        min-width: 64px;
-    }
-
-    .ss-o {
-        @extend %table-number-cell;
-
-        width: 99px;
-        min-width: 64px;
-    }
-
-    .ot {
-        @extend %table-number-cell;
-
-        width: 99px;
-        min-width: 64px;
-    }
-
-    // Table rows
-    .weekend {
-        background-color: $shadow-color-lighter;
+                .notes {
+                    flex: 1;
+                    padding-left: 8px;
+                }
+            }
+        }
     }
 
     @media print {

@@ -1,8 +1,6 @@
-import { Map } from 'immutable';
 import * as moment from 'moment';
 
-import { DATE_FORMATS } from '../constants';
-import { Day, Period } from '../interfaces';
+import { Period, Workdays } from '../types';
 
 export const getNewestWeekNumberInYear = (year: number) => {
     const now = moment();
@@ -12,8 +10,6 @@ export const getNewestWeekNumberInYear = (year: number) => {
         : now.year(year).isoWeeksInYear();
 };
 
-export const filterDaysByPeriod = (days: Map<string, Day>, period: Period) => days.filter((_, dateString) => {
-    const date = moment(dateString, DATE_FORMATS.storage);
-
-    return date.isBetween(period.from, period.to, undefined, '[]');
+export const filterWorkdaysByPeriod = (workdays: Workdays, period: Period) => workdays.filter((workday) => {
+    return workday.get('date').isBetween(period.from, period.to, 'date', '[]');
 });

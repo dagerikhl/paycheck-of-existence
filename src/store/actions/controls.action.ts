@@ -1,4 +1,4 @@
-import { Period } from '../../interfaces';
+import { Period } from '../../types';
 
 export enum ControlsActionType {
     UpdatePeriod = 'PERIOD/UPDATE_PERIOD'

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Theme } from '../../enums';
-import { ExternalRef } from '../../interfaces';
+import { ExternalRef } from '../../types';
 import { ExternalLink } from '../links/ExternalLink';
 import { FooterSection } from './FooterSection';
 

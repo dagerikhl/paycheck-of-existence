@@ -1,135 +1,119 @@
-import { List, Map } from 'immutable';
-import * as moment from 'moment';
+import { List, Record } from 'immutable';
+import { Moment } from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router';
 
 import { Card } from '../../../components/Card';
-import { ErrorMessage } from '../../../components/ErrorMessage';
 import { Input } from '../../../components/Input';
-import { Table } from '../../../components/Table';
-import { DATE_FORMATS, WEEK_COLUMNS, WEEK_ROWS_CSS } from '../../../constants';
-import { InputCellType, KeyCode } from '../../../enums';
-import { mapDispatchProps, range, toHourFormat } from '../../../helpers';
-import { Day, Period, Totals } from '../../../interfaces';
+import { DATE_FORMATS } from '../../../constants';
+import { InputCellType } from '../../../enums';
+import { mapDispatchProps, range } from '../../../helpers';
 import { database } from '../../../services';
-import { updateDayAction, updateWeekAction } from '../../../store/actions';
-import { getDaysInWeek, getInitialDaysInWeek, getUserId } from '../../../store/selectors';
+import { updateWorkdaysAction } from '../../../store/actions';
+import { getUserId, getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
-import { TableCell } from '../../../types';
+import { Period, Project, Projects, Workday, Workdays } from '../../../types';
+
 import { DataControls } from './DataControls';
-import { StatusSummary } from './StatusSummary';
 
 import './WeekTable.css';
 
-interface ViewState {
-    isDirty: boolean;
-}
+const workdayComparator = (date: Moment, project: Project) => {
+    return (workday: Workday) => {
+        return workday.get('date').isSame(date, 'date') && workday.get('projectId') === project.get('id');
+    };
+};
+
+const padWithEmptyWorkdays = (dates: Moment[], projects: Projects, workdays: Workdays): Workdays => {
+    let paddedWorkdays = workdays;
+    for (const date of dates) {
+        for (const project of projects.toArray()) {
+            if (!workdays.some(workdayComparator(date, project))) {
+                paddedWorkdays = paddedWorkdays.push(Record({
+                    date,
+                    hours: 0,
+                    notes: '',
+                    projectId: project.get('id'),
+                    ss: 0
+                })());
+            }
+        }
+    }
+
+    return paddedWorkdays;
+};
 
 interface OwnState {
-    viewState: Map<string, Map<string, ViewState>>;
-    error?: any;
+    modifiedWorkdays: Workdays;
 }
 
 interface StateProps {
     userId: string;
     period: Period;
-    week: Map<string, Day>;
-    initialWeek: Map<string, Day>;
+    projects: Projects;
+    workdays: Workdays;
 }
+
+// TODO Replace with real projects from state when implemented
+const dummyProjects: Projects = List([
+    Record({
+        grantsOvertime: true,
+        id: 'project_dummy-uuid-internal',
+        maxOvertime: -1,
+        name: 'Interntid',
+        workdayLength: 7.5
+    })(),
+    Record({
+        grantsOvertime: true,
+        id: 'project_dummy-uuid-nova',
+        maxOvertime: 4,
+        name: 'Nova Engage',
+        workdayLength: 7.5
+    })(),
+    Record({
+        grantsOvertime: false,
+        id: 'project_dummy-uuid-own-time',
+        maxOvertime: 0,
+        name: 'Egentid',
+        workdayLength: 7.5
+    })(),
+    Record({
+        grantsOvertime: true,
+        id: 'project_dummy-uuid-smb-lab-driv',
+        maxOvertime: -1,
+        name: 'SMB Lab - DRIV',
+        workdayLength: 8
+    })()
+]);
 
 const mapStateToProps = (state: State): StateProps => ({
     userId: getUserId(state),
     period: state.controls.period,
-    week: getDaysInWeek(state),
-    initialWeek: getInitialDaysInWeek(state)
+    projects: dummyProjects,
+    workdays: getWorkdaysInPeriod(state)
 });
 
 interface DispatchProps {
-    updateWeek: (week: Map<string, Day>) => void;
-    updateDay: (dateString: string, day: Day) => void;
+    updateWorkdays: (workdays: Workdays) => void;
 }
 
 const mapDispatchToProps = mapDispatchProps({
-    updateWeek: updateWeekAction,
-    updateDay: updateDayAction
+    updateWorkdays: updateWorkdaysAction
 });
 
 type WeekTableProps = StateProps & DispatchProps;
 
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
-    public state: OwnState = {
-        viewState: WeekTableComponent.populateViewState(this.props.period)
-    };
+    private dates: Moment[] = range(0, 7).map((n) => this.props.period.from.clone().add(n, 'days'));
 
-    public componentDidMount() {
-        this.checkAndPopulateWeek();
-
-        window.addEventListener('keypress', this.onEnterPressed);
-    }
-
-    public componentWillUnmount() {
-        window.removeEventListener('keypress', this.onEnterPressed);
-    }
-
-    public componentDidUpdate() {
-        this.checkAndPopulateWeek();
-    }
+    public state: OwnState = { modifiedWorkdays: padWithEmptyWorkdays(this.dates, this.props.projects, this.props.workdays) };
 
     public render() {
-        const { period, week } = this.props;
-        const { error } = this.state;
+        const { period, projects } = this.props;
+        const { modifiedWorkdays } = this.state;
 
-        if (week.isEmpty()) {
-            return null;
-        }
-
-        const displayRows: TableCell[][] = [];
-
-        let i = 0;
-        week
-            .toOrderedMap()
-            .sortBy((_, k) => moment(k, DATE_FORMATS.storage).valueOf())
-            .forEach((day, dateString) => {
-                const date = moment(dateString, DATE_FORMATS.storage);
-                const dateIndicator = date.isSame(moment(), 'date') && '>';
-                const dateCell = date.format(DATE_FORMATS.long);
-
-                displayRows[i] = [
-                    dateIndicator,
-                    dateCell,
-                    this.createInputCell(dateString, 'hoursNo', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'ssNo', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'hoursO', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'ssO', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'ot', InputCellType.NUMBER),
-                    this.createInputCell(dateString, 'notes', InputCellType.TEXT)
-                ];
-
-                i++;
-            });
-
-        const totals = week.reduce((result: Totals, day) => ({
-            hoursNo: result.hoursNo + day.hoursNo,
-            ssNo: result.ssNo + day.ssNo,
-            hoursO: result.hoursO + day.hoursO,
-            ssO: result.ssO + day.ssO,
-            ot: result.ot + day.ot
-        }), { hoursNo: 0, ssNo: 0, hoursO: 0, ssO: 0, ot: 0 });
-        const statusSummary = <StatusSummary totals={totals}/>;
-
-        const footer = [
-            undefined,
-            undefined,
-            toHourFormat(totals.hoursNo),
-            toHourFormat(totals.ssNo),
-            toHourFormat(totals.hoursO),
-            toHourFormat(totals.ssO),
-            toHourFormat(totals.ot),
-            statusSummary
-        ];
-
-        const isDirty = this.checkDirtyFlags();
+        const isDirty = this.isDirty();
 
         return (
             <React.Fragment>
@@ -137,23 +121,64 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
                 <Card className="week-table" level={3}>
                     <h1 className="title">
-                        <span>Week {period.from.isoWeek()}</span>
+                        <div>Week {period.from.isoWeek()}</div>
 
-                        <span className="dates">
-                            {period.from.format(DATE_FORMATS.withYear)} &ndash; {period.to.format(DATE_FORMATS.withYear)}
-                        </span>
+                        <div className="dates">
+                            {period.from.format(DATE_FORMATS.withYear)}
+                            &nbsp;&ndash;&nbsp;
+                            {period.to.format(DATE_FORMATS.withYear)}
+                        </div>
                     </h1>
 
-                    <Table
-                        className="table"
-                        columns={WEEK_COLUMNS.headers}
-                        columnClassNames={WEEK_COLUMNS.classNames}
-                        rows={displayRows}
-                        rowClassNames={WEEK_ROWS_CSS}
-                        footer={footer}
-                    />
+                    <div className="content">
+                        {this.dates.map((date) => (
+                            <div className="date" key={date.format(DATE_FORMATS.long)}>
+                                <div className="date-header">{date.format(DATE_FORMATS.long)}</div>
 
-                    {error && <ErrorMessage message={error.message}/>}
+                                {projects.map((project) => (
+                                    <div className="project" key={project.get('id')}>
+                                        <div className="project-header">{project.get('name')}</div>
+
+                                        {modifiedWorkdays
+                                            .filter((workday) => (
+                                                workday.get('projectId') === project.get('id') &&
+                                                workday.get('date').isSame(date, 'date')
+                                            ))
+                                            .map((workday) => (
+                                                <React.Fragment
+                                                    key={`${date.format(DATE_FORMATS.long)}:${project.get('id')}`}
+                                                >
+                                                    <Input
+                                                        className="hours"
+                                                        type={InputCellType.NUMBER}
+                                                        value={workday.get('hours')}
+                                                        onValueChange={this.onValueChange(date, project, 'hours')}
+                                                        min={-24}
+                                                        max={24}
+                                                        step={0.5}
+                                                    />
+                                                    <Input
+                                                        className="ss"
+                                                        type={InputCellType.NUMBER}
+                                                        value={workday.get('ss')}
+                                                        onValueChange={this.onValueChange(date, project, 'ss')}
+                                                        min={-24}
+                                                        max={24}
+                                                        step={0.5}
+                                                    />
+                                                    <Input
+                                                        className="notes"
+                                                        type={InputCellType.TEXT}
+                                                        value={workday.get('notes')}
+                                                        onValueChange={this.onValueChange(date, project, 'notes')}
+                                                    />
+                                                </React.Fragment>
+                                            ))}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
                 </Card>
 
                 <DataControls
@@ -168,156 +193,43 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         );
     }
 
+    private onValueChange = (date: Moment, project: Project, key: 'hours' | 'ss' | 'notes') => {
+        return (value: number | string) => {
+            const { modifiedWorkdays } = this.state;
+
+            const index = modifiedWorkdays.findIndex(workdayComparator(date, project));
+
+            this.setState({ modifiedWorkdays: modifiedWorkdays.update(index, (workday) => workday.set(key, value)) });
+        };
+    };
+
     private onSaveChanges = () => {
-        const { userId, period, week } = this.props;
+        const { userId, updateWorkdays } = this.props;
+        const { modifiedWorkdays } = this.state;
 
-        let possibleError: any;
-
-        week.forEach((day, dateString) => {
-            database.getUserRef(userId).child('hours').child(period.from.year().toString()).child(dateString).update(day)
-                .catch((error) => {
-                    possibleError = error;
-                });
-        });
-
-        if (possibleError) {
-            this.setState({ error: possibleError });
-        } else {
-            this.resetState();
-        }
+        // TODO Figure out a way to handle mirroring the redux store to the DB as a side effect
+        database(userId).workdays.postGroup(modifiedWorkdays)
+            .then(() => {
+                console.info('DB: Workdays saved.');
+            })
+            .catch((error) => {
+                // TODO Handle and display this error to the user
+                console.error(error);
+            });
+        updateWorkdays(modifiedWorkdays);
     };
 
     private onDiscardChanges = () => {
-        const { initialWeek, updateWeek, updateDay } = this.props;
+        const { workdays } = this.props;
 
-        if (initialWeek.isEmpty()) {
-            updateWeek(this.populateEmptyWeek());
-        } else {
-            initialWeek.forEach((day, dateString) => {
-                updateDay(dateString, day);
-            });
-        }
-
-        this.resetState();
+        this.setState({ modifiedWorkdays: workdays });
     };
 
-    private onEnterPressed = (event: KeyboardEvent) => {
-        if (event.key === KeyCode.Enter && this.checkDirtyFlags()) {
-            this.onSaveChanges();
-        }
-    };
+    private isDirty = () => {
+        const { workdays } = this.props;
+        const { modifiedWorkdays } = this.state;
 
-    private resetState = () => {
-        const { period } = this.props;
-
-        this.setState({
-            viewState: WeekTableComponent.populateViewState(period),
-            error: undefined
-        });
-    };
-
-    private onInputCellChange = (dateString: string, cellProperty: string) => (value: number | string) => {
-        const { updateDay } = this.props;
-
-        const day = this.getDay(dateString);
-
-        if (!day || (day && day[cellProperty] === value)) {
-            return;
-        }
-
-        const newDay = { ...day, [cellProperty]: value };
-
-        this.updateDirtyFlag(dateString, cellProperty, value);
-        updateDay(dateString, newDay);
-    };
-
-    private createInputCell = (dateString: string, cellProperty: string, type: InputCellType) => {
-        const day = this.getDay(dateString);
-
-        if (!day) {
-            return undefined;
-        }
-
-        let validations = {};
-        switch (type) {
-            case InputCellType.NUMBER:
-                validations = {
-                    min: cellProperty === 'ssNo' || cellProperty === 'ssO' ? -24 : 0,
-                    max: 24,
-                    step: 0.5
-                };
-
-                break;
-        }
-
-        return <Input
-            type={type}
-            value={day[cellProperty]}
-            onValueChange={this.onInputCellChange(dateString, cellProperty)}
-            {...validations}
-        />;
-    };
-
-    private checkAndPopulateWeek = () => {
-        const { week, updateWeek } = this.props;
-
-        if (week.isEmpty()) {
-            updateWeek(this.populateEmptyWeek());
-        }
-    };
-
-    private populateEmptyWeek = (): Map<string, Day> => {
-        const { period } = this.props;
-
-        let days = Map<string, Day>();
-        for (let i = 0; i < 7; i++) {
-            const dateString = period.from.clone().add(i, 'day').format(DATE_FORMATS.storage);
-
-            days = days.set(dateString, this.populateEmptyDay());
-        }
-
-        return days;
-    };
-
-    private populateEmptyDay = (): Day => ({ hoursNo: 0, ssNo: 0, hoursO: 0, ssO: 0, ot: 0, notes: '' });
-
-    private updateDirtyFlag = (dateString: string, cellProperty: string, value: number | string) => {
-        const { initialWeek } = this.props;
-        const { viewState } = this.state;
-
-        const initialDay = initialWeek.get(dateString);
-        const initialValue = initialDay && initialDay[cellProperty];
-        const hasInitialValue = !!initialValue;
-
-        const isDirty = (!hasInitialValue && !!value) || (hasInitialValue && value !== initialValue);
-
-        this.setState({
-            viewState: viewState.setIn(
-                [dateString, cellProperty],
-                { ...viewState.getIn([dateString, cellProperty]), isDirty }
-            )
-        });
-    };
-
-    private checkDirtyFlags = () => {
-        const { viewState } = this.state;
-
-        const dirtyFlags: List<boolean> = viewState.map((cells) => cells.map((cell) => cell.isDirty))
-            .toList().flatten().toList();
-
-        return dirtyFlags.some((dirtyFlag) => dirtyFlag);
-    };
-
-    private getDay = (dateString: string): Day | undefined => this.props.week.get(dateString);
-
-    private static populateViewState = (period: Period): Map<string, Map<string, ViewState>> => {
-        const cells = Map(WEEK_COLUMNS.headers.map((header): [string, ViewState] => {
-            return [header || '', { isDirty: false }];
-        }));
-
-        return Map(range(0, 7).map((i): [string, Map<string, ViewState>] => {
-            return [period.from.clone().add(i, 'day').format(DATE_FORMATS.storage), cells];
-        }));
+        return !workdays.equals(modifiedWorkdays);
     };
 }
 

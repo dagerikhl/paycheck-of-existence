@@ -1,13 +1,11 @@
-import { Map } from 'immutable';
+import { List } from 'immutable';
 
-import { Day } from '../../interfaces';
+import { Workdays } from '../../types';
 
 export interface HoursState {
-    days: Map<string, Day>;
-    initialDays: Map<string, Day>;
+    workdays: Workdays;
 }
 
 export const initialHoursState: HoursState = {
-    days: Map<string, Day>(),
-    initialDays: Map<string, Day>()
+    workdays: List()
 };

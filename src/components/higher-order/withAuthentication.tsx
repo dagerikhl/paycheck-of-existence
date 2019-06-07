@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 import { mapDispatchProps } from '../../helpers';
-import { AuthUser } from '../../interfaces';
 import { auth } from '../../services';
 import { updateAuthUserAction } from '../../store/actions';
+import { AuthUser } from '../../types';
 import { Loader } from '../Loader';
 
 interface OwnState {

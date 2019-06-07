@@ -10,12 +10,10 @@ class HoursPageComponent extends React.PureComponent {
     public render() {
         return (
             <section className="hours-page">
-                <div className="weeks">
-                    <WeekTable/>
-                </div>
+                <WeekTable/>
             </section>
         );
     }
 }
 
-export const HoursPage = withAuthorization(withData('days')(HoursPageComponent));
+export const HoursPage = withAuthorization(withData('workdays')(HoursPageComponent));

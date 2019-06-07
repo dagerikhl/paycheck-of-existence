@@ -1,19 +1,13 @@
 import { createSelector } from 'reselect';
 
-import { filterDaysByPeriod } from '../../helpers';
+import { filterWorkdaysByPeriod } from '../../helpers';
 import { State } from '../states';
 import { getPeriod } from './controls.selector';
 
 // Selectors
 
-const getDays = (state: State) => state.hours.days;
-
-const getInitialDays = (state: State) => state.hours.initialDays;
+const getWorkdays = (state: State) => state.hours.workdays;
 
 // Reselectors
 
-export const getDaysInWeek = createSelector([getPeriod, getDays], (period, days) => filterDaysByPeriod(days, period));
-
-export const getInitialDaysInWeek = createSelector([getPeriod, getInitialDays], (period, initialDays) => {
-    return filterDaysByPeriod(initialDays, period);
-});
+export const getWorkdaysInPeriod = createSelector([getWorkdays, getPeriod], filterWorkdaysByPeriod);

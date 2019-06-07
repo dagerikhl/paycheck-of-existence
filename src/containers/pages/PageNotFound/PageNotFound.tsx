@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { pickRandomItem } from '../../../helpers';
+import { pickRandom } from '../../../helpers';
 
 import './PageNotFound.css';
 
@@ -16,7 +16,7 @@ export class PageNotFound extends React.PureComponent {
     private message: string;
 
     public componentWillMount() {
-        this.message = pickRandomItem(this.messages);
+        this.message = pickRandom(this.messages);
     }
 
     public render() {

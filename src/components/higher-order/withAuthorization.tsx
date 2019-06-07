@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import { Routes } from '../../constants';
-import { AuthUser } from '../../interfaces';
 import { auth } from '../../services';
 import { State } from '../../store/states';
+import { AuthUser } from '../../types';
 
 interface StateProps {
     authUser: AuthUser | null;
