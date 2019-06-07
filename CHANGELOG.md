@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.0.0...v2.1.0) (2019-06-07)
+
+
+### Bug Fixes
+
+* **external-link:** Fix href pointing to undefined and fix subjet of mailto-link ([42a3162](https://github.com/dagerikhl/paycheck-of-existence/commit/42a3162))
+
+
+### Features
+
+* **data:** rework app to work with new data structure ([94284d3](https://github.com/dagerikhl/paycheck-of-existence/commit/94284d3))
+* **datacontrols:** add box shadow to data controls in weektable ([141f309](https://github.com/dagerikhl/paycheck-of-existence/commit/141f309))
+* **footer:** Improve visual display of site footer sections ([0e006d5](https://github.com/dagerikhl/paycheck-of-existence/commit/0e006d5))
+* **period:** Restrict visibility of period to authorized users ([1df9f4e](https://github.com/dagerikhl/paycheck-of-existence/commit/1df9f4e))
+* **period:** rewrite period from year/weekNumber to from/to ([001e079](https://github.com/dagerikhl/paycheck-of-existence/commit/001e079))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v1.1.0...v2.0.0) (2018-12-15)
 
