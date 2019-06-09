@@ -1,8 +1,6 @@
-import * as moment from 'moment';
-
 import { DATE_FORMATS } from '../../constants';
 import { parseWorkdaysDb } from '../../helpers/data-helper';
-import { WorkdayJs, Workdays, WorkdaysDb } from '../../types';
+import { Period, WorkdayJs, Workdays, WorkdaysDb } from '../../types';
 import { firebaseDatabase } from '../firebase';
 
 const databaseRef = firebaseDatabase.ref();
@@ -29,17 +27,19 @@ const workdaysApi = (userId: string) => ({
                 return parseWorkdaysDb(workdaysDb);
             });
     },
-    getInPeriod: (from: moment.Moment, to: moment.Moment): Promise<Workdays> => {
+    getInPeriod: (period: Period): Promise<Workdays> => {
         return getUserRef(userId).child('workdays').once('value')
             .then((snapshot) => {
                 const workdaysDb: WorkdaysDb = snapshot && snapshot.val();
 
-                const dateFilter = (workdayJs: WorkdayJs) => workdayJs.date.isBetween(from, to, 'date', '[]');
+                const dateFilter = (workdayJs: WorkdayJs) => {
+                    return workdayJs.date.isBetween(period.from, period.to, 'date', '[]');
+                };
 
                 return parseWorkdaysDb(workdaysDb, dateFilter);
             });
     },
-    postGroup: (workdays: Workdays) => Promise.all(
+    update: (workdays: Workdays) => Promise.all(
         workdays.map((workday) => {
             const projectId = workday.get('projectId');
             const dateString = workday.get('date').format(DATE_FORMATS.storage);

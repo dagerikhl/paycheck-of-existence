@@ -3,15 +3,16 @@ import { Moment } from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Prompt } from 'react-router';
+import { Dispatch } from 'redux';
 
 import { Card } from '../../../components/Card';
 import { Input } from '../../../components/Input';
+import { Loader } from '../../../components/Loader';
 import { DATE_FORMATS } from '../../../constants';
 import { InputCellType } from '../../../enums';
-import { mapDispatchProps, range } from '../../../helpers';
-import { database } from '../../../services';
+import { range } from '../../../helpers';
 import { updateWorkdaysAction } from '../../../store/actions';
-import { getUserId, getWorkdaysInPeriod } from '../../../store/selectors';
+import { getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
 import { Period, Project, Projects, Workday, Workdays } from '../../../types';
 
@@ -49,7 +50,7 @@ interface OwnState {
 }
 
 interface StateProps {
-    userId: string;
+    isStoring?: boolean;
     period: Period;
     projects: Projects;
     workdays: Workdays;
@@ -88,7 +89,7 @@ const dummyProjects: Projects = List([
 ]);
 
 const mapStateToProps = (state: State): StateProps => ({
-    userId: getUserId(state),
+    isStoring: state.hours.isStoring,
     period: state.controls.period,
     projects: dummyProjects,
     workdays: getWorkdaysInPeriod(state)
@@ -98,8 +99,8 @@ interface DispatchProps {
     updateWorkdays: (workdays: Workdays) => void;
 }
 
-const mapDispatchToProps = mapDispatchProps({
-    updateWorkdays: updateWorkdaysAction
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    updateWorkdays: (workdays: Workdays) => updateWorkdaysAction(workdays)(dispatch)
 });
 
 type WeekTableProps = StateProps & DispatchProps;
@@ -110,13 +111,15 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     public state: OwnState = { modifiedWorkdays: padWithEmptyWorkdays(this.dates, this.props.projects, this.props.workdays) };
 
     public render() {
-        const { period, projects } = this.props;
+        const { isStoring, period, projects } = this.props;
         const { modifiedWorkdays } = this.state;
 
         const isDirty = this.isDirty();
 
         return (
             <React.Fragment>
+                {isStoring && <Loader text="Storing data in server..."/>}
+
                 <Prompt when={isDirty} message="You have unsaved changes. Are you sure you want to leave?"/>
 
                 <Card className="week-table" level={3}>
@@ -204,18 +207,9 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private onSaveChanges = () => {
-        const { userId, updateWorkdays } = this.props;
+        const { updateWorkdays } = this.props;
         const { modifiedWorkdays } = this.state;
 
-        // TODO Figure out a way to handle mirroring the redux store to the DB as a side effect
-        database(userId).workdays.postGroup(modifiedWorkdays)
-            .then(() => {
-                console.info('DB: Workdays saved.');
-            })
-            .catch((error) => {
-                // TODO Handle and display this error to the user
-                console.error(error);
-            });
         updateWorkdays(modifiedWorkdays);
     };
 

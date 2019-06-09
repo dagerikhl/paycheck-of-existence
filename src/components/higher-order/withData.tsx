@@ -1,48 +1,37 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
 
-import { mapDispatchProps } from '../../helpers';
-import { database } from '../../services';
-import { updateWorkdaysAction } from '../../store/actions';
-import { getUserId } from '../../store/selectors';
+import { getWorkdaysInPeriodAction } from '../../store/actions';
 import { State } from '../../store/states';
-import { Period, Workdays } from '../../types';
+import { Period } from '../../types';
 import { Loader } from '../Loader';
-
-interface CommonState {
-    isLoaded: boolean;
-}
-
-interface CommonStateProps {
-    userId: string;
-}
 
 export const withData = (dataString: string) => (Component: React.ComponentType) => {
     switch (dataString) {
         case 'workdays': {
             interface StateProps {
+                isFetching?: boolean;
                 period: Period;
             }
 
-            const mapStateToProps = (state: State): CommonStateProps & StateProps => ({
-                userId: getUserId(state),
+            const mapStateToProps = (state: State): StateProps => ({
+                isFetching: state.hours.isFetching,
                 period: state.controls.period
             });
 
             interface DispatchProps {
-                updateWorkdays: (workdays: Workdays) => void;
+                getWorkdaysInPeriod: (period: Period) => void;
             }
 
-            const mapDispatchToProps = mapDispatchProps({
-                updateWorkdays: updateWorkdaysAction
+            const mapDispatchToProps = (dispatch: Dispatch) => ({
+                getWorkdaysInPeriod: (period: Period) => getWorkdaysInPeriodAction(period)(dispatch)
             });
 
-            type WithDaysDataProps = CommonStateProps & StateProps & DispatchProps & RouteComponentProps;
+            type WithDaysDataProps = StateProps & DispatchProps & RouteComponentProps;
 
-            class WithDaysData extends React.Component<WithDaysDataProps, CommonState> {
-                public state: CommonState = { isLoaded: false };
-
+            class WithDaysData extends React.Component<WithDaysDataProps> {
                 public componentDidMount() {
                     this.fetchDays();
                 }
@@ -50,7 +39,8 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 public shouldComponentUpdate(nextProps: WithDaysDataProps) {
                     const { period } = this.props;
 
-                    if (nextProps.period.from !== period.from || nextProps.period.to !== period.to) {
+                    if (!nextProps.period.from.isSame(period.from, 'date') ||
+                        !nextProps.period.to.isSame(period.to, 'date')) {
                         this.fetchDays(nextProps);
                     }
 
@@ -58,30 +48,17 @@ export const withData = (dataString: string) => (Component: React.ComponentType)
                 }
 
                 public render() {
-                    const { isLoaded } = this.state;
+                    const { isFetching } = this.props;
 
-                    return isLoaded
-                        ? <Component/>
-                        : <Loader text="Fetching data from server..."/>;
+                    return isFetching
+                        ? <Loader text="Fetching data from server..."/>
+                        : <Component/>;
                 }
 
                 private fetchDays = (props = this.props) => {
-                    const { userId, period, updateWorkdays } = props;
+                    const { period, getWorkdaysInPeriod } = props;
 
-                    this.setState({ isLoaded: false });
-
-                    database(userId).workdays.getInPeriod(period.from, period.to)
-                        .then((workdays) => {
-                            updateWorkdays(workdays);
-
-                            this.setState({ isLoaded: true });
-                        })
-                        .catch((error) => {
-                            // TODO Handle and display this error to the user
-                            console.error(error);
-
-                            this.setState({ isLoaded: true });
-                        });
+                    getWorkdaysInPeriod(period);
                 };
             }
 

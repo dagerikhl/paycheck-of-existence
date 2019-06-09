@@ -5,13 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { App } from './containers/App';
 import { registerServiceWorker } from './registerServiceWorker';
-import { configureStore } from './store/store';
+import { store } from './store/store';
 
 import 'normalize.css/normalize.css';
 import './styles/globals.css';
 
 ReactDOM.render(
-    <Provider store={configureStore()}>
+    <Provider store={store}>
         <BrowserRouter>
             <App/>
         </BrowserRouter>

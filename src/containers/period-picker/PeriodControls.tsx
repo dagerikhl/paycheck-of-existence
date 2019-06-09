@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { withAuthorization } from '../../components/higher-order/withAuthorization';
-import { getNewestWeekNumberInYear, mapDispatchProps } from '../../helpers';
+import { getNewestWeekNumberInYear, mapSynchronousDispatchProps } from '../../helpers';
 import { updatePeriodAction } from '../../store/actions';
 import { State } from '../../store/states';
 import { Period } from '../../types';
@@ -23,7 +23,7 @@ interface DispatchProps {
     updatePeriod: (period: Period) => void;
 }
 
-const mapDispatchToProps = mapDispatchProps({
+const mapDispatchToProps = mapSynchronousDispatchProps({
     updatePeriod: updatePeriodAction
 });
 

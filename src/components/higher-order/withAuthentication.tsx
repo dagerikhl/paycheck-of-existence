@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { mapDispatchProps } from '../../helpers';
+import { mapSynchronousDispatchProps } from '../../helpers';
 import { auth } from '../../services';
 import { updateAuthUserAction } from '../../store/actions';
 import { AuthUser } from '../../types';
@@ -16,7 +16,7 @@ interface DispatchProps {
     updateAuthUser: (authUser: AuthUser | null) => void;
 }
 
-const mapDispatchToProps = mapDispatchProps({
+const mapDispatchToProps = mapSynchronousDispatchProps({
     updateAuthUser: updateAuthUserAction
 });
 
