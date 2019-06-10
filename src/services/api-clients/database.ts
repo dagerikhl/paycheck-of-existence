@@ -1,6 +1,6 @@
 import { DATE_FORMATS } from '../../constants';
-import { parseWorkdaysDb } from '../../helpers/data-helper';
-import { Period, WorkdayJs, Workdays, WorkdaysDb } from '../../types';
+import { parseProjectDb, parseProjectsDb, parseWorkdaysDb } from '../../helpers/data-helper';
+import { Period, Project, ProjectDb, Projects, ProjectsDb, WorkdayJs, Workdays, WorkdaysDb } from '../../types';
 import { firebaseDatabase } from '../firebase';
 
 const databaseRef = firebaseDatabase.ref();
@@ -15,8 +15,34 @@ const stripFieldsForStorage = (data: object, keysToRemove: string[]) => {
     return data;
 };
 
-// TODO Implement API for projects
-const projectsApi = (userId: string) => ({});
+const projectsApi = (userId: string) => ({
+    get: (id: string): Promise<Project> => {
+        return getUserRef(userId).child('projects').child(id).once('value')
+            .then((snapshot) => {
+                const projectDb: ProjectDb = snapshot && snapshot.val();
+
+                return parseProjectDb(id, projectDb);
+            });
+    },
+    getAll: (): Promise<Projects> => {
+        return getUserRef(userId).child('projects').once('value')
+            .then((snapshot) => {
+                const projectsDb: ProjectsDb = snapshot && snapshot.val();
+
+                return parseProjectsDb(projectsDb);
+            });
+    },
+    update: (project: Project): Promise<any> => {
+        const id = project.get('id');
+
+        const projectDb = stripFieldsForStorage(project.toJS(), ['id']);
+
+        return getUserRef(userId).child('projects').child(id).update(projectDb);
+    },
+    delete: (id: string): Promise<any> => {
+        return getUserRef(userId).child('projects').child(id).remove();
+    }
+});
 
 const workdaysApi = (userId: string) => ({
     getAll: (): Promise<Workdays> => {
@@ -39,15 +65,16 @@ const workdaysApi = (userId: string) => ({
                 return parseWorkdaysDb(workdaysDb, dateFilter);
             });
     },
-    update: (workdays: Workdays) => Promise.all(
+    updateGroup: (workdays: Workdays) => Promise.all(
         workdays.map((workday) => {
             const projectId = workday.get('projectId');
             const dateString = workday.get('date').format(DATE_FORMATS.storage);
 
-            const workdayJs = stripFieldsForStorage(workday.toJS(), ['date', 'projectId']);
+            const workdayDb = stripFieldsForStorage(workday.toJS(), ['date', 'projectId']);
 
-            return getUserRef(userId).child('workdays').child(projectId).child(dateString).update(workdayJs);
-        }))
+            return getUserRef(userId).child('workdays').child(projectId).child(dateString).update(workdayDb);
+        })
+    )
 });
 
 export const database = (userId: string) => ({

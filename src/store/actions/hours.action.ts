@@ -103,7 +103,7 @@ export const updateWorkdaysAction = (workdays: Workdays) => (dispatch: Dispatch)
         return;
     }
 
-    database(state.auth.authUser.uid).workdays.update(workdays)
+    database(state.auth.authUser.uid).workdays.updateGroup(workdays)
         .then(() => {
             dispatch(updateWorkdaysSuccessAction(workdays));
         })

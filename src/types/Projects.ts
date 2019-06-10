@@ -1,14 +1,9 @@
 import { List } from 'immutable';
 
-import { Project, ProjectJs } from './';
+import { Project, ProjectDb, ProjectJs } from './';
 
 export interface ProjectsDb {
-    [projectId: string]: {
-        grantsOvertime: boolean;
-        maxOvertime: number;
-        name: string;
-        workdayLength: number;
-    };
+    [projectId: string]: ProjectDb;
 }
 
 export type ProjectsJs = ProjectJs[];
