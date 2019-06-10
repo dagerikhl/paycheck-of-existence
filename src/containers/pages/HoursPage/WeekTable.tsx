@@ -1,5 +1,5 @@
 import * as classNames from 'classnames';
-import { List, Record } from 'immutable';
+import { Record } from 'immutable';
 import { Moment } from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -79,42 +79,10 @@ interface StateProps {
     workdays: Workdays;
 }
 
-// TODO Replace with real projects from state when implemented
-const dummyProjects: Projects = List([
-    Record({
-        grantsOvertime: true,
-        id: 'project_dummy-uuid-internal',
-        maxOvertime: -1,
-        name: 'Interntid',
-        workdayLength: 7.5
-    })(),
-    Record({
-        grantsOvertime: true,
-        id: 'project_dummy-uuid-nova',
-        maxOvertime: 4,
-        name: 'Nova Engage',
-        workdayLength: 7.5
-    })(),
-    Record({
-        grantsOvertime: false,
-        id: 'project_dummy-uuid-own-time',
-        maxOvertime: 0,
-        name: 'Egentid',
-        workdayLength: 7.5
-    })(),
-    Record({
-        grantsOvertime: true,
-        id: 'project_dummy-uuid-smb-lab-driv',
-        maxOvertime: -1,
-        name: 'SMB Lab - DRIV',
-        workdayLength: 8
-    })()
-]);
-
 const mapStateToProps = (state: State): StateProps => ({
     isStoring: state.hours.isStoring,
     period: state.controls.period,
-    projects: dummyProjects,
+    projects: state.projects.projects,
     workdays: getWorkdaysInPeriod(state)
 });
 

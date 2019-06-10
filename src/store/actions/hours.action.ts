@@ -4,22 +4,84 @@ import { getState } from '../../helpers';
 import { database } from '../../services';
 import { Period, Workdays } from '../../types';
 
+const unauthenticatedError = new Error('User not authenticated.');
+
 export enum HoursActionType {
+    GetWorkdays = 'HOURS/GET_WORKDAYS!',
+    GetWorkdaysSuccess = 'HOURS/GET_WORKDAYS_SUCCESS',
+    GetWorkdaysFailure = 'HOURS/GET_WORKDAYS_FAILURE',
+
     GetWorkdaysInPeriod = 'HOURS/GET_WORKDAYS_IN_PERIOD!',
     GetWorkdaysInPeriodSuccess = 'HOURS/GET_WORKDAYS_IN_PERIOD_SUCCESS',
     GetWorkdaysInPeriodFailure = 'HOURS/GET_WORKDAYS_IN_PERIOD_FAILURE',
+
     UpdateWorkdays = 'HOURS/UPDATE_WORKDAYS!',
     UpdateWorkdaysSuccess = 'HOURS/UPDATE_WORKDAYS_SUCCESS',
     UpdateWorkdaysFailure = 'HOURS/UPDATE_WORKDAYS_FAILURE'
 }
 
 export type HoursAction =
+    | GetWorkdays
+    | GetWorkdaysSuccess
+    | GetWorkdaysFailure
+
     | GetWorkdaysInPeriod
     | GetWorkdaysInPeriodSuccess
     | GetWorkdaysInPeriodFailure
+
     | UpdateWorkdays
     | UpdateWorkdaysSuccess
     | UpdateWorkdaysFailure;
+
+// Get workdays
+
+interface GetWorkdays {
+    type: HoursActionType.GetWorkdays;
+}
+
+interface GetWorkdaysSuccess {
+    type: HoursActionType.GetWorkdaysSuccess;
+    workdays: Workdays;
+}
+
+interface GetWorkdaysFailure {
+    type: HoursActionType.GetWorkdaysFailure;
+    error: Error;
+}
+
+export const getWorkdaysAction = () => (dispatch: Dispatch) => {
+    dispatch({
+        type: HoursActionType.GetWorkdays
+    });
+
+    const state = getState();
+
+    if (!state.auth.authUser) {
+        dispatch(getWorkdaysFailureAction(unauthenticatedError));
+
+        return;
+    }
+
+    database(state.auth.authUser.uid).workdays.getAll()
+        .then((workdays) => {
+            dispatch(getWorkdaysSuccessAction(workdays));
+        })
+        .catch((error) => {
+            dispatch(getWorkdaysFailureAction(error));
+
+            console.error(error);
+        });
+};
+
+const getWorkdaysSuccessAction = (workdays: Workdays): GetWorkdaysSuccess => ({
+    type: HoursActionType.GetWorkdaysSuccess,
+    workdays
+});
+
+const getWorkdaysFailureAction = (error: Error): GetWorkdaysFailure => ({
+    type: HoursActionType.GetWorkdaysFailure,
+    error
+});
 
 // Get workdays in period
 
@@ -46,7 +108,7 @@ export const getWorkdaysInPeriodAction = (period: Period) => (dispatch: Dispatch
     const state = getState();
 
     if (!state.auth.authUser) {
-        dispatch(getWorkdaysInPeriodFailureAction(new Error('User not authenticated.')));
+        dispatch(getWorkdaysInPeriodFailureAction(unauthenticatedError));
 
         return;
     }
@@ -98,7 +160,7 @@ export const updateWorkdaysAction = (workdays: Workdays) => (dispatch: Dispatch)
     const state = getState();
 
     if (!state.auth.authUser) {
-        dispatch(updateWorkdaysFailureAction(new Error('User not authenticated.')));
+        dispatch(updateWorkdaysFailureAction(unauthenticatedError));
 
         return;
     }
