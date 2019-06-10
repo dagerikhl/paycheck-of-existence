@@ -140,12 +140,17 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         {this.dates.map((date: Moment) => (
                             <div
                                 className={classNames({
-                                    'date': true,
+                                    'line': true,
                                     'non-workday': date.isoWeekday() > 5
                                 })}
                                 key={date.format(DATE_FORMATS.long)}
                             >
-                                <div className="date-header">{date.format(DATE_FORMATS.long)}</div>
+                                <div className="line-header">
+                                    <div className="date-label">{date.format(DATE_FORMATS.long)}</div>
+                                    <div className="hours-label">Hours</div>
+                                    <div className="ss-label">SS</div>
+                                    <div className="notes-label">Notes</div>
+                                </div>
 
                                 {projects.map((project) => (
                                     <div className="project" key={project.get('id')}>

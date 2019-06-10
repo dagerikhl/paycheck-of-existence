@@ -1,6 +1,10 @@
 @import "../../../styles/bases.scss";
 @import "../../../styles/variables.scss";
-@import "../../../styles/typography.scss";
+
+$date-width: 196px;
+$number-width: 78px;
+
+$cell-margin: 0 2px;
 
 .week-table {
     .title {
@@ -15,17 +19,40 @@
     }
 
     .content {
-        .date {
+        .line {
             padding-bottom: 2px;
 
             // Table rows
-            .date-header {
-                @extend %header;
+            .line-header {
+                display: flex;
 
                 padding: 8px;
 
                 background-color: $shadow-color-lighter;
-                font-style: italic;
+
+                .date-label {
+                    width: $date-width + 24px;
+
+                    font-weight: bold;
+                }
+
+                .hours-label {
+                    width: $number-width;
+
+                    margin: $cell-margin;
+                }
+
+                .ss-label {
+                    width: $number-width;
+
+                    margin: $cell-margin;
+                }
+
+                .notes-label {
+                    flex: 1;
+
+                    margin: $cell-margin;
+                }
             }
 
             .project {
@@ -35,36 +62,42 @@
 
                 // Table columns
                 .project-header {
-                    @extend %header;
-
                     display: flex;
                     align-items: center;
 
-                    width: 196px;
+                    width: $date-width;
                 }
 
                 .hours {
                     @extend %table-number-cell;
 
-                    width: 78px;
+                    width: $number-width;
+
+                    margin: $cell-margin;
                 }
 
                 .ss {
                     @extend %table-number-cell;
 
-                    width: 78px;
+                    width: $number-width;
+
+                    margin: $cell-margin;
                 }
 
                 .notes {
                     flex: 1;
 
-                    padding-left: 8px;
+                    margin: $cell-margin;
                 }
             }
         }
 
         .non-workday {
             background-color: $shadow-color-lighter;
+        }
+
+        > :last-child {
+            padding-bottom: 32px;
         }
     }
 
