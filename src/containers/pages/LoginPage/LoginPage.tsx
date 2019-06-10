@@ -5,18 +5,14 @@ import { LoginForm } from './LoginForm';
 
 import './LoginPage.css';
 
-class LoginPageComponent extends React.PureComponent<RouteComponentProps> {
-    public render() {
-        const { history } = this.props;
+const LoginPageComponent: React.SFC<RouteComponentProps> = ({ history }) => {
+    return (
+        <section className="login-page">
+            <h1 className="title">Login</h1>
 
-        return (
-            <section className="login-page">
-                <h1 className="title">Login</h1>
-
-                <LoginForm history={history}/>
-            </section>
-        );
-    }
-}
+            <LoginForm history={history}/>
+        </section>
+    );
+};
 
 export const LoginPage = withRouter(LoginPageComponent);

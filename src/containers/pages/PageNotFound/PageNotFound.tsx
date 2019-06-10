@@ -4,28 +4,22 @@ import { pickRandom } from '../../../helpers';
 
 import './PageNotFound.css';
 
-export class PageNotFound extends React.PureComponent {
-    private readonly messages = [
-        'These aren\'t the droids you\'re looking for.',
-        'Nothing to see here. Move along.',
-        'Go about your business citizen.',
-        'Where to now?',
-        'You must gather your website contents before venturing forth.'
-    ];
+const messages = [
+    'These aren\'t the droids you\'re looking for.',
+    'Nothing to see here. Move along.',
+    'Go about your business citizen.',
+    'Where to now?',
+    'You must gather your website contents before venturing forth.'
+];
 
-    private message: string;
+export const PageNotFound: React.SFC = () => {
+    const message = pickRandom(messages);
 
-    public componentWillMount() {
-        this.message = pickRandom(this.messages);
-    }
+    return (
+        <section className="page-not-found">
+            <span className="title">404</span>
 
-    public render() {
-        return (
-            <section className="page-not-found">
-                <span className="title">404</span>
-
-                <h1 className="message">{this.message}</h1>
-            </section>
-        );
-    }
-}
+            <h1 className="message">{message}</h1>
+        </section>
+    );
+};
