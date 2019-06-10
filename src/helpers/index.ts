@@ -5,3 +5,4 @@ export * from './format-helper';
 export * from './number-helper';
 export * from './object-helper';
 export * from './redux-helper';
+export * from './workday-helper';

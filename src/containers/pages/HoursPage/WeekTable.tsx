@@ -1,5 +1,4 @@
 import * as classNames from 'classnames';
-import { Record } from 'immutable';
 import { Moment } from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -11,62 +10,16 @@ import { Input } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
 import { DATE_FORMATS } from '../../../constants';
 import { InputCellType } from '../../../enums';
-import { range } from '../../../helpers';
+import { calculateTotals, padWithEmptyWorkdays, range, workdayComparator } from '../../../helpers';
 import { updateWorkdaysAction } from '../../../store/actions';
 import { getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
-import { Period, Project, Projects, Totals, Workday, Workdays } from '../../../types';
+import { Period, Project, Projects, Workdays } from '../../../types';
 
 import { DataControls } from './DataControls';
 import { TotalsRow } from './TotalsRow';
 
 import './WeekTable.css';
-
-const workdayComparator = (date: Moment, project: Project) => {
-    return (workday: Workday) => {
-        return workday.get('date').isSame(date, 'date') && workday.get('projectId') === project.get('id');
-    };
-};
-
-const padWithEmptyWorkdays = (dates: Moment[], projects: Projects, workdays: Workdays): Workdays => {
-    let paddedWorkdays = workdays;
-    for (const date of dates) {
-        for (const project of projects.toArray()) {
-            if (!workdays.some(workdayComparator(date, project))) {
-                paddedWorkdays = paddedWorkdays.push(Record({
-                    date,
-                    hours: 0,
-                    notes: '',
-                    projectId: project.get('id'),
-                    ss: 0
-                })());
-            }
-        }
-    }
-
-    return paddedWorkdays;
-};
-
-const calculateTotals = (projects: Projects, workdays: Workdays): Totals => {
-    const totalsPerProject = workdays
-        .groupBy((workday) => workday.get('projectId'))
-        .map((projectWorkdays) => {
-            return projectWorkdays.reduce((result, current) => {
-                return {
-                    hours: result.hours + current.get('hours'),
-                    ss: result.ss + current.get('ss')
-                };
-            }, { hours: 0, ss: 0 });
-        });
-
-    return totalsPerProject
-        .reduce((result, current) => {
-            return {
-                hours: result.hours + current.hours,
-                ss: result.ss + current.ss
-            };
-        }, { hours: 0, ss: 0 });
-};
 
 interface OwnState {
     modifiedWorkdays: Workdays;
