@@ -1,10 +1,6 @@
 @import "../../../styles/bases.scss";
 @import "../../../styles/variables.scss";
-
-$date-width: 196px;
-$number-width: 78px;
-
-$cell-margin: 0 2px;
+@import "./hours-page-variables.scss";
 
 .week-table {
     .title {
@@ -22,37 +18,13 @@ $cell-margin: 0 2px;
         .line {
             padding-bottom: 2px;
 
-            // Table rows
             .line-header {
                 display: flex;
 
                 padding: 8px;
 
                 background-color: $shadow-color-lighter;
-
-                .date-label {
-                    width: $date-width + 24px;
-
-                    font-weight: bold;
-                }
-
-                .hours-label {
-                    width: $number-width;
-
-                    margin: $cell-margin;
-                }
-
-                .ss-label {
-                    width: $number-width;
-
-                    margin: $cell-margin;
-                }
-
-                .notes-label {
-                    flex: 1;
-
-                    margin: $cell-margin;
-                }
+                font-weight: bold;
             }
 
             .project {
@@ -60,7 +32,6 @@ $cell-margin: 0 2px;
 
                 padding: 0 32px;
 
-                // Table columns
                 .project-header {
                     display: flex;
                     align-items: center;
@@ -99,6 +70,14 @@ $cell-margin: 0 2px;
         > :last-child {
             padding-bottom: 32px;
         }
+    }
+
+    .good {
+        color: $good-color;
+    }
+
+    .bad {
+        color: $bad-color;
     }
 
     @media print {

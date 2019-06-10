@@ -15,9 +15,10 @@ import { range } from '../../../helpers';
 import { updateWorkdaysAction } from '../../../store/actions';
 import { getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
-import { Period, Project, Projects, Workday, Workdays } from '../../../types';
+import { Period, Project, Projects, Totals, Workday, Workdays } from '../../../types';
 
 import { DataControls } from './DataControls';
+import { TotalsRow } from './TotalsRow';
 
 import './WeekTable.css';
 
@@ -44,6 +45,27 @@ const padWithEmptyWorkdays = (dates: Moment[], projects: Projects, workdays: Wor
     }
 
     return paddedWorkdays;
+};
+
+const calculateTotals = (projects: Projects, workdays: Workdays): Totals => {
+    const totalsPerProject = workdays
+        .groupBy((workday) => workday.get('projectId'))
+        .map((projectWorkdays) => {
+            return projectWorkdays.reduce((result, current) => {
+                return {
+                    hours: result.hours + current.get('hours'),
+                    ss: result.ss + current.get('ss')
+                };
+            }, { hours: 0, ss: 0 });
+        });
+
+    return totalsPerProject
+        .reduce((result, current) => {
+            return {
+                hours: result.hours + current.hours,
+                ss: result.ss + current.ss
+            };
+        }, { hours: 0, ss: 0 });
 };
 
 interface OwnState {
@@ -119,6 +141,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         const isDirty = this.isDirty();
 
+        const totals = calculateTotals(projects, modifiedWorkdays);
+
         return (
             <React.Fragment>
                 {isStoring && <Loader text="Storing data in server..."/>}
@@ -137,6 +161,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     </h1>
 
                     <div className="content">
+                        <TotalsRow totals={totals}/>
+
                         {this.dates.map((date: Moment) => (
                             <div
                                 className={classNames({
@@ -145,12 +171,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                 })}
                                 key={date.format(DATE_FORMATS.long)}
                             >
-                                <div className="line-header">
-                                    <div className="date-label">{date.format(DATE_FORMATS.long)}</div>
-                                    <div className="hours-label">Hours</div>
-                                    <div className="ss-label">SS</div>
-                                    <div className="notes-label">Notes</div>
-                                </div>
+                                <div className="line-header">{date.format(DATE_FORMATS.long)}</div>
 
                                 {projects.map((project) => (
                                     <div className="project" key={project.get('id')}>
@@ -188,6 +209,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                                         type={InputCellType.TEXT}
                                                         value={workday.get('notes')}
                                                         onValueChange={this.onValueChange(date, project, 'notes')}
+                                                        placeholder="Notes..."
                                                     />
                                                 </React.Fragment>
                                             ))}
