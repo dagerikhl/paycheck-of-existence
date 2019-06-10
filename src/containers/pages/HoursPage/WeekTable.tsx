@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import { List, Record } from 'immutable';
 import { Moment } from 'moment';
 import * as React from 'react';
@@ -108,7 +109,9 @@ type WeekTableProps = StateProps & DispatchProps;
 class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private dates: Moment[] = range(0, 7).map((n) => this.props.period.from.clone().add(n, 'days'));
 
-    public state: OwnState = { modifiedWorkdays: padWithEmptyWorkdays(this.dates, this.props.projects, this.props.workdays) };
+    public state: OwnState = {
+        modifiedWorkdays: padWithEmptyWorkdays(this.dates, this.props.projects, this.props.workdays)
+    };
 
     public render() {
         const { isStoring, period, projects } = this.props;
@@ -127,15 +130,21 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         <div>Week {period.from.isoWeek()}</div>
 
                         <div className="dates">
-                            {period.from.format(DATE_FORMATS.withYear)}
+                            {period.from.format(DATE_FORMATS.longWithYear)}
                             &nbsp;&ndash;&nbsp;
-                            {period.to.format(DATE_FORMATS.withYear)}
+                            {period.to.format(DATE_FORMATS.longWithYear)}
                         </div>
                     </h1>
 
                     <div className="content">
-                        {this.dates.map((date) => (
-                            <div className="date" key={date.format(DATE_FORMATS.long)}>
+                        {this.dates.map((date: Moment) => (
+                            <div
+                                className={classNames({
+                                    'date': true,
+                                    'non-workday': date.isoWeekday() > 5
+                                })}
+                                key={date.format(DATE_FORMATS.long)}
+                            >
                                 <div className="date-header">{date.format(DATE_FORMATS.long)}</div>
 
                                 {projects.map((project) => (
