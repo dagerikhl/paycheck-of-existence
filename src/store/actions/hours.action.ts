@@ -5,10 +5,10 @@ import { database } from '../../services';
 import { Period, Workdays } from '../../types';
 
 export enum HoursActionType {
-    GetWorkdaysInPeriod = 'HOURS/GET_WORKDAYS_IN_PERIOD',
+    GetWorkdaysInPeriod = 'HOURS/GET_WORKDAYS_IN_PERIOD!',
     GetWorkdaysInPeriodSuccess = 'HOURS/GET_WORKDAYS_IN_PERIOD_SUCCESS',
     GetWorkdaysInPeriodFailure = 'HOURS/GET_WORKDAYS_IN_PERIOD_FAILURE',
-    UpdateWorkdays = 'HOURS/UPDATE_WORKDAYS',
+    UpdateWorkdays = 'HOURS/UPDATE_WORKDAYS!',
     UpdateWorkdaysSuccess = 'HOURS/UPDATE_WORKDAYS_SUCCESS',
     UpdateWorkdaysFailure = 'HOURS/UPDATE_WORKDAYS_FAILURE'
 }
