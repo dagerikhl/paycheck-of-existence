@@ -90,7 +90,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
                     <div className="content">
                         <div className="totals-row-container">
-                            <div className="offset"/>
+                            <div className="totals-row-offset"/>
 
                             <TotalsRow showLabels={true} totals={totals}/>
                         </div>
@@ -104,7 +104,9 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                 key={date.format(DATE_FORMATS.long)}
                             >
                                 <div className="line-header">
-                                    <div className="line-header-label">{date.format(DATE_FORMATS.long)}</div>
+                                    <div className="line-header-label totals-row-offset">
+                                        {date.format(DATE_FORMATS.long)}
+                                    </div>
 
                                     {totalsPerDate.has(date) && <TotalsRow totals={totalsPerDate.get(date) as Totals}/>}
                                 </div>

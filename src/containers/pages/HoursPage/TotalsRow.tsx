@@ -14,7 +14,7 @@ interface TotalsRowProps {
 
 export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hours, ss } }) => (
     <div className="totals-row">
-        <div className="total-hours">
+        <div className="total-row">
             {showLabels && <div className="total-label">Hours</div>}
 
             <div className={classNames({ 'total-value': true, 'bad': hours > HOUR_LIMITS.maxHoursPerWeek })}>
@@ -22,11 +22,19 @@ export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hou
             </div>
         </div>
 
-        <div className="total-ss">
+        <div className="total-row">
             {showLabels && <div className="total-label">SS</div>}
 
-            <div className="total-value">
+            <div className={classNames({ 'total-value': true, 'bad': ss < 0, 'good': ss > 0 })}>
                 {toHourFormat(ss)}
+            </div>
+        </div>
+
+        <div className="total-row total" style={{ flex: 1 }}>
+            {showLabels && <div className="total-label">Total</div>}
+
+            <div className="total-value">
+                {toHourFormat(hours - Math.min(ss, 0))}
             </div>
         </div>
     </div>

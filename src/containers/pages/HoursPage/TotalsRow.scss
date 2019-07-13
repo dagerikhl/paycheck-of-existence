@@ -4,6 +4,8 @@
 .totals-row {
     display: flex;
 
+    width: 100%;
+
     text-align: right;
 
     .total-label {
@@ -18,10 +20,13 @@
         font-weight: normal;
     }
 
-    .total-hours,
-    .total-ss {
+    .total-row {
         width: $number-width;
 
         margin: $cell-margin;
+
+        & .total {
+            flex: 1;
+        }
     }
 }

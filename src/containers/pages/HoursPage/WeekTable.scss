@@ -21,10 +21,6 @@
             padding: 8px;
 
             background-color: $shadow-color-light;
-
-            > .offset {
-                width: $label-width + 24px;
-            }
         }
 
         .line {
@@ -33,13 +29,11 @@
             .line-header {
                 display: flex;
 
-                padding: 16px 8px 8px 8px;
+                padding: 16px 8px;
 
                 background-color: $shadow-color-lighter;
 
                 .line-header-label {
-                    width: $label-width + 24px;
-
                     font-weight: bold;
                 }
             }
@@ -78,6 +72,11 @@
                     margin: $cell-margin;
                 }
             }
+        }
+
+        .totals-row-offset {
+            flex-shrink: 0;
+            width: $label-width + 24px;
         }
 
         .non-workday {
