@@ -1,6 +1,6 @@
 {
   "name": "paycheck-of-existence",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Personal tool to keep track of hours worked each week",
   "author": "Dag Erik Homdrum Løvgren <dagerikhl@gmail.com> (https://github.com/dagerikhl)",
   "scripts": {

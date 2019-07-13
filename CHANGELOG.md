@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.1.0...v2.2.0) (2019-07-13)
+
+
+### Features
+
+* **data:** use redux-thunk for async side effects with redux store ([7579aba](https://github.com/dagerikhl/paycheck-of-existence/commit/7579aba))
+* **projects:** add projects API ([ce5f219](https://github.com/dagerikhl/paycheck-of-existence/commit/ce5f219))
+* **projects:** add projects state and communicate with the projects API ([7b8fca0](https://github.com/dagerikhl/paycheck-of-existence/commit/7b8fca0))
+* **totals:** add total of hours + -ss to totals row ([e08ba82](https://github.com/dagerikhl/paycheck-of-existence/commit/e08ba82))
+* **totals:** add totals to each day ([fa1f074](https://github.com/dagerikhl/paycheck-of-existence/commit/fa1f074))
+* **totals:** add totals to week table for hours+ss ([709c1c2](https://github.com/dagerikhl/paycheck-of-existence/commit/709c1c2))
+* **weektable:** add labels to week table columns ([4465efb](https://github.com/dagerikhl/paycheck-of-existence/commit/4465efb))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.0.0...v2.1.0) (2019-06-07)
 
