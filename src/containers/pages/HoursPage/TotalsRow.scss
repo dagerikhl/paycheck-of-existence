@@ -4,25 +4,21 @@
 .totals-row {
     display: flex;
 
-    padding: 8px;
-
-    background-color: $shadow-color-light;
-    text-align: center;
+    text-align: right;
 
     .total-label {
+        text-align: center;
         font-weight: bold;
     }
 
-    .total-header {
-        width: $date-width + 24px;
+    .total-value {
+        // Magic number to position the total at the same position as the input numbers below
+        padding-right: 14px;
+
+        font-weight: normal;
     }
 
-    .total-hours {
-        width: $number-width;
-
-        margin: $cell-margin;
-    }
-
+    .total-hours,
     .total-ss {
         width: $number-width;
 

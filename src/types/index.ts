@@ -6,5 +6,6 @@ export * from './Project';
 export * from './Projects';
 export * from './TableCell';
 export * from './Totals';
+export * from './TotalsCollection';
 export * from './Workday';
 export * from './Workdays';

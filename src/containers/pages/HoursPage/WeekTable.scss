@@ -15,16 +15,33 @@
     }
 
     .content {
+        .totals-row-container {
+            display: flex;
+
+            padding: 8px;
+
+            background-color: $shadow-color-light;
+
+            > .offset {
+                width: $label-width + 24px;
+            }
+        }
+
         .line {
             padding-bottom: 2px;
 
             .line-header {
                 display: flex;
 
-                padding: 8px;
+                padding: 16px 8px 8px 8px;
 
                 background-color: $shadow-color-lighter;
-                font-weight: bold;
+
+                .line-header-label {
+                    width: $label-width + 24px;
+
+                    font-weight: bold;
+                }
             }
 
             .project {
@@ -36,7 +53,7 @@
                     display: flex;
                     align-items: center;
 
-                    width: $date-width;
+                    width: $label-width;
                 }
 
                 .hours {

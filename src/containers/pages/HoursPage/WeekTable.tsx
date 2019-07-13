@@ -10,11 +10,17 @@ import { Input } from '../../../components/Input';
 import { Loader } from '../../../components/Loader';
 import { DATE_FORMATS } from '../../../constants';
 import { InputCellType } from '../../../enums';
-import { calculateTotals, padWithEmptyWorkdays, range, workdayComparator } from '../../../helpers';
+import {
+    calculateTotalsForDates,
+    calculateTotalsPerDate,
+    padWithEmptyWorkdays,
+    range,
+    workdayComparator
+} from '../../../helpers';
 import { updateWorkdaysAction } from '../../../store/actions';
 import { getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
-import { Period, Project, Projects, Workdays } from '../../../types';
+import { Period, Project, Projects, Totals, Workdays } from '../../../types';
 
 import { DataControls } from './DataControls';
 import { TotalsRow } from './TotalsRow';
@@ -62,7 +68,8 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
         const isDirty = this.isDirty();
 
-        const totals = calculateTotals(projects, modifiedWorkdays);
+        const totalsPerDate = calculateTotalsPerDate(projects, modifiedWorkdays);
+        const totals = calculateTotalsForDates(totalsPerDate);
 
         return (
             <React.Fragment>
@@ -82,7 +89,11 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                     </h1>
 
                     <div className="content">
-                        <TotalsRow totals={totals}/>
+                        <div className="totals-row-container">
+                            <div className="offset"/>
+
+                            <TotalsRow showLabels={true} totals={totals}/>
+                        </div>
 
                         {this.dates.map((date: Moment) => (
                             <div
@@ -92,7 +103,11 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                 })}
                                 key={date.format(DATE_FORMATS.long)}
                             >
-                                <div className="line-header">{date.format(DATE_FORMATS.long)}</div>
+                                <div className="line-header">
+                                    <div className="line-header-label">{date.format(DATE_FORMATS.long)}</div>
+
+                                    {totalsPerDate.has(date) && <TotalsRow totals={totalsPerDate.get(date) as Totals}/>}
+                                </div>
 
                                 {projects.map((project) => (
                                     <div className="project" key={project.get('id')}>

@@ -8,25 +8,24 @@ import { Totals } from '../../../types';
 import './TotalsRow.css';
 
 interface TotalsRowProps {
+    showLabels?: boolean;
     totals: Totals;
 }
 
-export const TotalsRow: React.SFC<TotalsRowProps> = ({ totals: { hours, ss } }) => (
+export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hours, ss } }) => (
     <div className="totals-row">
-        <div className="total-header"/>
-
         <div className="total-hours">
-            <div className="total-label">Hours</div>
+            {showLabels && <div className="total-label">Hours</div>}
 
-            <div className={classNames({ 'bad': hours > HOUR_LIMITS.maxHoursPerWeek })}>
+            <div className={classNames({ 'total-value': true, 'bad': hours > HOUR_LIMITS.maxHoursPerWeek })}>
                 {toHourFormat(hours)}
             </div>
         </div>
 
         <div className="total-ss">
-            <div className="total-label">SS</div>
+            {showLabels && <div className="total-label">SS</div>}
 
-            <div>
+            <div className="total-value">
                 {toHourFormat(ss)}
             </div>
         </div>
