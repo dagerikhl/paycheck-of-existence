@@ -4,9 +4,11 @@
 .page-not-found {
     @extend %titlepage;
 
-    background-color: $theme-primary-light;
+    color: $theme-primary-light;
 
     .title {
+        margin: 32px;
+
         font-size: 1000%;
     }
 }
