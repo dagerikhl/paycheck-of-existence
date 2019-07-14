@@ -13,7 +13,7 @@ interface OwnProps {
     onClick?: () => void;
 }
 
-type ButtonProps = OwnProps & React.HTMLProps<HTMLButtonElement>;
+type ButtonProps = OwnProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: React.SFC<ButtonProps> = ({ className, theme, square, round, children, ...rest }) => (
     <button
