@@ -19,7 +19,7 @@
     "release": "standard-version",
     "deploy": "firebase deploy -P staging",
     "deploy:prod": "firebase deploy -P default",
-    "prodset": "npm run build && npm run release && npm run deploy:prod",
+    "prodset": "npm run release && npm run build && npm run deploy:prod",
     "eject": "react-scripts-ts eject"
   },
   "dependencies": {
