@@ -4,7 +4,7 @@ export interface ProjectDb {
     grantsOvertime: boolean;
     maxOvertime: number;
     name: string;
-    workdayLength: number;
+    show: boolean;
 }
 
 export interface ProjectJs extends ProjectDb {

@@ -111,48 +111,50 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                     {totalsPerDate.has(date) && <TotalsRow totals={totalsPerDate.get(date) as Totals}/>}
                                 </div>
 
-                                {projects.map((project) => (
-                                    <div className="project" key={project.get('id')}>
-                                        <div className="project-header">{project.get('name')}</div>
+                                {projects
+                                    .filter((project) => project.get('show'))
+                                    .map((project) => (
+                                        <div className="project" key={project.get('id')}>
+                                            <div className="project-header">{project.get('name')}</div>
 
-                                        {modifiedWorkdays
-                                            .filter((workday) => (
-                                                workday.get('projectId') === project.get('id') &&
-                                                workday.get('date').isSame(date, 'date')
-                                            ))
-                                            .map((workday) => (
-                                                <React.Fragment
-                                                    key={`${date.format(DATE_FORMATS.long)}:${project.get('id')}`}
-                                                >
-                                                    <Input
-                                                        className="hours"
-                                                        type={InputCellType.NUMBER}
-                                                        value={workday.get('hours')}
-                                                        onValueChange={this.onValueChange(date, project, 'hours')}
-                                                        min={-24}
-                                                        max={24}
-                                                        step={0.5}
-                                                    />
-                                                    <Input
-                                                        className="ss"
-                                                        type={InputCellType.NUMBER}
-                                                        value={workday.get('ss')}
-                                                        onValueChange={this.onValueChange(date, project, 'ss')}
-                                                        min={-24}
-                                                        max={24}
-                                                        step={0.5}
-                                                    />
-                                                    <Input
-                                                        className="notes"
-                                                        type={InputCellType.TEXT}
-                                                        value={workday.get('notes')}
-                                                        onValueChange={this.onValueChange(date, project, 'notes')}
-                                                        placeholder="Notes..."
-                                                    />
-                                                </React.Fragment>
-                                            ))}
-                                    </div>
-                                ))}
+                                            {modifiedWorkdays
+                                                .filter((workday) => (
+                                                    workday.get('projectId') === project.get('id') &&
+                                                    workday.get('date').isSame(date, 'date')
+                                                ))
+                                                .map((workday) => (
+                                                    <React.Fragment
+                                                        key={`${date.format(DATE_FORMATS.long)}:${project.get('id')}`}
+                                                    >
+                                                        <Input
+                                                            className="hours"
+                                                            type={InputCellType.NUMBER}
+                                                            value={workday.get('hours')}
+                                                            onValueChange={this.onValueChange(date, project, 'hours')}
+                                                            min={-24}
+                                                            max={24}
+                                                            step={0.5}
+                                                        />
+                                                        <Input
+                                                            className="ss"
+                                                            type={InputCellType.NUMBER}
+                                                            value={workday.get('ss')}
+                                                            onValueChange={this.onValueChange(date, project, 'ss')}
+                                                            min={-24}
+                                                            max={24}
+                                                            step={0.5}
+                                                        />
+                                                        <Input
+                                                            className="notes"
+                                                            type={InputCellType.TEXT}
+                                                            value={workday.get('notes')}
+                                                            onValueChange={this.onValueChange(date, project, 'notes')}
+                                                            placeholder="Notes..."
+                                                        />
+                                                    </React.Fragment>
+                                                ))}
+                                        </div>
+                                    ))}
                             </div>
                         ))}
                     </div>
