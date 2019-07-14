@@ -1,6 +1,21 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [2.3.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.2.0...v2.3.0) (2019-07-14)
+
+
+### Build System
+
+* **npm:** remove hats from all dependencies ([988b142](https://github.com/dagerikhl/paycheck-of-existence/commit/988b142))
+* **npm:** update all npm packages to newest version ([f5fce47](https://github.com/dagerikhl/paycheck-of-existence/commit/f5fce47))
+
+
+### Features
+
+* **projects:** remove workdayLength, add show bool to projects ([be9929d](https://github.com/dagerikhl/paycheck-of-existence/commit/be9929d))
+
+
 
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.1.0...v2.2.0) (2019-07-13)
