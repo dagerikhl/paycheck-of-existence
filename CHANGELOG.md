@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.3.1...v2.4.0) (2019-08-19)
+
+
+### Features
+
+* **summarypage:** add summary page ([e1d4b37](https://github.com/dagerikhl/paycheck-of-existence/commit/e1d4b37))
+
+
+
 ### [2.3.1](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.3.0...v2.3.1) (2019-07-14)
 
 
