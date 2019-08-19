@@ -19,3 +19,11 @@ h2 {
 h3 {
     @extend %h3;
 }
+
+.good {
+    color: $good-color !important;
+}
+
+.bad {
+    color: $bad-color !important;
+}

@@ -3,4 +3,4 @@ import { Moment } from 'moment';
 
 import { Totals } from './Totals';
 
-export type TotalsCollection = Map<Moment, Totals>;
+export type TotalsDateCollection = Map<Moment, Totals>;

@@ -11,6 +11,7 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { HoursPage } from './pages/HoursPage/HoursPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { PageNotFound } from './pages/PageNotFound/PageNotFound';
+import { SummaryPage } from './pages/SummaryPage/SummaryPage';
 
 import './App.css';
 
@@ -44,8 +45,8 @@ class AppComponent extends React.PureComponent {
                         <Route exact path={Routes.LOGIN.path} component={LoginPage}/>
                         <Route exact path={Routes.HOME.path} component={HomePage}/>
                         <Route exact path={Routes.HOURS.path} component={HoursPage}/>
+                        <Route exact path={Routes.SUMMARY.path} component={SummaryPage}/>
                         <Route component={PageNotFound}/>
-                        {/*<Route exact path={Routes.SUMMARY.path} component={SummaryPage}/>*/}
                     </Switch>
                 </main>
 

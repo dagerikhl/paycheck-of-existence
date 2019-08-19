@@ -1,0 +1,53 @@
+@import "../../../styles/bases.scss";
+@import "../../../styles/variables.scss";
+@import "./summary-page-variables.scss";
+
+.summary-table {
+    padding: 0 32px;
+
+    .line-header {
+        display: flex;
+
+        padding: 16px 0;
+
+        text-align: center;
+        font-weight: bold;
+
+        .header-label-fill {
+            flex: 1;
+        }
+
+        .header-label {
+            width: $number-width;
+
+            margin: $cell-margin;
+        }
+    }
+
+    .project {
+        display: flex;
+
+        .project-header {
+            flex: 1;
+        }
+
+        .hours,
+        .ss {
+            @extend %table-number-cell;
+
+            width: $number-width;
+
+            margin: $cell-margin;
+
+            color: $theme-secondary-text;
+        }
+    }
+
+    > :last-child {
+        padding-bottom: 32px;
+    }
+
+    @media print {
+        page-break-inside: avoid;
+    }
+}

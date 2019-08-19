@@ -88,14 +88,6 @@
         }
     }
 
-    .good {
-        color: $good-color;
-    }
-
-    .bad {
-        color: $bad-color;
-    }
-
     @media print {
         page-break-inside: avoid;
     }

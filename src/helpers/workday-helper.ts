@@ -1,9 +1,18 @@
 import { Record } from 'immutable';
 import { Moment } from 'moment';
 
-import { Project, Projects, Totals, TotalsCollection, Workday, Workdays } from '../types';
+import { Project, Projects, Totals, TotalsDateCollection, TotalsProjectCollection, Workday, Workdays } from '../types';
 
-export const calculateTotalsForDates = (totalsPerDate: TotalsCollection): Totals => {
+const totalsMapper = (workdays: Workdays) => {
+    return workdays.reduce((result, current) => {
+        return {
+            hours: result.hours + current.get('hours'),
+            ss: result.ss + current.get('ss')
+        };
+    }, { hours: 0, ss: 0 });
+};
+
+export const calculateTotalsForDates = (totalsPerDate: TotalsDateCollection): Totals => {
     return totalsPerDate
         .reduce((result, current) => {
             return {
@@ -13,17 +22,17 @@ export const calculateTotalsForDates = (totalsPerDate: TotalsCollection): Totals
         }, { hours: 0, ss: 0 });
 };
 
-export const calculateTotalsPerDate = (projects: Projects, workdays: Workdays): TotalsCollection => {
+export const calculateTotalsPerDate = (projects: Projects, workdays: Workdays): TotalsDateCollection => {
     return workdays
-        .groupBy((workday) => workday.get('date'))
-        .map((projectWorkdays) => {
-            return projectWorkdays.reduce((result, current) => {
-                return {
-                    hours: result.hours + current.get('hours'),
-                    ss: result.ss + current.get('ss')
-                };
-            }, { hours: 0, ss: 0 });
-        })
+        .groupBy<Moment>((workday) => workday.get('date'))
+        .map(totalsMapper)
+        .toMap();
+};
+
+export const calculateTotalsPerProject = (projects: Projects, workdays: Workdays): TotalsProjectCollection => {
+    return workdays
+        .groupBy<string>((workday) => workday.get('projectId'))
+        .map(totalsMapper)
         .toMap();
 };
 

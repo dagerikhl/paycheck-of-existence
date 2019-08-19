@@ -2,27 +2,27 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { getWorkdaysInPeriodAction } from '../../../store/actions';
+import { getWorkdaysAction } from '../../../store/actions';
 import { State } from '../../../store/states';
-import { Period } from '../../../types';
+import { Workdays } from '../../../types';
 import { Loader } from '../../Loader';
 
 interface StateProps {
     isFetching?: boolean;
-    period: Period;
+    workdays?: Workdays;
 }
 
 const mapStateToProps = (state: State): StateProps => ({
     isFetching: state.hours.isFetching,
-    period: state.controls.period
+    workdays: state.hours.workdays
 });
 
 interface DispatchProps {
-    getWorkdaysInPeriod: (period: Period) => void;
+    getWorkdays: () => void;
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    getWorkdaysInPeriod: (period: Period) => getWorkdaysInPeriodAction(period)(dispatch)
+    getWorkdays: () => getWorkdaysAction()(dispatch)
 });
 
 type WithWorkdaysDataProps = StateProps & DispatchProps;
@@ -34,10 +34,7 @@ export const withWorkdaysData = (Component: React.ComponentType) => {
         }
 
         public shouldComponentUpdate(nextProps: WithWorkdaysDataProps) {
-            const { period } = this.props;
-
-            if (!nextProps.period.from.isSame(period.from, 'date') ||
-                !nextProps.period.to.isSame(period.to, 'date')) {
+            if (!nextProps.workdays) {
                 this.fetchDays(nextProps);
             }
 
@@ -53,9 +50,9 @@ export const withWorkdaysData = (Component: React.ComponentType) => {
         }
 
         private fetchDays = (props = this.props) => {
-            const { period, getWorkdaysInPeriod } = props;
+            const { getWorkdays } = props;
 
-            getWorkdaysInPeriod(period);
+            getWorkdays();
         };
     }
 
