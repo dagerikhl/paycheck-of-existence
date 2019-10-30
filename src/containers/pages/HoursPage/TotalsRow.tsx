@@ -9,10 +9,17 @@ import './TotalsRow.css';
 
 interface TotalsRowProps {
     showLabels?: boolean;
+    showNegativeAndPositiveSs?: boolean;
+    showTotalSs?: boolean;
     totals: Totals;
 }
 
-export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hours, ss } }) => (
+export const TotalsRow: React.SFC<TotalsRowProps> = ({
+    showLabels,
+    showNegativeAndPositiveSs,
+    showTotalSs = true,
+    totals: { hours, negativeSs, positiveSs, ss }
+}) => (
     <div className="totals-row">
         <div className="total-row">
             {showLabels && <div className="total-label">Hours</div>}
@@ -25,8 +32,20 @@ export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hou
         <div className="total-row">
             {showLabels && <div className="total-label">SS</div>}
 
-            <div className={classNames({ 'total-value': true, 'bad': ss < 0, 'good': ss > 0 })}>
-                {toHourFormat(ss)}
+            <div className="total-value">
+                {showNegativeAndPositiveSs && (
+                    <React.Fragment>
+                        <span className="good">+{toHourFormat(positiveSs)}</span>
+                        &nbsp;
+                        <span className="bad">-{toHourFormat(Math.abs(negativeSs))}</span>
+                        {showTotalSs && ' = '}
+                    </React.Fragment>
+                )}
+                {showTotalSs && (
+                    <span className={classNames({ 'bad': ss < 0, 'good': ss > 0 })}>
+                        {toHourFormat(ss)}
+                    </span>
+                )}
             </div>
         </div>
 
@@ -34,7 +53,7 @@ export const TotalsRow: React.SFC<TotalsRowProps> = ({ showLabels, totals: { hou
             {showLabels && <div className="total-label">Total</div>}
 
             <div className="total-value">
-                {toHourFormat(hours - Math.min(ss, 0))}
+                {toHourFormat(hours - negativeSs)}
             </div>
         </div>
     </div>

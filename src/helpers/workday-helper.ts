@@ -7,9 +7,11 @@ const totalsMapper = (workdays: Workdays) => {
     return workdays.reduce((result, current) => {
         return {
             hours: result.hours + current.get('hours'),
+            negativeSs: result.negativeSs + Math.min(0, current.get('ss')),
+            positiveSs: result.positiveSs + Math.max(0, current.get('ss')),
             ss: result.ss + current.get('ss')
         };
-    }, { hours: 0, ss: 0 });
+    }, { hours: 0, negativeSs: 0, positiveSs: 0, ss: 0 });
 };
 
 export const calculateTotalsForDates = (totalsPerDate: TotalsDateCollection): Totals => {
@@ -17,9 +19,11 @@ export const calculateTotalsForDates = (totalsPerDate: TotalsDateCollection): To
         .reduce((result, current) => {
             return {
                 hours: result.hours + current.hours,
+                negativeSs: result.negativeSs + Math.min(0, current.negativeSs),
+                positiveSs: result.positiveSs + Math.min(0, current.positiveSs),
                 ss: result.ss + current.ss
             };
-        }, { hours: 0, ss: 0 });
+        }, { hours: 0, negativeSs: 0, positiveSs: 0, ss: 0 });
 };
 
 export const calculateTotalsPerDate = (projects: Projects, workdays: Workdays): TotalsDateCollection => {

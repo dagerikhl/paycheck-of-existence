@@ -15,9 +15,12 @@
 
     .total-value {
         // Magic number to position the total at the same position as the input numbers below
-        padding-right: 14px;
+        //padding-right: 14px;
+        text-align: center;
 
         font-weight: normal;
+
+        white-space: nowrap;
     }
 
     .total-row {

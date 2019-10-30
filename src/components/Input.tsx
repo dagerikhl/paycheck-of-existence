@@ -21,11 +21,24 @@ interface OwnProps {
     max?: number;
     minLength?: number;
     maxLength?: number;
+    title?: string;
 }
 
 export class Input extends React.PureComponent<OwnProps> {
     public render() {
-        const { className, theme, square, round, type, value, placeholder, disabled, step, children } = this.props;
+        const {
+            className,
+            theme,
+            square,
+            round,
+            type,
+            value,
+            placeholder,
+            disabled,
+            step,
+            title,
+            children
+        } = this.props;
 
         return (
             <input
@@ -42,7 +55,7 @@ export class Input extends React.PureComponent<OwnProps> {
                 placeholder={placeholder}
                 disabled={disabled}
                 step={step}
-                title={'' + value}
+                title={title || `${value}`}
                 aria-label={`${type} input`}
             >
                 {children}

@@ -92,7 +92,12 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         <div className="totals-row-container">
                             <div className="totals-row-offset"/>
 
-                            <TotalsRow showLabels={true} totals={totals}/>
+                            <TotalsRow
+                                showLabels={true}
+                                showNegativeAndPositiveSs={true}
+                                showTotalSs={false}
+                                totals={totals}
+                            />
                         </div>
 
                         {this.dates.map((date: Moment) => (
@@ -108,7 +113,13 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                                         {date.format(DATE_FORMATS.long)}
                                     </div>
 
-                                    {totalsPerDate.has(date) && <TotalsRow totals={totalsPerDate.get(date) as Totals}/>}
+                                    {totalsPerDate.has(date) && (
+                                        <TotalsRow
+                                            showNegativeAndPositiveSs={true}
+                                            showTotalSs={false}
+                                            totals={totalsPerDate.get(date) as Totals}
+                                        />
+                                    )}
                                 </div>
 
                                 {projects

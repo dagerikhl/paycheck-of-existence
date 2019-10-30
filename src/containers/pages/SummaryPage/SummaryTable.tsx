@@ -49,6 +49,8 @@ class WeekTableComponent extends React.PureComponent<StateProps> {
                             return null;
                         }
 
+                        const ssValue = `${totals.ss > 0 ? '+' : ''}${toHourFormat(totals.ss)}`;
+
                         return (
                             <div className="project" key={projectId}>
                                 <div className="project-header">{matchingProject.get('name')}</div>
@@ -62,7 +64,8 @@ class WeekTableComponent extends React.PureComponent<StateProps> {
                                 <Input
                                     className={classNames({ ss: true, good: totals.ss > 0, bad: totals.ss < 0 })}
                                     type={InputCellType.TEXT}
-                                    value={`${totals.ss > 0 ? '+' : ''}${toHourFormat(totals.ss)}`}
+                                    value={ssValue}
+                                    title={`+${totals.positiveSs} - ${Math.abs(totals.negativeSs)} = ${ssValue}`}
                                     disabled={true}
                                 />
                             </div>
