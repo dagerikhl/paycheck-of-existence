@@ -4,10 +4,17 @@
 
 .week-table {
     .title {
+        position: sticky;
         display: flex;
         justify-content: space-between;
 
+        top: $header-height;
+
         padding: 16px 32px;
+
+        background-color: $color-card-background;
+
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
         .dates {
             font-weight: normal;
