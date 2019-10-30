@@ -1,14 +1,17 @@
 @import "../../../styles/variables.scss";
 
 .data-controls {
+    position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    top: $header-height;
+    left: 0;
+
     height: 0;
 
-    padding: 0 16px;
-    margin-bottom: 16px;
+    padding: 0 8px;
 
     color: $theme-primary-text;
     background-color: $theme-primary-light;
@@ -18,12 +21,12 @@
     transition: height 200ms ease-in-out;
 
     &.open {
-        height: 64px;
+        height: 48px;
     }
 
     .control-buttons {
         display: flex;
-        width: 256px;
+        //width: 256px;
 
         :first-child {
             margin-right: 8px;

@@ -8,7 +8,7 @@ import './DataControls.css';
 
 interface OwnProps {
     className?: string;
-    label: string;
+    label?: string;
     saveLabel: string;
     cancelLabel: string;
     hide?: boolean;

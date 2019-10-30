@@ -86,6 +86,14 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                             &nbsp;&ndash;&nbsp;
                             {period.to.format(DATE_FORMATS.longWithYear)}
                         </div>
+
+                        <DataControls
+                            saveLabel="Save"
+                            cancelLabel="Discard"
+                            onSave={this.onSaveChanges}
+                            onCancel={this.onDiscardChanges}
+                            hide={!isDirty}
+                        />
                     </h1>
 
                     <div className="content">
@@ -170,15 +178,6 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                         ))}
                     </div>
                 </Card>
-
-                <DataControls
-                    label={`You have unsaved changes in week ${period.from.isoWeek()}.`}
-                    saveLabel="Save"
-                    cancelLabel="Discard"
-                    onSave={this.onSaveChanges}
-                    onCancel={this.onDiscardChanges}
-                    hide={!isDirty}
-                />
             </React.Fragment>
         );
     }
