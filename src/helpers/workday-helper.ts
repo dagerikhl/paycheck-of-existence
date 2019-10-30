@@ -14,6 +14,12 @@ const totalsMapper = (workdays: Workdays) => {
     }, { hours: 0, negativeSs: 0, positiveSs: 0, ss: 0 });
 };
 
+const filterByShownProject = (projects: Projects, workday: Workday): boolean => {
+    const workdayProjectId = workday.get('projectId');
+
+    return projects.some((project) => project.get('id') === workdayProjectId && project.get('show'));
+};
+
 export const calculateTotalsForDates = (totalsPerDate: TotalsDateCollection): Totals => {
     return totalsPerDate
         .reduce((result, current) => {
@@ -28,6 +34,7 @@ export const calculateTotalsForDates = (totalsPerDate: TotalsDateCollection): To
 
 export const calculateTotalsPerDate = (projects: Projects, workdays: Workdays): TotalsDateCollection => {
     return workdays
+        .filter((workday) => filterByShownProject(projects, workday))
         .groupBy<Moment>((workday) => workday.get('date'))
         .map(totalsMapper)
         .toMap();
@@ -35,6 +42,7 @@ export const calculateTotalsPerDate = (projects: Projects, workdays: Workdays): 
 
 export const calculateTotalsPerProject = (projects: Projects, workdays: Workdays): TotalsProjectCollection => {
     return workdays
+        .filter((workday) => filterByShownProject(projects, workday))
         .groupBy<string>((workday) => workday.get('projectId'))
         .map(totalsMapper)
         .toMap();
