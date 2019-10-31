@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.4.0...v2.5.0) (2019-10-31)
+
+
+### Bug Fixes
+
+* **totals:** visualize negative SS ([2eb2b6f](https://github.com/dagerikhl/paycheck-of-existence/commit/2eb2b6f))
+* **workday-helper:** ignore hidden projects in totals ([34e1709](https://github.com/dagerikhl/paycheck-of-existence/commit/34e1709))
+
+
+### Features
+
+* **DataControls:** move data controls to sticky top header ([18a51b0](https://github.com/dagerikhl/paycheck-of-existence/commit/18a51b0))
+* **WeekTable:** make WeekTable header sticky ([85377f4](https://github.com/dagerikhl/paycheck-of-existence/commit/85377f4))
+
+
+
 ## [2.4.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.3.1...v2.4.0) (2019-08-19)
 
 
