@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.5.0...v2.6.0) (2019-11-05)
+
+
+### Features
+
+* **periodpicker:** move PeriodPicker into WeekTable + prompt on dirty ([424304c](https://github.com/dagerikhl/paycheck-of-existence/commit/424304c))
+* **weektable:** add prompt to prevent leaving page with unsaved changes ([4ce80b8](https://github.com/dagerikhl/paycheck-of-existence/commit/4ce80b8))
+
+
+
 ## [2.5.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.4.0...v2.5.0) (2019-10-31)
 
 
