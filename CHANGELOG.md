@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.6.0...v2.6.1) (2019-11-05)
+
+
+### Build System
+
+* **npm:** add build to deploy scripts to ensure latest build ([ca56315](https://github.com/dagerikhl/paycheck-of-existence/commit/ca56315))
+
+
+
 ## [2.6.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.5.0...v2.6.0) (2019-11-05)
 
 
