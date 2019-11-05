@@ -28,6 +28,7 @@ import { TotalsRow } from './TotalsRow';
 import './WeekTable.css';
 
 interface OwnState {
+    isEmptyWeek: boolean;
     modifiedWorkdays: Workdays;
 }
 
@@ -59,8 +60,17 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     private dates: Moment[] = range(0, 7).map((n) => this.props.period.from.clone().add(n, 'days'));
 
     public state: OwnState = {
+        isEmptyWeek: true,
         modifiedWorkdays: padWithEmptyWorkdays(this.dates, this.props.projects, this.props.workdays)
     };
+
+    public componentDidMount() {
+        window.addEventListener('beforeunload', this.onUnload);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('beforeunload', this.onUnload);
+    }
 
     public render() {
         const { isStoring, period, projects } = this.props;
@@ -188,7 +198,10 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
 
             const index = modifiedWorkdays.findIndex(workdayComparator(date, project));
 
-            this.setState({ modifiedWorkdays: modifiedWorkdays.update(index, (workday) => workday.set(key, value)) });
+            this.setState({
+                isEmptyWeek: false,
+                modifiedWorkdays: modifiedWorkdays.update(index, (workday) => workday.set(key, value))
+            });
         };
     };
 
@@ -200,16 +213,30 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
     };
 
     private onDiscardChanges = () => {
-        const { workdays } = this.props;
+        const { projects, workdays } = this.props;
 
-        this.setState({ modifiedWorkdays: workdays });
+        if (workdays.size === 0) {
+            this.setState({
+                isEmptyWeek: true,
+                modifiedWorkdays: padWithEmptyWorkdays(this.dates, projects, workdays)
+            });
+        } else {
+            this.setState({ modifiedWorkdays: workdays });
+        }
+    };
+
+    private onUnload = (event: Event) => {
+        if (this.isDirty()) {
+            event.preventDefault();
+            event.returnValue = true;
+        }
     };
 
     private isDirty = () => {
         const { workdays } = this.props;
-        const { modifiedWorkdays } = this.state;
+        const { isEmptyWeek, modifiedWorkdays } = this.state;
 
-        return !workdays.equals(modifiedWorkdays);
+        return !isEmptyWeek && !workdays.equals(modifiedWorkdays);
     };
 }
 
