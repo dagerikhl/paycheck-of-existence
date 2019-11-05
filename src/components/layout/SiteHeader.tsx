@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { PeriodControls } from '../../containers/period-picker/PeriodControls';
 import { SiteNavigation } from './SiteNavigation';
 
 import logo from '../../images/logo.svg';
@@ -16,10 +15,6 @@ export const SiteHeader: React.SFC<OwnProps> = (props: OwnProps) => (
         <div className="title">
             <img className="logo" src={logo} alt="Logo"/>
             <h1>{props.title}</h1>
-        </div>
-
-        <div className="period-picker-container">
-            <PeriodControls/>
         </div>
 
         <div className="site-navigation-container">

@@ -1,16 +1,7 @@
-@import "../../styles/variables.scss";
-
 .period-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 2px;
-
-    color: $theme-secondary-text;
-    background-color: $theme-primary-dark;
-    border: 1px solid $shadow-color;
-    border-radius: 2px;
 
     > :first-child {
         margin-right: 4px;

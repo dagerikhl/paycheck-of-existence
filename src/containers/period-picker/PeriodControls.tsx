@@ -2,7 +2,6 @@ import * as moment from 'moment';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { withAuthorization } from '../../components/higher-order/withAuthorization';
 import { getNewestWeekNumberInYear, mapSynchronousDispatchProps } from '../../helpers';
 import { updatePeriodAction } from '../../store/actions';
 import { State } from '../../store/states';
@@ -10,6 +9,11 @@ import { Period } from '../../types';
 import { PeriodPicker } from './PeriodPicker';
 
 import './PeriodControls.css';
+
+interface OwnProps {
+    shouldPromptOnDirty?: boolean;
+    isDirty?: boolean;
+}
 
 interface StateProps {
     period: Period;
@@ -27,7 +31,7 @@ const mapDispatchToProps = mapSynchronousDispatchProps({
     updatePeriod: updatePeriodAction
 });
 
-type PeriodControlsProps = StateProps & DispatchProps;
+type PeriodControlsProps = OwnProps & StateProps & DispatchProps;
 
 class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
     public render() {
@@ -66,10 +70,12 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
         const newestWeekNumber = getNewestWeekNumberInYear(year);
         const newWeek = moment().year(year).isoWeek(newestWeekNumber);
 
-        updatePeriod({
-            from: newWeek.clone().startOf('isoWeek'),
-            to: newWeek.clone().endOf('isoWeek')
-        });
+        if (!this.shouldPromptUser() || this.shouldPromptUser() && this.promptUser()) {
+            updatePeriod({
+                from: newWeek.clone().startOf('isoWeek'),
+                to: newWeek.clone().endOf('isoWeek')
+            });
+        }
     };
 
     private onUpdateWeekNumber = (weekNumber: number) => () => {
@@ -78,10 +84,12 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
         const year = this.getYearCorrectedForNewyear();
         const newWeek = moment().year(year).isoWeek(weekNumber);
 
-        updatePeriod({
-            from: newWeek.clone().startOf('isoWeek'),
-            to: newWeek.clone().endOf('isoWeek')
-        });
+        if (!this.shouldPromptUser() || this.shouldPromptUser() && this.promptUser()) {
+            updatePeriod({
+                from: newWeek.clone().startOf('isoWeek'),
+                to: newWeek.clone().endOf('isoWeek')
+            });
+        }
     };
 
     private getYearCorrectedForNewyear = () => {
@@ -89,6 +97,16 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
 
         return (period.from.isoWeek() === 1 ? period.to : period.from).year();
     };
+
+    private shouldPromptUser = () => {
+        const { shouldPromptOnDirty, isDirty } = this.props;
+
+        return shouldPromptOnDirty && isDirty;
+    };
+
+    private promptUser = () => {
+        return confirm('You have unsaved changes. Are you sure you want to change the period?');
+    };
 }
 
-export const PeriodControls = withAuthorization(connect(mapStateToProps, mapDispatchToProps)(PeriodControlsComponent));
+export const PeriodControls = connect(mapStateToProps, mapDispatchToProps)(PeriodControlsComponent);

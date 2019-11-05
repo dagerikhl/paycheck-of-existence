@@ -21,6 +21,7 @@ import { updateWorkdaysAction } from '../../../store/actions';
 import { getWorkdaysInPeriod } from '../../../store/selectors';
 import { State } from '../../../store/states';
 import { Period, Project, Projects, Totals, Workdays } from '../../../types';
+import { PeriodControls } from '../../period-picker/PeriodControls';
 
 import { DataControls } from './DataControls';
 import { TotalsRow } from './TotalsRow';
@@ -88,13 +89,17 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                 <Prompt when={isDirty} message="You have unsaved changes. Are you sure you want to leave?"/>
 
                 <Card className="week-table" level={3}>
-                    <h1 className="title">
-                        <div>Week {period.from.isoWeek()}</div>
+                    <div className="title">
+                        <h1>Week {period.from.isoWeek()}</h1>
 
-                        <div className="dates">
-                            {period.from.format(DATE_FORMATS.longWithYear)}
-                            &nbsp;&ndash;&nbsp;
-                            {period.to.format(DATE_FORMATS.longWithYear)}
+                        <h1 className="dates">
+                            <span>{period.from.format(DATE_FORMATS.longWithYear)}</span>
+                            <span>&nbsp;&ndash;&nbsp;</span>
+                            <span>{period.to.format(DATE_FORMATS.longWithYear)}</span>
+                        </h1>
+
+                        <div className="period-picker-container">
+                            <PeriodControls shouldPromptOnDirty={true} isDirty={isDirty}/>
                         </div>
 
                         <DataControls
@@ -104,7 +109,7 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
                             onCancel={this.onDiscardChanges}
                             hide={!isDirty}
                         />
-                    </h1>
+                    </div>
 
                     <div className="content">
                         <div className="totals-row-container">
