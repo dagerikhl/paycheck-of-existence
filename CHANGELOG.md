@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.6.1...v2.7.0) (2019-11-08)
+
+
+### Build System
+
+* **npm:** build css before starting dev server ([eabdc43](https://github.com/dagerikhl/paycheck-of-existence/commit/eabdc43))
+
+
+### Features
+
+* **keyboard:** add keyboard shortcuts for period change+save+discard ([4d2dcf3](https://github.com/dagerikhl/paycheck-of-existence/commit/4d2dcf3))
+
+
+
 ### [2.6.1](https://github.com/dagerikhl/paycheck-of-existence/compare/v2.6.0...v2.6.1) (2019-11-05)
 
 
