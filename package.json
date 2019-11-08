@@ -4,7 +4,7 @@
   "description": "Personal tool to keep track of hours worked each week",
   "author": "Dag Erik Homdrum Løvgren <dagerikhl@gmail.com> (https://github.com/dagerikhl)",
   "scripts": {
-    "start": "npm-run-all -l -p watch-css start-js",
+    "start": "npm run build css && npm-run-all -l -p watch-css start-js",
     "build": "npm run build-css && react-scripts-ts build",
     "build-css": "node-sass --include-path ./node_modules/ src/ -o src/",
     "start-js": "react-scripts-ts start",
