@@ -214,19 +214,23 @@ class WeekTableComponent extends React.PureComponent<WeekTableProps, OwnState> {
         const { updateWorkdays } = this.props;
         const { modifiedWorkdays } = this.state;
 
-        updateWorkdays(modifiedWorkdays);
+        if (this.isDirty()) {
+            updateWorkdays(modifiedWorkdays);
+        }
     };
 
     private onDiscardChanges = () => {
         const { projects, workdays } = this.props;
 
-        if (workdays.size === 0) {
-            this.setState({
-                isEmptyWeek: true,
-                modifiedWorkdays: padWithEmptyWorkdays(this.dates, projects, workdays)
-            });
-        } else {
-            this.setState({ modifiedWorkdays: workdays });
+        if (this.isDirty()) {
+            if (workdays.size === 0) {
+                this.setState({
+                    isEmptyWeek: true,
+                    modifiedWorkdays: padWithEmptyWorkdays(this.dates, projects, workdays)
+                });
+            } else {
+                this.setState({ modifiedWorkdays: workdays });
+            }
         }
     };
 

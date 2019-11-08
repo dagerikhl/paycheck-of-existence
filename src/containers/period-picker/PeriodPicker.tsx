@@ -5,16 +5,26 @@ import './PeriodPicker.css';
 interface OwnProps {
     value: number;
     onUpdate: (value: number) => () => void;
+    tooltipIncrease?: string;
+    tooltipDecrease?: string;
     disableIncrease?: boolean;
     disableDecrease?: boolean;
 }
 
-export const PeriodPicker: React.SFC<OwnProps> = ({ value, onUpdate, disableIncrease, disableDecrease }) => (
+export const PeriodPicker: React.SFC<OwnProps> = ({
+    value,
+    onUpdate,
+    tooltipIncrease,
+    tooltipDecrease,
+    disableIncrease,
+    disableDecrease
+}) => (
     <div className="period-picker">
         <span className="value">{value}</span>
 
         <div className="controls">
             <button
+                title={tooltipIncrease}
                 aria-label="Increase"
                 onClick={onUpdate(value + 1)}
                 disabled={disableIncrease}
@@ -23,6 +33,7 @@ export const PeriodPicker: React.SFC<OwnProps> = ({ value, onUpdate, disableIncr
             </button>
 
             <button
+                title={tooltipDecrease}
                 aria-label="Decrease"
                 onClick={onUpdate(value - 1)}
                 disabled={disableDecrease}

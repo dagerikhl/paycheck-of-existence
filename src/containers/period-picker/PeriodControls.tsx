@@ -34,10 +34,16 @@ const mapDispatchToProps = mapSynchronousDispatchProps({
 type PeriodControlsProps = OwnProps & StateProps & DispatchProps;
 
 class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
+    public componentDidMount() {
+        window.addEventListener('keydown', this.onKeyboardShortcut);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('keydown', this.onKeyboardShortcut);
+    }
+
     public render() {
         const { period } = this.props;
-
-        const now = moment();
 
         const year = this.getYearCorrectedForNewyear();
         // This has to use period.to to ensure the week containing January 1st is counted as the first week of the year
@@ -48,17 +54,18 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
                 <PeriodPicker
                     value={year}
                     onUpdate={this.onUpdateYear}
-                    disableIncrease={year === now.year()}
+                    tooltipIncrease="SHIFT+PageUp"
+                    tooltipDecrease="SHIFT+PageDown"
+                    disableIncrease={this.shouldDisableIncreaseYear()}
                 />
 
                 <PeriodPicker
                     value={weekNumber}
                     onUpdate={this.onUpdateWeekNumber}
-                    disableIncrease={
-                        year === now.year() && weekNumber === now.isoWeek() ||
-                        weekNumber === moment().year(year).isoWeeksInYear()
-                    }
-                    disableDecrease={weekNumber === 1}
+                    tooltipIncrease="PageUp"
+                    tooltipDecrease="PageDown"
+                    disableIncrease={this.shouldDisableIncreaseWeekNumber()}
+                    disableDecrease={this.shouldDisableDecreaseWeekNumber()}
                 />
             </div>
         );
@@ -92,10 +99,66 @@ class PeriodControlsComponent extends React.PureComponent<PeriodControlsProps> {
         }
     };
 
+    private onKeyboardShortcut = (event: KeyboardEvent) => {
+        const { period } = this.props;
+
+        if (event.shiftKey && event.key === 'PageUp') {
+            if (!this.shouldDisableIncreaseYear()) {
+                this.onUpdateYear(period.from.year() + 1)();
+            }
+
+            event.preventDefault();
+        } else if (event.shiftKey && event.key === 'PageDown') {
+            this.onUpdateYear(period.from.year() - 1)();
+
+            event.preventDefault();
+        } else if (event.key === 'PageUp') {
+            if (!this.shouldDisableIncreaseWeekNumber()) {
+                this.onUpdateWeekNumber(period.to.isoWeek() + 1)();
+            }
+
+            event.preventDefault();
+        } else if (event.key === 'PageDown') {
+            if (!this.shouldDisableDecreaseWeekNumber()) {
+                this.onUpdateWeekNumber(period.to.isoWeek() - 1)();
+            }
+
+            event.preventDefault();
+        }
+    };
+
     private getYearCorrectedForNewyear = () => {
         const { period } = this.props;
 
         return (period.from.isoWeek() === 1 ? period.to : period.from).year();
+    };
+
+    private shouldDisableIncreaseYear = () => {
+        const now = moment();
+        const year = this.getYearCorrectedForNewyear();
+
+        return year === now.year();
+    };
+
+    private shouldDisableIncreaseWeekNumber = () => {
+        const { period } = this.props;
+
+        const now = moment();
+        const year = this.getYearCorrectedForNewyear();
+        const weekNumber = period.to.isoWeek();
+
+        return (
+            year === now.year() && weekNumber === now.isoWeek() ||
+            weekNumber === moment().year(year).isoWeeksInYear()
+        );
+    };
+
+    private shouldDisableDecreaseWeekNumber = () => {
+        const { period } = this.props;
+
+        const weekNumber = period.to.isoWeek();
+
+        return weekNumber === 1;
     };
 
     private shouldPromptUser = () => {

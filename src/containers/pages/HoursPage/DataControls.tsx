@@ -16,17 +16,44 @@ interface OwnProps {
     onCancel: () => void;
 }
 
-export const DataControls: React.SFC<OwnProps> =
-    ({ className, label, saveLabel, cancelLabel, hide, onSave, onCancel }) => (
-        <Card
-            className={classNames({ [className as string]: className, 'data-controls': true, 'open': !hide })}
-            level={3}
-        >
-            <h2>{label}</h2>
+export class DataControls extends React.PureComponent<OwnProps> {
+    public componentDidMount() {
+        window.addEventListener('keydown', this.onKeyboardShortcut);
+    }
 
-            <div className="control-buttons">
-                <Button onClick={onSave} disabled={hide}>{saveLabel}</Button>
-                <Button onClick={onCancel} disabled={hide}>{cancelLabel}</Button>
-            </div>
-        </Card>
-    );
+    public componentWillUnmount() {
+        window.removeEventListener('keydown', this.onKeyboardShortcut);
+    }
+
+    public render() {
+        const { className, label, saveLabel, cancelLabel, hide, onSave, onCancel } = this.props;
+
+        return (
+            <Card
+                className={classNames({ [className as string]: className, 'data-controls': true, 'open': !hide })}
+                level={3}
+            >
+                <h2>{label}</h2>
+
+                <div className="control-buttons">
+                    <Button title="CTRL+S" onClick={onSave} disabled={hide}>{saveLabel}</Button>
+                    <Button title="CTRL+D" onClick={onCancel} disabled={hide}>{cancelLabel}</Button>
+                </div>
+            </Card>
+        );
+    }
+
+    private onKeyboardShortcut = (event: KeyboardEvent) => {
+        const { onSave, onCancel } = this.props;
+
+        if (event.ctrlKey && event.key === 's') {
+            onSave();
+
+            event.preventDefault();
+        } else if (event.ctrlKey && event.key === 'd') {
+            onCancel();
+
+            event.preventDefault();
+        }
+    };
+}
