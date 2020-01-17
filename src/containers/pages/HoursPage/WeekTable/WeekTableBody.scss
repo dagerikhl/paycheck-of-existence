@@ -1,0 +1,77 @@
+@import "../../../../styles/bases.scss";
+@import "../../../../styles/variables.scss";
+@import "../hours-page-variables.scss";
+
+.week-table-body {
+    .totals-row-container {
+        display: flex;
+
+        padding: 8px;
+
+        background-color: $shadow-color-light;
+    }
+
+    .line {
+        padding-bottom: 2px;
+
+        .line-header {
+            display: flex;
+
+            padding: 16px 8px;
+
+            background-color: $shadow-color-lighter;
+
+            .line-header-label {
+                font-weight: bold;
+            }
+        }
+
+        .project {
+            display: flex;
+
+            padding: 0 32px;
+
+            .project-header {
+                display: flex;
+                align-items: center;
+
+                width: $label-width;
+            }
+
+            .hours {
+                @extend %table-number-cell;
+
+                width: $number-width;
+
+                margin: $cell-margin;
+            }
+
+            .ss {
+                @extend %table-number-cell;
+
+                width: $number-width;
+
+                margin: $cell-margin;
+            }
+
+            .notes {
+                flex: 1;
+
+                margin: $cell-margin;
+            }
+        }
+    }
+
+    .totals-row-offset {
+        flex-shrink: 0;
+        width: $label-width + 24px;
+    }
+
+    .non-workday {
+        background-color: $shadow-color-lighter;
+    }
+
+    > :last-child {
+        padding-bottom: 32px;
+    }
+}

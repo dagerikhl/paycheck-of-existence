@@ -4,7 +4,7 @@ import { withProjectsData } from '../../../components/higher-order/with-data/wit
 import { withWorkdaysInPeriodData } from '../../../components/higher-order/with-data/withWorkdaysInPeriodData';
 import { withAuthorization } from '../../../components/higher-order/withAuthorization';
 
-import { WeekTable } from './WeekTable';
+import { WeekTable } from './WeekTable/WeekTable';
 
 import './HoursPage.css';
 
