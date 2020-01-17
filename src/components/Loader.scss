@@ -18,6 +18,8 @@ $border-width: 8px;
 
     background-color: $shadow-color-light;
 
+    z-index: 500;
+
     .spinner {
         height: 64px;
         width: 64px;
